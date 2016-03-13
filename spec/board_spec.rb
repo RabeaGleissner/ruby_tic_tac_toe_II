@@ -72,5 +72,20 @@ describe Board do
   it "knows that all all marks are o in line" do
     expect(board.all_o([:O, :O, :O])).to be true
   end
+
+  it "knows that game is over" do
+    full_board = Board.new([:X, :O, :X,
+                            :O, :X, :O,
+                            :X, :O, :X])
+    expect(full_board.game_over?).to be true
+  end
+
+  it "knows that game is not over" do
+    full_board = Board.new([:O, :O, :X,
+                            :O, :X, :O,
+                            :E, :E, :E])
+    expect(full_board.game_over?).to be false
+  end
+
 end
 

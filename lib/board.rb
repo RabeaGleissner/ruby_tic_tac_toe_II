@@ -5,16 +5,16 @@ class Board
     @dimension = Math.sqrt(@grid.size).to_i
   end
 
+  def game_over?
+    return true if winner || full?
+    false
+  end
+
   def winner
     winner = false
     lines.each do |line|
-      if all_x(line)
-        winner = :X
-      end
-
-      if all_o(line)
-        winner = :O
-      end
+      winner = :X if all_x(line)
+      winner = :O if all_o(line)
     end
     winner
   end
@@ -41,9 +41,7 @@ class Board
 
   def full?
     @grid.each do |mark|
-      if mark == :E
-        return false
-      end
+      return false if mark == :E
     end
     true
   end
