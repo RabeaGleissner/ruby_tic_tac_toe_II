@@ -29,6 +29,10 @@ class Ui
     end
   end
 
+  def draw_board(board)
+    puts create_board_image(board)
+  end
+
   def create_board_image(board)
     board_image = ""
     counter = 1

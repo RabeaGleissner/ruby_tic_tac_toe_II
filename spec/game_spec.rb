@@ -38,6 +38,9 @@ describe Game do
     def announce_winner_called
       @announce_winner_called
     end
+
+    def draw_board(board)
+    end
   end
 
 end
