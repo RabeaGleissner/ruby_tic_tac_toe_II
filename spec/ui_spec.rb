@@ -10,12 +10,12 @@ describe Ui do
 
     it "prints the board to the console" do
         board = Board.new([:E, :E, :X, :E, :E, :O, :E, :E, :X])
-        expect(ui.create_board_image(board)).to eq(" 1 | 2 | X\n----------\n 4 | 5 | O\n----------\n 7 | 8 | X")
+        expect(ui.create_board_image(board)).to eq("\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X")
     end
 
     it "asks user for a position" do
         allow(ui.input).to receive(:gets).and_return("2")
-        expect(output_stream).to receive(:puts).with("Please enter a position:")
+        expect(output_stream).to receive(:puts).with("\nPlease enter a position:")
         expect(ui.request_position(Board.new)).to eq(1)
     end
 
@@ -23,7 +23,7 @@ describe Ui do
         board = Board.new
         new_board = board.add_mark(1, :X)
         allow(ui.input).to receive(:gets).and_return("2", "3")
-        expect(output_stream).to receive(:puts).with("Please enter a position:").twice
+        expect(output_stream).to receive(:puts).with("\nPlease enter a position:").twice
         expect(ui.request_position(new_board)).to eq(2)
     end
 
@@ -31,7 +31,7 @@ describe Ui do
       x_winner_board = Board.new([:X, :X, :X,
                          :E, :E, :O,
                          :O, :E, :E])
-      expect(output_stream).to receive(:puts).with("Game over! Winner is X.")
+      expect(output_stream).to receive(:puts).with("\nGame over! Winner is X.")
       ui.announce_winner(x_winner_board)
     end
 
@@ -39,7 +39,7 @@ describe Ui do
       drawn_board = Board.new([:X, :O, :X,
                          :X, :O, :O,
                          :O, :X, :X])
-      expect(output_stream).to receive(:puts).with("Game over! It's a draw.")
+      expect(output_stream).to receive(:puts).with("\nGame over! It's a draw.")
       ui.announce_winner(drawn_board)
     end
 

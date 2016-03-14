@@ -17,15 +17,21 @@ class Game
       board = current_player.make_move(board)
       current_player = switch_player(current_player)
     end
-    ui.announce_winner(board)
+    end_game(board)
   end
 
+  private
   def switch_player(current_player)
     if current_player == player1
       player2
     else
       player1
     end
+  end
+
+  def end_game(board)
+    ui.draw_board(board)
+    ui.announce_winner(board)
   end
 
 end

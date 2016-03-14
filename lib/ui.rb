@@ -8,7 +8,7 @@ class Ui
   end
 
   def request_position(board)
-    output.puts "Please enter a position:"
+    output.puts "\nPlease enter a position:"
     get_position(board)
   end
 
@@ -23,9 +23,9 @@ class Ui
 
   def announce_winner(board)
     if board.winner == false
-      output.puts "Game over! It's a draw."
+      output.puts "\nGame over! It's a draw."
     else
-      output.puts "Game over! Winner is #{board.winner}."
+      output.puts "\nGame over! Winner is #{board.winner}."
     end
   end
 
@@ -34,7 +34,7 @@ class Ui
   end
 
   def create_board_image(board)
-    board_image = ""
+    board_image = "\n"
     counter = 1
     rows = board.rows
     rows.each do |row|
@@ -45,7 +45,7 @@ class Ui
         board_image += " |" unless is_last_cell_in_row(cell, row)
         counter +=1
       end
-      board_image += "\n----------\n" unless is_last_row(counter, rows)
+      board_image += "\n-----------\n" unless is_last_row(counter, rows)
     end
     board_image
   end
@@ -55,7 +55,7 @@ class Ui
     if is_empty(cell)
       add_empty_cell(counter)
     else
-      add_marked_cell(cell) 
+      add_marked(cell)
     end
   end
 
@@ -71,7 +71,7 @@ class Ui
     counter.to_s
   end
 
-  def add_marked_cell(cell)
+  def add_marked(cell)
     cell.to_s
   end
 
