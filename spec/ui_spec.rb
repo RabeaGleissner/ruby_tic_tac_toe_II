@@ -1,6 +1,7 @@
 require_relative 'spec_helper'
 require 'stringio'
 require_relative '../lib/ui'
+require_relative '../lib/board'
 
 describe Ui do
     let(:input_stream) {StringIO.new}
@@ -15,7 +16,15 @@ describe Ui do
     it "asks user for a position" do
         allow(ui.input).to receive(:gets).and_return("2")
         expect(output_stream).to receive(:puts).with("Please enter a position:")
-        expect(ui.request_position(Board.new)).to eq(2)
+        expect(ui.request_position(Board.new)).to eq(1)
+    end
+
+    it "asks user for a position again if first input was invalid" do
+        board = Board.new
+        new_board = board.add_mark(1, :X)
+        allow(ui.input).to receive(:gets).and_return("2", "3")
+        expect(output_stream).to receive(:puts).with("Please enter a position:").twice
+        expect(ui.request_position(new_board)).to eq(2)
     end
 
 end

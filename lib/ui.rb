@@ -13,7 +13,12 @@ class Ui
     end
 
     def get_position(board)
-        input.gets.chomp.to_i
+        position = input.gets.chomp.to_i - 1
+        if board.available_positions.include? position
+            position
+        else
+            request_position(board)
+        end
     end
 
     def create_board_image(board)
