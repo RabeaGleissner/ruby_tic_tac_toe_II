@@ -1,10 +1,14 @@
-class HumanPlayer
+require_relative 'ui'
 
-  def initialize(mark)
+class HumanPlayer
+  attr_reader :mark, :ui
+
+  def initialize(mark, ui)
     @mark = mark
+    @ui = ui
   end
 
-  def make_move(position, board)
-    board.add_mark(3, @mark)
+  def make_move(board)
+    board.add_mark(ui.request_position(board), mark)
   end
 end
