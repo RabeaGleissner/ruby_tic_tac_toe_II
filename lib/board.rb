@@ -1,4 +1,5 @@
 class Board
+  attr_reader :grid, :dimension
 
   def initialize(marks = [:E]*9)
     @grid = marks
@@ -6,7 +7,7 @@ class Board
   end
 
   def add_mark(position, mark)
-    new_grid = @grid.clone
+    new_grid = grid.clone
     new_grid[position] = mark
     return Board.new(new_grid)
   end
@@ -14,7 +15,7 @@ class Board
   def available_positions
     positions = []
     index = 0
-    @grid.each do |cell|
+    grid.each do |cell|
       if cell == :E
         positions << index
       end
@@ -42,7 +43,7 @@ class Board
   end
 
   def full?
-    @grid.each do |mark|
+    grid.each do |mark|
       return false if mark == :E
     end
     true
@@ -70,7 +71,7 @@ class Board
 
   def rows
     rows = []
-    @grid.each_slice(@dimension) do |row|
+    grid.each_slice(dimension) do |row|
       rows << row
     end
     rows
@@ -79,7 +80,7 @@ class Board
   def columns
     columns = []
     index = 0
-    @dimension.times do
+    dimension.times do
       column = []
       rows.each do |row|
         column << row[index]
@@ -93,16 +94,16 @@ class Board
   def diagonals
     first = []
     index = 0
-    @dimension.times do
-      first << @grid[(@dimension * index) + index]
+    dimension.times do
+      first << grid[(dimension * index) + index]
       index +=1
     end
 
     second = []
-    offset = @dimension-1
-    @dimension.times do
-      second << @grid[offset]
-      offset += @dimension-1
+    offset = dimension-1
+    dimension.times do
+      second << grid[offset]
+      offset += dimension-1
     end
     [first, second]
   end
