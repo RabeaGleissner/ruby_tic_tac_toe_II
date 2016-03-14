@@ -62,7 +62,14 @@ describe Board do
     board = Board.new([:X, :O, :E,
                        :O, :X, :O,
                        :E, :E, :E])
-    expect(board.lines).to eq([[:X, :O, :E], [:O, :X, :O], [:E, :E, :E], [:X, :O, :E], [:O, :X, :E], [:E, :O, :E], [:X, :X, :E], [:E, :X, :E]])
+    expect(board.lines).to eq([[:X, :O, :E],
+                               [:O, :X, :O],
+                               [:E, :E, :E],
+                               [:X, :O, :E],
+                               [:O, :X, :E],
+                               [:E, :O, :E],
+                               [:X, :X, :E],
+                               [:E, :X, :E]])
   end
 
   it "knows that all all marks are x in line" do
@@ -87,5 +94,14 @@ describe Board do
     expect(full_board.game_over?).to be false
   end
 
+  it "adds adds a mark on a new board" do
+    new_board = board.add_mark(1, :X)
+    expect(new_board.available_positions).to eq([0,2,3,4,5,6,7,8])
+  end
+
+  it "doesn't change the existing board if a move is made" do
+    board.add_mark(1, :X)
+    expect(board.available_positions.length).to eq (9)
+  end
 end
 

@@ -5,6 +5,24 @@ class Board
     @dimension = Math.sqrt(@grid.size).to_i
   end
 
+  def add_mark(position, mark)
+    new_grid = @grid.clone
+    new_grid[position] = mark
+    return Board.new(new_grid)
+  end
+
+  def available_positions
+    positions = []
+    index = 0
+    @grid.each do |cell|
+      if cell == :E
+        positions << index
+      end
+      index += 1
+    end
+    positions
+  end
+
   def game_over?
     return true if winner || full?
     false
@@ -17,6 +35,17 @@ class Board
       winner = :O if all_o(line)
     end
     winner
+  end
+
+  def empty?
+    full? == false
+  end
+
+  def full?
+    @grid.each do |mark|
+      return false if mark == :E
+    end
+    true
   end
 
   def all_x(line)
@@ -33,17 +62,6 @@ class Board
       all_o = all_o && cell == :O
     end
     all_o
-  end
-
-  def empty?
-    full? == false
-  end
-
-  def full?
-    @grid.each do |mark|
-      return false if mark == :E
-    end
-    true
   end
 
   def lines
