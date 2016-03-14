@@ -1,5 +1,20 @@
 require 'pry-byebug'
 class Ui
+    attr_reader :input, :output
+
+    def initialize(input, output)
+        @input = input
+        @output = output
+    end
+
+    def request_position(board)
+        output.puts "Please enter a position:"
+        get_position(board)
+    end
+
+    def get_position(board)
+        input.gets.chomp.to_i
+    end
 
     def create_board_image(board)
         board_image = ""
@@ -19,7 +34,6 @@ class Ui
     end
 
     private
-
     def draw_one_cell(cell, counter)
         if is_empty(cell)
             add_empty_cell(counter)
