@@ -45,8 +45,13 @@ describe Ui do
 
     it "finds out if user wants to play again" do
       allow(ui.input).to receive(:gets).and_return("n")
-      expect(output_stream).to receive(:puts).with("Do you want to play again?\nEnter y for yes\nEnter n for no")
+      expect(output_stream).to receive(:puts).with("\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no")
       expect(ui.replay?).to be false
+    end
+
+    it "says goodbye to the user" do
+      allow(output_stream).to receive(:puts).with("\e[H\e[2JByyyee!")
+      ui.say_goodbye
     end
 
 end

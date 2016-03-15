@@ -30,7 +30,7 @@ class Ui
   end
 
   def replay?
-    output.puts "Do you want to play again?\nEnter y for yes\nEnter n for no"
+    output.puts "\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no"
     user_wants_to_play_again?
   end
 
@@ -38,15 +38,15 @@ class Ui
     user_choice = input.gets.chomp.downcase
     return true if user_choice == "y"
     return false if user_choice == "n"
-    ask_for_replay_choice
+    replay?
   end
 
   def say_goodbye
-    puts "Byyyee!"
+    output.puts "\e[H\e[2JByyyee!"
   end
 
   def draw_board(board)
-    puts create_board_image(board)
+    output.puts "\e[H\e[2J" + create_board_image(board)
   end
 
   def create_board_image(board)
