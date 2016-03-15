@@ -10,12 +10,12 @@ describe Ui do
 
     it "creates an image of the board" do
         board = Board.new([nil, nil, :X, nil, nil, :O, nil, nil, :X])
-        expect(ui.create_board_image(board)).to eq("\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X")
+        expect(ui.create_board_image(board)).to eq("\n-----------\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X\n-----------\n")
     end
 
     it "draws a board to the console" do
       board = Board.new
-      expect(output_stream).to receive(:puts).with("\e[H\e[2J\n 1 | 2 | 3 |\n-----------\n 4 | 5 | 6 |\n-----------\n 7 | 8 | 9 |")
+      expect(output_stream).to receive(:puts).with("\e[H\e[2J\n-----------\n 1 | 2 | 3\n-----------\n 4 | 5 | 6\n-----------\n 7 | 8 | 9\n-----------\n")
 
       ui.draw_board(board)
     end
@@ -63,7 +63,7 @@ describe Ui do
     end
 
     it "says goodbye to the user" do
-      allow(output_stream).to receive(:puts).with("\e[H\e[2JByyyee!")
+      allow(output_stream).to receive(:puts).with("\e[H\e[2JByyyee!\n\n")
       ui.say_goodbye
     end
 

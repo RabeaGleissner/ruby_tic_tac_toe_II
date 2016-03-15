@@ -42,7 +42,7 @@ class Ui
   end
 
   def say_goodbye
-    output.puts "\e[H\e[2JByyyee!"
+    output.puts "\e[H\e[2JByyyee!\n\n"
   end
 
   def draw_board(board)
@@ -50,26 +50,22 @@ class Ui
   end
 
   def create_board_image(board)
-    board_image = "\n"
-    counter = 1
-    rows = board.rows
-    rows.each do |row|
-      row.each do |cell|
-        board_image += " "
-        board_image += draw_one_cell(cell, counter)
-
-        board_image += " |" unless is_last_cell_in_row(cell, row)
-        counter +=1
-      end
-      board_image += "\n-----------\n" unless is_last_row(counter, rows)
+    line = "\n-----------\n"
+    pipe = " |"
+    board_image = line
+    board.rows.flatten.each_with_index do |cell, index|
+      board_image += draw_one_cell(cell, index)
+      board_image += pipe unless last_cell_in_row?(index, board)
+      board_image += line if last_cell_in_row?(index, board)
     end
     board_image
   end
 
   private
-  def draw_one_cell(cell, counter)
+
+  def draw_one_cell(cell, index)
     if empty?(cell)
-      add_empty_cell(counter)
+      add_empty_cell(index)
     else
       add_marked(cell)
     end
@@ -79,19 +75,17 @@ class Ui
     cell == nil
   end
 
-  def is_last_cell_in_row(cell, row)
-    row.index(cell) == row.length - 1
+  def last_cell_in_row?(index, board)
+    board_size = board.rows.first.length
+    index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1
   end
 
-  def add_empty_cell(counter)
-    counter.to_s
+  def add_empty_cell(index)
+    " " + (index + 1).to_s
   end
 
   def add_marked(cell)
-    cell.to_s
+    " " + cell.to_s
   end
 
-  def is_last_row(counter, rows)
-    counter == rows.flatten.length + 1
-  end
 end
