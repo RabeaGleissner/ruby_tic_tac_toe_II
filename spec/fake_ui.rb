@@ -12,6 +12,10 @@ class FakeUi
     @announce_winner_called
   end
 
+  def request_position(board)
+    3
+  end
+
   def draw_board(board)
   end
 
