@@ -1,4 +1,3 @@
-require 'pry-byebug'
 class FakeUi
   def initialize
     @announce_winner_called = 0
