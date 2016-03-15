@@ -1,4 +1,5 @@
-require 'pry-byebug'
+require_relative 'game'
+
 class GameRunner
   attr_reader :ui, :player1, :player2
 

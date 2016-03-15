@@ -13,6 +13,7 @@ class HumanPlayer
   end
 
   def play_again
+    ui.replay?
   end
 
 end

@@ -43,4 +43,10 @@ describe Ui do
       ui.announce_winner(drawn_board)
     end
 
+    it "finds out if user wants to play again" do
+      allow(ui.input).to receive(:gets).and_return("n")
+      expect(output_stream).to receive(:puts).with("Do you want to play again?\nEnter y for yes\nEnter n for no")
+      expect(ui.replay?).to be false
+    end
+
 end

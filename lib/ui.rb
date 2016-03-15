@@ -29,6 +29,18 @@ class Ui
     end
   end
 
+  def replay?
+    output.puts "Do you want to play again?\nEnter y for yes\nEnter n for no"
+    user_wants_to_play_again?
+  end
+
+  def user_wants_to_play_again?
+    user_choice = input.gets.chomp.downcase
+    return true if user_choice == "y"
+    return false if user_choice == "n"
+    ask_for_replay_choice
+  end
+
   def say_goodbye
     puts "Byyyee!"
   end
