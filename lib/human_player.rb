@@ -11,4 +11,8 @@ class HumanPlayer
   def make_move(board)
     board.add_mark(ui.request_position(board), mark)
   end
+
+  def play_again
+  end
+
 end

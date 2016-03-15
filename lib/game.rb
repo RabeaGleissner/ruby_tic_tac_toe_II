@@ -20,6 +20,7 @@ class Game
     end_game(board)
   end
 
+
   private
   def switch_player(current_player)
     if current_player == player1

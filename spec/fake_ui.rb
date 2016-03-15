@@ -1,3 +1,4 @@
+require 'pry-byebug'
 class FakeUi
   def initialize
     @announce_winner_called = 0
@@ -12,6 +13,9 @@ class FakeUi
   end
 
   def draw_board(board)
+  end
+
+  def say_goodbye
   end
 
 end

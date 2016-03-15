@@ -29,6 +29,10 @@ class Ui
     end
   end
 
+  def say_goodbye
+    puts "Byyyee!"
+  end
+
   def draw_board(board)
     puts create_board_image(board)
   end
