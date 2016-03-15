@@ -11,7 +11,7 @@ class PlayerWithPresetData
     board.add_mark(moves.shift, mark)
   end
 
-  def play_again
+  def play_again?
     replay.shift
   end
 

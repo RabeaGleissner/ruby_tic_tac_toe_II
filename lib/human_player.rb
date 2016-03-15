@@ -12,7 +12,7 @@ class HumanPlayer
     board.add_mark(ui.request_position(board), mark)
   end
 
-  def play_again
+  def play_again?
     ui.replay?
   end
 

@@ -8,9 +8,16 @@ describe Ui do
     let(:output_stream) {StringIO.new}
     let (:ui) {Ui.new(input_stream, output_stream)}
 
-    it "prints the board to the console" do
+    it "creates an image of the board" do
         board = Board.new([:E, :E, :X, :E, :E, :O, :E, :E, :X])
         expect(ui.create_board_image(board)).to eq("\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X")
+    end
+
+    it "draws a board to the console" do
+      board = Board.new
+      expect(output_stream).to receive(:puts).with("\e[H\e[2J\n 1 | 2 | 3 |\n-----------\n 4 | 5 | 6 |\n-----------\n 7 | 8 | 9 |")
+
+      ui.draw_board(board)
     end
 
     it "asks user for a position" do
@@ -47,6 +54,12 @@ describe Ui do
       allow(ui.input).to receive(:gets).and_return("n")
       expect(output_stream).to receive(:puts).with("\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no")
       expect(ui.replay?).to be false
+    end
+
+    it "asks again for replay choice if unexpected input" do
+      allow(ui.input).to receive(:gets).and_return("hello", "n")
+      expect(output_stream).to receive(:puts).with("\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no").twice
+      ui.replay?
     end
 
     it "says goodbye to the user" do

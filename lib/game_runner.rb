@@ -16,7 +16,7 @@ class GameRunner
   end
 
   def replay
-    if player1.play_again == true
+    if player1.play_again? == true
       set_up_game
     else
       ui.say_goodbye

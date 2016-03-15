@@ -22,5 +22,9 @@ class FakeUi
   def say_goodbye
   end
 
+  def replay?
+    true
+  end
+
 end
 
