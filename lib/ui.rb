@@ -29,7 +29,7 @@ class Ui
   end
 
   def replay?
-    output.puts "\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no"
+    output.puts "\nDo you want to play again?\n\n- Enter y for yes\n- Enter n for no"
     user_wants_to_play_again?
   end
 

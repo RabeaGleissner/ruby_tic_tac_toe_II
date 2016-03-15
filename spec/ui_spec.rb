@@ -52,13 +52,13 @@ describe Ui do
 
     it "finds out if user wants to play again" do
       allow(ui.input).to receive(:gets).and_return("n")
-      expect(output_stream).to receive(:puts).with("\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no")
+      expect(output_stream).to receive(:puts).with("\nDo you want to play again?\n\n- Enter y for yes\n- Enter n for no")
       expect(ui.replay?).to be false
     end
 
     it "asks again for replay choice if unexpected input" do
       allow(ui.input).to receive(:gets).and_return("hello", "n")
-      expect(output_stream).to receive(:puts).with("\e[H\e[2JDo you want to play again?\n\n- Enter y for yes\n- Enter n for no").twice
+      expect(output_stream).to receive(:puts).with("\nDo you want to play again?\n\n- Enter y for yes\n- Enter n for no").twice
       ui.replay?
     end
 
