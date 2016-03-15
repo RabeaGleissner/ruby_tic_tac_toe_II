@@ -9,7 +9,7 @@ describe Ui do
     let (:ui) {Ui.new(input_stream, output_stream)}
 
     it "creates an image of the board" do
-        board = Board.new([:E, :E, :X, :E, :E, :O, :E, :E, :X])
+        board = Board.new([nil, nil, :X, nil, nil, :O, nil, nil, :X])
         expect(ui.create_board_image(board)).to eq("\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X")
     end
 
@@ -36,8 +36,8 @@ describe Ui do
 
     it "announces that the winner is X" do
       x_winner_board = Board.new([:X, :X, :X,
-                         :E, :E, :O,
-                         :O, :E, :E])
+                         nil, nil, :O,
+                         :O, nil, nil])
       expect(output_stream).to receive(:puts).with("\nGame over! Winner is X.")
       ui.announce_winner(x_winner_board)
     end

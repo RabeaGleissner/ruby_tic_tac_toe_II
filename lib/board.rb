@@ -1,7 +1,7 @@
 class Board
   attr_reader :grid, :dimension
 
-  def initialize(marks = [:E]*9)
+  def initialize(marks = [nil]*9)
     @grid = marks
     @dimension = Math.sqrt(@grid.size).to_i
   end
@@ -16,7 +16,7 @@ class Board
     positions = []
     index = 0
     grid.each do |cell|
-      if cell == :E
+      if cell == nil
         positions << index
       end
       index += 1
@@ -44,7 +44,7 @@ class Board
 
   def full?
     grid.each do |mark|
-      return false if mark == :E
+      return false if mark == nil
     end
     true
   end

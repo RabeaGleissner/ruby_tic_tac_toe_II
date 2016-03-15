@@ -68,15 +68,15 @@ class Ui
 
   private
   def draw_one_cell(cell, counter)
-    if is_empty(cell)
+    if empty?(cell)
       add_empty_cell(counter)
     else
       add_marked(cell)
     end
   end
 
-  def is_empty(cell)
-    cell == :E
+  def empty?(cell)
+    cell == nil
   end
 
   def is_last_cell_in_row(cell, row)
