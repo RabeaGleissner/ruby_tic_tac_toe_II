@@ -58,10 +58,12 @@ class Ui
     pipe = " |"
     board_image = line
     rows = board.rows.flatten
+    index = 0
     rows.each do |cell|
       board_image += draw_one_cell(cell)
-      board_image += pipe unless last_cell_in_row?(rows.index(cell), board)
-      board_image += line if last_cell_in_row?(rows.index(cell), board)
+      board_image += pipe unless last_cell_in_row?(index, board)
+      board_image += line if last_cell_in_row?(index, board)
+      index += 1
     end
     board_image
   end

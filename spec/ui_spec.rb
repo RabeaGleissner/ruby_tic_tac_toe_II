@@ -8,8 +8,8 @@ describe Ui do
   let (:ui) {Ui.new(input, output)}
 
   it "creates an image of the board" do
-    board = Board.new([0, 1, :X, 3, 4, :O, 6, 7, :X])
-    expect(ui.create_board_image(board)).to eq("\n-----------\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X\n-----------\n")
+    board = Board.new([:X, 1, :X, :O, 4, :O, :O, 7, :X])
+    expect(ui.create_board_image(board)).to eq("\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
   end
 
   it "draws a board to the console" do
