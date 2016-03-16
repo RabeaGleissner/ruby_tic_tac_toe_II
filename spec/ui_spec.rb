@@ -9,7 +9,7 @@ describe Ui do
     let (:ui) {Ui.new(input_stream, output_stream)}
 
     it "creates an image of the board" do
-        board = Board.new([nil, nil, :X, nil, nil, :O, nil, nil, :X])
+        board = Board.new([0, 1, :X, 3, 4, :O, 6, 7, :X])
         expect(ui.create_board_image(board)).to eq("\n-----------\n 1 | 2 | X\n-----------\n 4 | 5 | O\n-----------\n 7 | 8 | X\n-----------\n")
     end
 
@@ -20,10 +20,16 @@ describe Ui do
       ui.draw_board(board)
     end
 
-    it "asks user for a position" do
-        allow(ui.input).to receive(:gets).and_return("2")
-        expect(output_stream).to receive(:puts).with("\nPlease enter a position:")
-        expect(ui.request_position(Board.new)).to eq(1)
+    it "asks user for position" do
+      output = StringIO.new
+      ui = Ui.new(StringIO.new("2"), output)
+      ui.request_position(Board.new)
+      expect(output.string).to eq("\nPlease enter a position:\n")
+    end
+
+    it "returns user's position" do
+      ui = Ui.new(StringIO.new("2"), StringIO.new)
+      expect(ui.request_position(Board.new)).to eq(1)
     end
 
     it "asks user for a position again if first input was invalid" do
@@ -36,8 +42,8 @@ describe Ui do
 
     it "announces that the winner is X" do
       x_winner_board = Board.new([:X, :X, :X,
-                         nil, nil, :O,
-                         :O, nil, nil])
+                         3, 4, :O,
+                         :O, 7, 8])
       expect(output_stream).to receive(:puts).with("\nGame over! Winner is X.")
       ui.announce_winner(x_winner_board)
     end

@@ -1,7 +1,7 @@
 class Board
   attr_reader :grid, :dimension
 
-  def initialize(marks = [nil]*9)
+  def initialize(marks = (0..8).to_a)
     @grid = marks
     @dimension = Math.sqrt(@grid.size).to_i
   end
@@ -14,12 +14,10 @@ class Board
 
   def available_positions
     positions = []
-    index = 0
     grid.each do |cell|
-      if cell == nil
-        positions << index
+      if (0..8).to_a.include? cell
+        positions << cell
       end
-      index += 1
     end
     positions
   end
@@ -42,7 +40,7 @@ class Board
   end
 
   def full?
-    !grid.include? nil
+    (grid & (0..8).to_a).empty?
   end
 
   def all_x(line)

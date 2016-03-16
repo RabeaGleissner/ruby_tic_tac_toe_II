@@ -22,22 +22,22 @@ describe Board do
 
   it "has a winner X" do
     winning_board = Board.new([X, X, X,
-                               O, O, nil,
-                               nil, nil, nil])
+                               O, O, 5,
+                               6, 7, 8])
     expect(winning_board.winner).to eq(X)
   end
 
   it "has a winner O" do
-    winning_board = Board.new([nil, X, X,
+    winning_board = Board.new([0, X, X,
                                O, O, O,
-                               nil, nil, nil])
+                               6, 7, 8])
     expect(winning_board.winner).to eq(O)
   end
 
   it "has no winner" do
-    winning_board = Board.new([nil, X, X,
+    winning_board = Board.new([0, X, X,
                                O, X, O,
-                               nil, nil, nil])
+                               6, 7, 8])
     expect(winning_board.winner).to eq(false)
   end
 
@@ -49,32 +49,25 @@ describe Board do
   end
 
   it "lists all columns" do
-    board = Board.new([X, O, nil,
+    board = Board.new([X, O, 2,
                        O, X, O,
-                       nil, nil, nil])
-    expect(board.columns).to eq([[X, O, nil], [O, X, nil], [nil, O, nil]])
+                       6, 7, 8])
+    expect(board.columns).to eq([[X, O, 6], [O, X, 7], [2, O, 8]])
   end
 
 
   it "lists all diagonals" do
-    board = Board.new([X, O, nil,
+    board = Board.new([X, O, 2,
                        O, X, O,
-                       nil, nil, nil])
-    expect(board.diagonals).to eq([[X, X, nil], [nil, X, nil]])
+                       6, 7, 8])
+    expect(board.diagonals).to eq([[X, X, 8], [2, X, 6]])
   end
 
   it "lists all lines of the current game state" do
-    board = Board.new([X, O, nil,
+    board = Board.new([X, O, 2,
                        O, X, O,
-                       nil, nil, nil])
-    expect(board.lines).to eq([[X, O, nil],
-                               [O, X, O],
-                               [nil, nil, nil],
-                               [X, O, nil],
-                               [O, X, nil],
-                               [nil, O, nil],
-                               [X, X, nil],
-                               [nil, X, nil]])
+                       6, 7, 8])
+    expect(board.lines).to eq([[:X, :O, 2], [:O, :X, :O], [6, 7, 8], [:X, :O, 6], [:O, :X, 7], [2, :O, 8], [:X, :X, 8], [2, :X, 6]])
   end
 
   it "knows that all all marks are x in line" do
@@ -95,7 +88,7 @@ describe Board do
   it "knows that game is not over" do
     full_board = Board.new([O, O, X,
                             O, X, O,
-                            nil, nil, nil])
+                            6, 7, 8])
     expect(full_board.game_over?).to be false
   end
 

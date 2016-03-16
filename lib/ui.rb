@@ -1,3 +1,4 @@
+require 'pry-byebug'
 class Ui
   attr_reader :input, :output
 
@@ -52,39 +53,27 @@ class Ui
     line = "\n-----------\n"
     pipe = " |"
     board_image = line
-    board.rows.flatten.each_with_index do |cell, index|
-      board_image += draw_one_cell(cell, index)
-      board_image += pipe unless last_cell_in_row?(index, board)
-      board_image += line if last_cell_in_row?(index, board)
+    rows = board.rows.flatten
+    rows.each do |cell|
+      board_image += draw_one_cell(cell)
+      board_image += pipe unless last_cell_in_row?(rows.index(cell), board)
+      board_image += line if last_cell_in_row?(rows.index(cell), board)
     end
     board_image
   end
 
   private
-
-  def draw_one_cell(cell, index)
-    if empty?(cell)
-      add_empty_cell(index)
-    else
-      add_marked(cell)
-    end
+  def draw_one_cell(cell)
+    cell += 1 unless cell == :X || cell == :O
+    " " + (cell).to_s
   end
 
   def empty?(cell)
-    cell == nil
+    (0..8).to_a.include? cell
   end
 
   def last_cell_in_row?(index, board)
     board_size = board.rows.first.length
     index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1
   end
-
-  def add_empty_cell(index)
-    " " + (index + 1).to_s
-  end
-
-  def add_marked(cell)
-    " " + cell.to_s
-  end
-
 end
