@@ -1,5 +1,4 @@
 require_relative 'ui'
-
 class HumanPlayer
   attr_reader :mark, :ui
 
@@ -15,5 +14,4 @@ class HumanPlayer
   def play_again?
     ui.replay?
   end
-
 end

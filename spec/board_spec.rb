@@ -1,8 +1,6 @@
 require_relative 'spec_helper'
 require_relative '../lib/board'
-
 describe Board do
-
   let(:board) {Board.new}
 
   it "is empty when initialised" do
@@ -98,4 +96,3 @@ describe Board do
     expect(board.available_positions.length).to eq (9)
   end
 end
-

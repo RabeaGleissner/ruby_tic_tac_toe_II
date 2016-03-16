@@ -1,5 +1,4 @@
 require_relative 'game'
-
 class GameRunner
   attr_reader :ui, :player1, :player2
 
@@ -22,5 +21,4 @@ class GameRunner
       ui.say_goodbye
     end
   end
-
 end

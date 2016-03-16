@@ -2,7 +2,6 @@ require_relative 'spec_helper'
 require 'stringio'
 require_relative '../lib/ui'
 require_relative '../lib/board'
-
 describe Ui do
   let(:input) {StringIO.new}
   let(:output) {StringIO.new}
@@ -78,5 +77,4 @@ describe Ui do
     ui.say_goodbye
     expect(output.string).to eq(CLEAR + "Byyyee!\n\n")
   end
-
 end

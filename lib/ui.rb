@@ -1,4 +1,3 @@
-require 'pry-byebug'
 class Ui
   CLEAR_SCREEN = "\e[H\e[2J"
   attr_reader :input, :output

@@ -14,5 +14,4 @@ class PlayerWithPresetData
   def play_again?
     replay.shift
   end
-
 end
