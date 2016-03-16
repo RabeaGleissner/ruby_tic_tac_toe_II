@@ -1,17 +1,39 @@
+require 'pry-byebug'
 class ComputerPlayer
-  attr_reader :mark
+  attr_reader :computer_mark
 
-  def initialize(mark)
-    @mark = mark
+  def initialize(computer_mark)
+    @computer_mark = computer_mark
   end
 
   def make_move(board)
-    board.add_mark(board.available_positions.first, mark)
+    arr = minimax(board, computer_mark)
+    board.add_mark(arr[1], computer_mark)
+  end
+
+  def minimax(board, current_mark)
+    best_score = current_mark == computer_mark ? - 1000 : 1000
+    best_move = -1
+    available_moves = board.available_positions
+
+    if board.game_over? || available_moves.length == 0
+      return [score(board), -1]
+    end
+
+    available_moves.each do |move|
+      next_board = board.add_mark(move, current_mark)
+      score = minimax(next_board, switch_mark(current_mark))
+      if (current_mark == computer_mark && score[0] >= best_score || current_mark != computer_mark && score[0] <= best_score)
+        best_score = score[0]
+        best_move = move
+      end
+    end
+    [best_score, best_move]
   end
 
   def score(board)
     score = -100
-    if board.winner == mark
+    if board.winner == computer_mark
       score = 10
     elsif board.winner == false
       score = 0
