@@ -9,7 +9,7 @@ class Board
   def add_mark(position, mark)
     new_grid = grid.clone
     new_grid[position] = mark
-    return Board.new(new_grid)
+    Board.new(new_grid)
   end
 
   def available_positions

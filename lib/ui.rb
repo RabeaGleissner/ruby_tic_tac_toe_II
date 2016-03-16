@@ -1,5 +1,6 @@
 require 'pry-byebug'
 class Ui
+  CLEAR_SCREEN = "\e[H\e[2J"
   attr_reader :input, :output
 
   def initialize(input, output)
@@ -36,17 +37,21 @@ class Ui
 
   def user_wants_to_play_again?
     user_choice = input.gets.chomp.downcase
-    return true if user_choice == "y"
-    return false if user_choice == "n"
-    replay?
+    if user_choice == "y"
+      true
+    elsif user_choice == "n"
+      false
+    else
+      replay?
+    end
   end
 
   def say_goodbye
-    output.puts "\e[H\e[2JByyyee!\n\n"
+    output.puts CLEAR_SCREEN + "Byyyee!\n\n"
   end
 
   def draw_board(board)
-    output.puts "\e[H\e[2J" + create_board_image(board)
+    output.puts CLEAR_SCREEN + create_board_image(board)
   end
 
   def create_board_image(board)
