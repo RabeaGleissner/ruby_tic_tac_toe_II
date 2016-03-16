@@ -38,4 +38,39 @@ describe ComputerPlayer do
   it "switches the mark to X" do
     expect(player.switch_mark(:O)).to eq :X
   end
+
+  it "makes a winning move for a diagonal win" do
+    new_board = player.make_move(Board.new([:O, :X, 2,
+                                            :X, :O, 5,
+                                             6, :X, 8]))
+    expect(new_board.winner).to eq(:O)
+  end
+
+  it "makes a winning move for a horizontal win" do
+    new_board = player.make_move(Board.new([:O, :X,  2,
+                                            3, :O, :O,
+                                            6, :X, :X]))
+    expect(new_board.winner).to eq(:O)
+  end
+
+  it "makes a winning move for a vertical win" do
+    new_board = player.make_move(Board.new([:O, :X,  2,
+                                            3, :O, :O,
+                                           :X, :O, :X]))
+    expect(new_board.winner).to eq(:O)
+  end
+
+  it "blocks an opponents winning move" do
+    new_board = player.make_move(Board.new([:X, :O,  2,
+                                           :X,  4,  5,
+                                           :O,  7, :X]))
+    expect(new_board.available_positions).not_to include 4
+  end
+
+  it "creates a trap if possible" do
+    new_board = player.make_move(Board.new([0, :O,  2,
+                                           :X,  4,  5,
+                                           :O,  7, :X]))
+    expect(new_board.available_positions).not_to include 4
+  end
 end
