@@ -30,4 +30,12 @@ describe ComputerPlayer do
     new_board = player.make_move(Board.new)
     expect(new_board.available_positions).not_to eq 0
   end
+
+  it "switches the mark to O" do
+    expect(player.switch_mark(:X)).to eq :O
+  end
+
+  it "switches the mark to X" do
+    expect(player.switch_mark(:O)).to eq :X
+  end
 end

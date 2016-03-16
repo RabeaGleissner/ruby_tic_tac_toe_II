@@ -20,4 +20,8 @@ class ComputerPlayer
     end
     score
   end
+
+  def switch_mark(mark)
+    mark = mark == :X ? :O : :X
+  end
 end
