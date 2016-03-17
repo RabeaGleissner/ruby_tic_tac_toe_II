@@ -9,21 +9,21 @@ describe ComputerPlayer do
     board = Board.new([:O, :O, :O,
                         3,  4,  5,
                         6, :X, :X])
-    expect(player.score(board)).to eq 10
+    expect(player.score_for_move(board)).to eq 10
   end
 
   it "assigns a score of 0 if game is drawn" do
     board = Board.new([:O, :O, :X,
                        :X, :X, :O,
                        :O, :X, :X])
-    expect(player.score(board)).to eq 0
+    expect(player.score_for_move(board)).to eq 0
   end
 
   it "assigns a score of -10 if opponent wins" do
     board = Board.new([:O, :O,  2,
                         3,  4,  5,
                         :X, :X, :X])
-    expect(player.score(board)).to eq -10
+    expect(player.score_for_move(board)).to eq -10
   end
 
   it "switches the mark to O" do
@@ -41,10 +41,10 @@ describe ComputerPlayer do
     expect(new_board.winner).to eq(:O)
   end
 
-  xit "makes a winning move for a horizontal win" do
-    new_board = player.make_move(Board.new([0, :X,  2,
-                                            3, :O, :O,
-                                            6, :X, :X]))
+  it "makes a winning move for a horizontal win" do
+    new_board = player.make_move(Board.new([:X, 1,  2,
+                                             3, :O, :O,
+                                            :X,  7, :X]))
     expect(new_board.winner).to eq(:O)
   end
 

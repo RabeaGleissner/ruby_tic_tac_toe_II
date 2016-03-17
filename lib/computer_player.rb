@@ -12,18 +12,18 @@ class ComputerPlayer
   end
 
   def minimax(board, current_mark)
-    best_score = current_mark == computer_mark ? - 1000 : 1000
+    best_score = reset_score(current_mark)
     best_move = -1
     available_moves = board.available_positions
 
-    if board.game_over? || available_moves.length == 0
-      return [score(board), -1]
+    if board.game_over?
+      return [score_for_move(board), -1]
     end
 
     available_moves.each do |move|
       next_board = board.add_mark(move, current_mark)
       score = minimax(next_board, switch_mark(current_mark))
-      if (current_mark == computer_mark && score[0] >= best_score || current_mark != computer_mark && score[0] <= best_score)
+      if score_favourable_for_computer?(current_mark, score, best_score)
         best_score = score[0]
         best_move = move
       end
@@ -31,7 +31,7 @@ class ComputerPlayer
     [best_score, best_move]
   end
 
-  def score(board)
+  def score_for_move(board)
     score = -100
     if board.winner == computer_mark
       score = 10
@@ -45,5 +45,14 @@ class ComputerPlayer
 
   def switch_mark(mark)
     mark = mark == :X ? :O : :X
+  end
+
+  def score_favourable_for_computer?(current_mark, score, best_score)
+    current_mark == computer_mark && score[0] >= best_score ||
+      current_mark != computer_mark && score[0] <= best_score
+  end
+
+  def reset_score(current_mark)
+    current_mark == computer_mark ? - 1000 : 1000
   end
 end
