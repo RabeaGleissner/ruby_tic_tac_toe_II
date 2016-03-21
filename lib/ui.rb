@@ -1,5 +1,4 @@
 class Ui
-  CLEAR_SCREEN = "\e[H\e[2J"
   attr_reader :input, :output
 
   def initialize(input, output)
@@ -53,6 +52,10 @@ class Ui
     output.puts CLEAR_SCREEN + create_board_image(board)
   end
 
+
+  private
+  CLEAR_SCREEN = "\e[H\e[2J"
+
   def create_board_image(board)
     line = "\n-----------\n"
     pipe = " |"
@@ -68,14 +71,9 @@ class Ui
     board_image
   end
 
-  private
   def draw_one_cell(cell)
     cell += 1 unless cell == :X || cell == :O
     " " + (cell).to_s
-  end
-
-  def empty?(cell)
-    (0..8).to_a.include? cell
   end
 
   def last_cell_in_row?(index, board)
