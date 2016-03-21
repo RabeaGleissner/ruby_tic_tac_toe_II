@@ -4,7 +4,6 @@ require_relative 'fake_ui'
 require_relative '../lib/board'
 
 describe HumanPlayer do
-
   it "makes a move" do
     player = HumanPlayer.new(:X, FakeUi.new)
     new_board = player.make_move(Board.new)
@@ -15,5 +14,4 @@ describe HumanPlayer do
     player = HumanPlayer.new(:X, FakeUi.new)
     expect(player.play_again?).to be true
   end
-
 end

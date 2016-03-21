@@ -1,5 +1,4 @@
 require_relative 'board'
-
 class Game
   attr_reader :player1, :player2, :ui
 
@@ -20,7 +19,6 @@ class Game
     end_game(board)
   end
 
-
   private
   def switch_player(current_player)
     if current_player == player1
@@ -34,5 +32,4 @@ class Game
     ui.draw_board(board)
     ui.announce_winner(board)
   end
-
 end

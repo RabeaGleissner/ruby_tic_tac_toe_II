@@ -35,56 +35,49 @@ class Ui
 
   def user_wants_to_play_again?
     user_choice = input.gets.chomp.downcase
-    return true if user_choice == "y"
-    return false if user_choice == "n"
-    replay?
+    if user_choice == "y"
+      true
+    elsif user_choice == "n"
+      false
+    else
+      replay?
+    end
   end
 
   def say_goodbye
-    output.puts "\e[H\e[2JByyyee!\n\n"
+    output.puts CLEAR_SCREEN + "Byyyee!\n\n"
   end
 
   def draw_board(board)
-    output.puts "\e[H\e[2J" + create_board_image(board)
+    output.puts CLEAR_SCREEN + create_board_image(board)
   end
+
+
+  private
+  CLEAR_SCREEN = "\e[H\e[2J"
 
   def create_board_image(board)
     line = "\n-----------\n"
     pipe = " |"
     board_image = line
-    board.rows.flatten.each_with_index do |cell, index|
-      board_image += draw_one_cell(cell, index)
+    rows = board.rows.flatten
+    index = 0
+    rows.each do |cell|
+      board_image += draw_one_cell(cell)
       board_image += pipe unless last_cell_in_row?(index, board)
       board_image += line if last_cell_in_row?(index, board)
+      index += 1
     end
     board_image
   end
 
-  private
-
-  def draw_one_cell(cell, index)
-    if empty?(cell)
-      add_empty_cell(index)
-    else
-      add_marked(cell)
-    end
-  end
-
-  def empty?(cell)
-    cell == nil
+  def draw_one_cell(cell)
+    cell += 1 unless cell == :X || cell == :O
+    " " + (cell).to_s
   end
 
   def last_cell_in_row?(index, board)
     board_size = board.rows.first.length
     index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1
   end
-
-  def add_empty_cell(index)
-    " " + (index + 1).to_s
-  end
-
-  def add_marked(cell)
-    " " + cell.to_s
-  end
-
 end

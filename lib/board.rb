@@ -1,7 +1,7 @@
 class Board
   attr_reader :grid, :dimension
 
-  def initialize(marks = [nil]*9)
+  def initialize(marks = (0..8).to_a)
     @grid = marks
     @dimension = Math.sqrt(@grid.size).to_i
   end
@@ -9,24 +9,21 @@ class Board
   def add_mark(position, mark)
     new_grid = grid.clone
     new_grid[position] = mark
-    return Board.new(new_grid)
+    Board.new(new_grid)
   end
 
   def available_positions
     positions = []
-    index = 0
     grid.each do |cell|
-      if cell == nil
-        positions << index
+      if (0..8).to_a.include? cell
+        positions << cell
       end
-      index += 1
     end
     positions
   end
 
   def game_over?
-    return true if winner || full?
-    false
+    winner || full? ? true : false
   end
 
   def winner
@@ -39,30 +36,19 @@ class Board
   end
 
   def empty?
-    full? == false
+    !full?
   end
 
   def full?
-    grid.each do |mark|
-      return false if mark == nil
-    end
-    true
+    (grid & (0..8).to_a).empty?
   end
 
   def all_x(line)
-    all_x = true
-    line.each do |cell|
-      all_x = all_x && cell == :X
-    end
-    all_x
+    line.all? {|x| x == :X}
   end
 
   def all_o(line)
-    all_o = true
-    line.each do |cell|
-      all_o = all_o && cell == :O
-    end
-    all_o
+    line.all? {|o| o == :O}
   end
 
   def lines
@@ -70,43 +56,17 @@ class Board
   end
 
   def rows
-    rows = []
-    grid.each_slice(dimension) do |row|
-      rows << row
-    end
-    rows
+    grid.each_slice(dimension).to_a
   end
 
   def columns
-    columns = []
-    index = 0
-    dimension.times do
-      column = []
-      rows.each do |row|
-        column << row[index]
-      end
-      columns << column
-      index += 1
-    end
-    columns
+    rows.transpose
   end
 
   def diagonals
-    first = []
-    index = 0
-    dimension.times do
-      first << grid[(dimension * index) + index]
-      index +=1
-    end
-
-    second = []
-    offset = dimension-1
-    dimension.times do
-      second << grid[offset]
-      offset += dimension-1
-    end
-    [first, second]
+    [
+      [grid[0], grid[4], grid[8]],
+      [grid[2], grid[4], grid[6]]
+    ]
   end
-
 end
-

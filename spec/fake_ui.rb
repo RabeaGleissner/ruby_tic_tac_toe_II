@@ -24,6 +24,4 @@ class FakeUi
   def replay?
     true
   end
-
 end
-
