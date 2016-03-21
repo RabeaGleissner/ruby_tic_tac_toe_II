@@ -10,4 +10,5 @@ describe GameRunner do
     game_runner.set_up_game
     expect(fake_ui.announce_winner_called).to eq 2
   end
+
 end

@@ -6,24 +6,23 @@ class Ui
     @output = output
   end
 
-  def menu
+  def menu(game_options)
     output.puts "::: WELCOME TO TIC TAC TOE :::\n\n"
     output.puts "Please indicate your desired game mode:\n\n"
-    output.puts "1 - Human vs Human"
-    output.puts "2 - Human vs Computer"
-    output.puts "3 - Computer vs Human"
-    output.puts "q - Quit program"
+    game_options.each do |number, option|
+      output.puts "#{number} - #{option}"
+    end
     output.puts "--> "
-    get_game_mode
+    get_game_mode(game_options)
   end
 
-  def get_game_mode
+  def get_game_mode(game_options)
     mode = input.gets.chomp
     if (1..3).include? mode.to_i || mode == "q"
       mode
     else
       game_mode_selection_error
-      menu
+      menu(game_options)
     end
   end
 

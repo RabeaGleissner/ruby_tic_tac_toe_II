@@ -1,11 +1,17 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 require 'stringio'
-require_relative '../lib/ui'
-require_relative '../lib/board'
+require 'ui'
+require 'board'
+
 describe Ui do
   let(:input) {StringIO.new}
   let(:output) {StringIO.new}
   let (:ui) {Ui.new(input, output)}
+
+  GAME_OPTIONS = {1 => "Human vs Human",
+                  2 => "Human vs Computer",
+                  3 => "Computer vs Human",
+                  4 => "Quit program"}
 
   it "draws a board to the console" do
     board = Board.new([:X, 1, :X, :O, 4, :O, :O, 7, :X])
@@ -16,20 +22,21 @@ describe Ui do
 
   it "shows the menu" do
     ui = Ui.new(StringIO.new("1"), output)
-    ui.menu
-    expect(output.string).to eq("::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\nq - Quit program\n--> \n")
+    ui.menu(GAME_OPTIONS)
+    expect(output.string).to eq("::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Quit program\n--> \n")
   end
 
   it "gets the game mode" do
     ui = Ui.new(StringIO.new("2"), output)
-    expect(ui.menu).to eq("2")
+    expect(ui.menu(GAME_OPTIONS)).to eq("2")
   end
 
   it "displays error message and menu options on bad user input" do
     allow(ui.input).to receive(:gets).and_return("bad", "3")
-    ui.get_game_mode
-    expect(output.string).to eq("Please select a valid game mode!\n::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\nq - Quit program\n--> \n")
+    ui.get_game_mode(GAME_OPTIONS)
+    expect(output.string).to eq("Please select a valid game mode!\n::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Quit program\n--> \n")
   end
+
 
   it "asks user for position" do
     output = StringIO.new

@@ -15,7 +15,7 @@ class FakeUi
     3
   end
 
-  def menu
+  def menu(options)
   end
 
   def draw_board(board)
