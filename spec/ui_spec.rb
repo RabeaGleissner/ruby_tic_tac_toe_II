@@ -14,6 +14,23 @@ describe Ui do
     expect(output.string).to eq("\e[H\e[2J\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
   end
 
+  it "shows the menu" do
+    ui = Ui.new(StringIO.new("1"), output)
+    ui.menu
+    expect(output.string).to eq("::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\nq - Quit program\n--> \n")
+  end
+
+  it "gets the game mode" do
+    ui = Ui.new(StringIO.new("2"), output)
+    expect(ui.menu).to eq("2")
+  end
+
+  it "displays error message and menu options on bad user input" do
+    allow(ui.input).to receive(:gets).and_return("bad", "3")
+    ui.get_game_mode
+    expect(output.string).to eq("Please select a valid game mode!\n::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\nq - Quit program\n--> \n")
+  end
+
   it "asks user for position" do
     output = StringIO.new
     ui = Ui.new(StringIO.new("2"), output)
