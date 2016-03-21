@@ -1,26 +1,25 @@
 require 'board'
 class Game
-  attr_reader :player1, :player2, :ui
+  attr_reader :ui
 
-  def initialize(player1, player2, ui)
-    @player1 = player1
-    @player2 = player2
+
+  def initialize(ui)
     @ui = ui
   end
 
-  def play
+  def play(player1, player2)
     board = Board.new
     current_player = player1
     while !board.game_over?
       ui.draw_board(board)
       board = current_player.make_move(board)
-      current_player = switch_player(current_player)
+      current_player = switch_player(current_player, player1, player2)
     end
     end_game(board)
   end
 
   private
-  def switch_player(current_player)
+  def switch_player(current_player, player1, player2)
     if current_player == player1
       player2
     else

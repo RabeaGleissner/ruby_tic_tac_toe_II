@@ -1,6 +1,11 @@
 class FakeUi
+
   def initialize
     @announce_winner_called = 0
+  end
+
+  def menu(game_options)
+    "1"
   end
 
   def announce_winner(board)
@@ -25,6 +30,6 @@ class FakeUi
   end
 
   def replay?
-    true
+    false 
   end
 end
