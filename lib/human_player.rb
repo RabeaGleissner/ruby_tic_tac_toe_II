@@ -1,4 +1,4 @@
-require_relative 'ui'
+require 'ui'
 class HumanPlayer
   attr_reader :mark, :ui
 

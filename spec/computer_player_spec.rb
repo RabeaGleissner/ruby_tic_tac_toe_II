@@ -1,6 +1,6 @@
-require_relative 'spec_helper'
-require_relative '../lib/computer_player'
-require_relative '../lib/board'
+require 'spec_helper'
+require 'computer_player'
+require 'board'
 
 describe ComputerPlayer do
   let(:player) {ComputerPlayer.new(:O)}

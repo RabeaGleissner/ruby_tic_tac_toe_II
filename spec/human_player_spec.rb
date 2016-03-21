@@ -1,7 +1,7 @@
-require_relative 'spec_helper'
-require_relative '../lib/human_player'
-require_relative 'fake_ui'
-require_relative '../lib/board'
+require 'spec_helper'
+require 'human_player'
+require 'fake_ui'
+require 'board'
 
 describe HumanPlayer do
   it "makes a move" do

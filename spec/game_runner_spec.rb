@@ -1,5 +1,5 @@
-require_relative 'spec_helper'
-require_relative '../lib/game_runner.rb'
+require 'spec_helper'
+require 'game_runner.rb'
 
 describe GameRunner do
   it "plays game again if user chooses to" do

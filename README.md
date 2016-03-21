@@ -10,7 +10,8 @@
 
 `bundle install`
 
-`ruby lib/main.rb`
+`bin/run.sh`
+
 
 
 ## How to run the tests
@@ -18,4 +19,5 @@
 When you're inside the ruby_tic_tac_toe_II folder, type:
 
 `rspec spec`
+
 

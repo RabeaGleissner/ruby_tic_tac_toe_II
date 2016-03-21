@@ -1,4 +1,4 @@
-require_relative 'game'
+require 'game'
 class GameRunner
   attr_reader :ui, :player1, :player2
 

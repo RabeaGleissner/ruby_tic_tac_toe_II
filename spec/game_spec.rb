@@ -1,7 +1,7 @@
-require_relative 'spec_helper'
-require_relative 'player_with_preset_data'
-require_relative 'fake_ui'
-require_relative '../lib/game.rb'
+require 'spec_helper'
+require 'player_with_preset_data'
+require 'fake_ui'
+require 'game.rb'
 
 describe Game do
   it "plays game once" do
