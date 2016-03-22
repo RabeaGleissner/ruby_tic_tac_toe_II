@@ -5,19 +5,13 @@ class PlayerFactory
     @ui = ui
   end
 
-  def create_player1(game_mode)
-    if game_mode == "1" || game_mode == "2"
-      HumanPlayer.new(:X, ui)
-    elsif game_mode == "3"
-      ComputerPlayer.new(:X)
-    end
-  end
-
-  def create_player2(game_mode)
-    if game_mode == "1" || game_mode == "3"
-      HumanPlayer.new(:O, ui)
+  def create_players(game_mode)
+    if game_mode == "1"
+      [HumanPlayer.new(:X, ui), HumanPlayer.new(:O, ui)]
     elsif game_mode == "2"
-      ComputerPlayer.new(:O)
+      [HumanPlayer.new(:X, ui), ComputerPlayer.new(:O)]
+    elsif game_mode == "3"
+      [ComputerPlayer.new(:X), HumanPlayer.new(:O, ui)]
     end
   end
 end
