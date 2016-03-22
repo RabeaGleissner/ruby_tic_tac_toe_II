@@ -1,13 +1,27 @@
 require 'spec_helper'
 require 'game_runner.rb'
+require 'player_factory'
+require 'fake_ui'
+require 'game_spy'
 
 describe GameRunner do
-  it "plays game again if user chooses to" do
-    player1 = PlayerWithPresetData.new(:X, [0,1,2,0,1,2], [true, false])
-    player2 = PlayerWithPresetData.new(:O, [3,4,3,4], [false])
-    fake_ui = FakeUi.new
-    game_runner = GameRunner.new(fake_ui, player1, player2)
-    game_runner.set_up_game
-    expect(fake_ui.announce_winner_called).to eq 2
+  let (:game_spy) {GameSpy.new}
+
+  it "kicks of the playing of the game" do
+    replay = [false]
+    fake_ui = FakeUi.new(replay)
+    player_factory = PlayerFactory.new(fake_ui)
+    game_runner = GameRunner.new(fake_ui, game_spy, player_factory)
+    game_runner.start
+    expect(game_spy.play_method_calls_count).to be 1
+  end
+
+  it "starts the game again if user wants to replay" do
+    replay = [true, false]
+    fake_ui = FakeUi.new(replay)
+    player_factory = PlayerFactory.new(fake_ui)
+    game_runner = GameRunner.new(fake_ui, game_spy, player_factory)
+    game_runner.start
+    expect(game_spy.play_method_calls_count).to be 2
   end
 end

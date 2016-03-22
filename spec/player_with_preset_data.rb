@@ -1,17 +1,12 @@
 class PlayerWithPresetData
-  attr_reader :mark, :moves, :replay
+  attr_reader :mark, :moves
 
-  def initialize(mark, moves, replay)
+  def initialize(mark, moves)
     @mark = mark
     @moves = moves
-    @replay = replay
   end
 
   def make_move(board)
     board.add_mark(moves.shift, mark)
-  end
-
-  def play_again?
-    replay.shift
   end
 end

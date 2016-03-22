@@ -7,8 +7,8 @@ require 'computer_player'
 require 'ui'
 
 ui = Ui.new($stdin, $stdout)
-player1 = HumanPlayer.new(:X, ui)
-player2 = ComputerPlayer.new(:O)
-game_runner = GameRunner.new(ui, player1, player2)
-game_runner.set_up_game
+player_factory = PlayerFactory.new(ui)
+game = Game.new(ui)
+game_runner = GameRunner.new(ui, game, player_factory)
+game_runner.start
 

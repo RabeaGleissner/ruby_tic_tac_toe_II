@@ -1,18 +1,43 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 require 'stringio'
-require_relative '../lib/ui'
-require_relative '../lib/board'
+require 'ui'
+require 'board'
+
 describe Ui do
   let(:input) {StringIO.new}
   let(:output) {StringIO.new}
   let (:ui) {Ui.new(input, output)}
 
+  CLEAR_SCREEN = "\e[H\e[2J"
+  GAME_OPTIONS = {1 => "Human vs Human",
+                  2 => "Human vs Computer",
+                  3 => "Computer vs Human"}
+
   it "draws a board to the console" do
     board = Board.new([:X, 1, :X, :O, 4, :O, :O, 7, :X])
     ui = Ui.new(StringIO.new, output)
     ui.draw_board(board)
-    expect(output.string).to eq("\e[H\e[2J\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
+    expect(output.string).to eq("#{CLEAR_SCREEN}\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
   end
+
+  it "shows the menu" do
+    ui = Ui.new(StringIO.new("1"), output)
+    ui.menu(GAME_OPTIONS)
+    expect(output.string).to eq("#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n--> \n")
+  end
+
+  it "gets the game mode" do
+    ui = Ui.new(StringIO.new("2"), output)
+    expect(ui.menu(GAME_OPTIONS)).to eq("2")
+  end
+
+  it "displays error message and menu options on bad user input" do
+    ERROR_MESSAGE = "Please select a valid game mode!"
+    allow(ui.input).to receive(:gets).and_return("bad", "3")
+    ui.get_game_mode(GAME_OPTIONS)
+    expect(output.string).to include(ERROR_MESSAGE)
+  end
+
 
   it "asks user for position" do
     output = StringIO.new
@@ -29,9 +54,10 @@ describe Ui do
   it "asks user for a position again if first input was invalid" do
     board = Board.new
     new_board = board.add_mark(1, :X)
+    ui = Ui.new(input, output)
     allow(ui.input).to receive(:gets).and_return("2", "3")
-    expect(output).to receive(:puts).with("\nPlease enter a position:").twice
     ui.request_position(new_board)
+    expect(output.string).to include("\nPlease enter a position:", "\nPlease enter a position:")
   end
 
   it "announces that the winner is X" do

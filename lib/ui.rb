@@ -1,9 +1,35 @@
 class Ui
   attr_reader :input, :output
 
+  CLEAR_SCREEN = "\e[H\e[2J"
+
   def initialize(input, output)
     @input = input
     @output = output
+  end
+
+  def menu(game_options)
+    output.puts "#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\n"
+    output.puts "Please indicate your desired game mode:\n\n"
+    game_options.each do |number, option|
+      output.puts "#{number} - #{option}"
+    end
+    output.puts "--> "
+    get_game_mode(game_options)
+  end
+
+  def get_game_mode(game_options)
+    mode = input.gets.chomp
+    if (1..3).include? mode.to_i || mode == "q"
+      mode
+    else
+      game_mode_selection_error
+      menu(game_options)
+    end
+  end
+
+  def game_mode_selection_error
+    output.puts "Please select a valid game mode!"
   end
 
   def request_position(board)
@@ -16,8 +42,14 @@ class Ui
     if board.available_positions.include? position
       position
     else
+      draw_board(board)
+      invalid_position_error
       request_position(board)
     end
+  end
+
+  def invalid_position_error
+    output.puts "Unfortunately the position you entered is not valid."
   end
 
   def announce_winner(board)
@@ -54,8 +86,6 @@ class Ui
 
 
   private
-  CLEAR_SCREEN = "\e[H\e[2J"
-
   def create_board_image(board)
     line = "\n-----------\n"
     pipe = " |"
