@@ -23,7 +23,7 @@ class GameRunner
   end
 
   def replay
-    if ui.replay? == true
+    if ui.replay?
       start
     else
       ui.say_goodbye

@@ -11,4 +11,3 @@ player_factory = PlayerFactory.new(ui)
 game = Game.new(ui)
 game_runner = GameRunner.new(ui, game, player_factory)
 game_runner.start
-
