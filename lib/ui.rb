@@ -72,12 +72,16 @@ class Ui
     output.puts CLEAR_SCREEN + "Byyyee!\n\n"
   end
 
+  def interruption_message
+    output.puts CLEAR_SCREEN + "You interrupted the application. Bye!\n\n"
+  end
+
   def draw_board(board)
     output.puts CLEAR_SCREEN + create_board_image(board)
   end
 
-
   private
+
   def invalid_position_error
     output.puts "Unfortunately the position you entered is not valid."
   end

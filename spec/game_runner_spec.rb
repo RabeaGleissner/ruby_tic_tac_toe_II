@@ -17,4 +17,30 @@ describe GameRunner do
 
     expect(game_spy.play_method_calls_count).to be 2
   end
+
+  it "catches exception if a user interrupts with ctrl + c" do
+    disruptive_ui = DisruptiveUi.new
+    player_factory = PlayerFactory.new(disruptive_ui)
+    game_runner = GameRunner.new(disruptive_ui, game_spy, player_factory)
+    game_runner.start
+    expect(disruptive_ui.displayed_interruption_message?).to be true
+  end
+
+  class DisruptiveUi
+    def initialize
+      @says_goodbye = false
+    end
+
+    def menu(placeholder)
+      raise Interrupt
+    end
+
+    def displayed_interruption_message?
+      @says_goodbye
+    end
+
+    def interruption_message
+      @says_goodbye = true
+    end
+  end
 end

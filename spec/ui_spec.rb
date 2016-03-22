@@ -99,8 +99,12 @@ describe Ui do
   end
 
   it "says goodbye to the user" do
-    CLEAR = "\e[H\e[2J"
     ui.say_goodbye
-    expect(output.string).to eq(CLEAR + "Byyyee!\n\n")
+    expect(output.string).to eq(CLEAR_SCREEN + "Byyyee!\n\n")
+  end
+
+  it "notifies user of interruption" do
+    ui.interruption_message
+    expect(output.string).to eq(CLEAR_SCREEN + "You interrupted the application. Bye!\n\n")
   end
 end
