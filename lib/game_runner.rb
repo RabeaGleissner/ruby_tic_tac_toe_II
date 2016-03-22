@@ -1,5 +1,6 @@
 require 'game'
 require 'player_factory'
+require 'ui'
 
 class GameRunner
   attr_reader :ui, :game, :player_factory

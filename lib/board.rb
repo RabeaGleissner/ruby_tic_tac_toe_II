@@ -14,12 +14,7 @@ class Board
 
   def available_positions
     positions = []
-    grid.each do |cell|
-      if (0..8).to_a.include? cell
-        positions << cell
-      end
-    end
-    positions
+    grid.select { |cell| (0..8).to_a.include? cell}
   end
 
   def game_over?

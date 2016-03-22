@@ -20,16 +20,12 @@ class Ui
 
   def get_game_mode(game_options)
     mode = input.gets.chomp
-    if (1..3).include? mode.to_i || mode == "q"
+    if (1..game_options.length).include? mode.to_i || mode == "q"
       mode
     else
       game_mode_selection_error
       menu(game_options)
     end
-  end
-
-  def game_mode_selection_error
-    output.puts "Please select a valid game mode!"
   end
 
   def request_position(board)
@@ -46,10 +42,6 @@ class Ui
       invalid_position_error
       request_position(board)
     end
-  end
-
-  def invalid_position_error
-    output.puts "Unfortunately the position you entered is not valid."
   end
 
   def announce_winner(board)
@@ -86,6 +78,14 @@ class Ui
 
 
   private
+  def invalid_position_error
+    output.puts "Unfortunately the position you entered is not valid."
+  end
+
+  def game_mode_selection_error
+    output.puts "Please select a valid game mode!"
+  end
+
   def create_board_image(board)
     line = "\n-----------\n"
     pipe = " |"

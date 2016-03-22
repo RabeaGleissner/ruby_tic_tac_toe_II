@@ -1,5 +1,9 @@
 class ComputerPlayer
   attr_reader :computer_mark
+  BEST_MOVE_PLACEHOLDER = -1
+  INITIAL_ALPHA_VALUE = -10000
+  INITIAL_BETA_VALUE = 10000
+  RESET_SCORE = -100
 
   def initialize(computer_mark)
     @computer_mark = computer_mark
@@ -37,13 +41,13 @@ class ComputerPlayer
   end
 
   def score_for_move(board, depth)
-    score = -100
+    score = RESET_SCORE
     if board.winner == computer_mark
       score = depth
     elsif board.winner == false
       score = 0
     else
-      score = depth * -1
+      score = - depth
     end
     score
   end
@@ -53,10 +57,6 @@ class ComputerPlayer
   end
 
   private
-  BEST_MOVE_PLACEHOLDER = -1
-  INITIAL_ALPHA_VALUE = -10000
-  INITIAL_BETA_VALUE = 10000
-
   def score_favourable_for_computer?(current_mark, score, best_score)
     current_mark == computer_mark && score[0] >= best_score ||
       current_mark != computer_mark && score[0] <= best_score
