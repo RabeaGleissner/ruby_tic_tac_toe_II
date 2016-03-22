@@ -1,11 +1,9 @@
 class FakeUi
+  attr_reader :replay
 
-  def initialize
+  def initialize(replay)
+    @replay = replay
     @announce_winner_called = 0
-  end
-
-  def menu(game_options)
-    "1"
   end
 
   def announce_winner(board)
@@ -30,6 +28,6 @@ class FakeUi
   end
 
   def replay?
-    false 
+    replay.shift
   end
 end

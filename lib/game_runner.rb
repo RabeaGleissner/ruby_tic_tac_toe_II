@@ -6,8 +6,7 @@ class GameRunner
 
   GAME_OPTIONS = {1 => "Human vs Human",
                   2 => "Human vs Computer",
-                  3 => "Computer vs Human",
-                  4 => "Quit program"}
+                  3 => "Computer vs Human"}
 
   def initialize(ui, game, player_factory)
     @ui = ui

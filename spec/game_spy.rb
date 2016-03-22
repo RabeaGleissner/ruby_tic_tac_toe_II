@@ -1,14 +1,13 @@
 class GameSpy
-
   def initialize
-    @play_method_was_called = false
+    @play_method_calls_count = 0
   end
 
   def play(player1, player2)
-    @play_method_was_called = true
+    @play_method_calls_count += 1
   end
 
-  def called_play_method?
-    @play_method_was_called
+  def play_method_calls_count
+    @play_method_calls_count
   end
 end
