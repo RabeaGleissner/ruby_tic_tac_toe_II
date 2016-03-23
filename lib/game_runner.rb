@@ -16,17 +16,16 @@ class GameRunner
   end
 
   def start
-    game_option = ui.menu(GAME_OPTIONS)
-    game.play(player_factory.create_player1(game_option),
-              player_factory.create_player2(game_option))
-    replay
-  end
-
-  def replay
-    if ui.replay?
-      start
-    else
+    begin
+      loop do
+        game_option = ui.menu(GAME_OPTIONS)
+        player1, player2 = player_factory.create_players(game_option)
+        game.play(player1, player2)
+        break unless ui.replay?
+      end
       ui.say_goodbye
+    rescue Interrupt => e
+      ui.interruption_message
     end
   end
 end

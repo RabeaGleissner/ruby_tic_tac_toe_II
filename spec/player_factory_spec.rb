@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'player_factory'
+require 'computer_player'
+require 'human_player'
 require 'ui'
 
 describe PlayerFactory do
@@ -9,40 +11,21 @@ describe PlayerFactory do
   HUMAN_VS_COMPUTER = "2"
   COMPUTER_VS_HUMAN = "3"
 
-  it "creates a computer player as player1" do
+  it "creates a computer player and a human player" do
     factory = PlayerFactory.new(ui)
-
-    expect(factory.create_player1(COMPUTER_VS_HUMAN)).to be_a ComputerPlayer
+    expect(factory.create_players(COMPUTER_VS_HUMAN).first).to be_a ComputerPlayer
+    expect(factory.create_players(COMPUTER_VS_HUMAN).last).to be_a HumanPlayer
   end
 
-  it "creates a human player as player1 for a Human vs Human game" do
+  it "creates a human player and a computer player" do
     factory = PlayerFactory.new(ui)
-
-    expect(factory.create_player1(HUMAN_VS_HUMAN)).to be_a HumanPlayer
+    expect(factory.create_players(HUMAN_VS_COMPUTER).first).to be_a HumanPlayer
+    expect(factory.create_players(HUMAN_VS_COMPUTER).last).to be_a ComputerPlayer
   end
 
-  it "creates a human player as player1 for a Human vs Computer game" do
+  it "creates two human players" do
     factory = PlayerFactory.new(ui)
-
-    expect(factory.create_player1(HUMAN_VS_COMPUTER)).to be_a HumanPlayer
-  end
-
-  it "creates a human player as player2" do
-    factory = PlayerFactory.new(ui)
-
-    expect(factory.create_player2(HUMAN_VS_HUMAN)).to be_a HumanPlayer
-
-  end
-
-  it "creates a computer player as player2" do
-    factory = PlayerFactory.new(ui)
-
-    expect(factory.create_player2(HUMAN_VS_COMPUTER)).to be_a ComputerPlayer 
-  end
-
-  it "creates a human player as player2" do
-    factory = PlayerFactory.new(ui)
-
-    expect(factory.create_player2(COMPUTER_VS_HUMAN)).to be_a HumanPlayer 
-  end
+    expect(factory.create_players(HUMAN_VS_HUMAN).first).to be_a HumanPlayer
+    expect(factory.create_players(HUMAN_VS_HUMAN).last).to be_a HumanPlayer
+   end
 end

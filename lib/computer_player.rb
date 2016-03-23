@@ -57,6 +57,7 @@ class ComputerPlayer
   end
 
   private
+
   def score_favourable_for_computer?(current_mark, score, best_score)
     current_mark == computer_mark && score[0] >= best_score ||
       current_mark != computer_mark && score[0] <= best_score
