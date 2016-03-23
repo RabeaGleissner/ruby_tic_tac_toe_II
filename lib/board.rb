@@ -21,15 +21,21 @@ class Board
   end
 
   def winner
-    winner = false
-    lines.each do |line|
-      return line[0] if all_same_marks?(line)
+    if @winner == nil
+      winner = false
+      lines.each do |line|
+        if all_same_marks?(line)
+          winner = line[0]
+          break
+        end
+      end
+      @winner = winner
     end
-    winner
+    @winner
   end
 
   def has_winner?
-    lines.any?{|line| all_same_marks?(line)}
+    winner != false
   end
 
   def all_same_marks?(line)
@@ -45,7 +51,7 @@ class Board
   end
 
   def lines
-    [rows, columns, diagonals].flatten(1)
+    @lines ||= [rows, columns, diagonals].flatten(1)
   end
 
   def rows
