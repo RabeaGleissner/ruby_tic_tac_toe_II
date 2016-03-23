@@ -41,15 +41,13 @@ class ComputerPlayer
   end
 
   def score_for_move(board, depth)
-    score = RESET_SCORE
-    if board.winner == computer_mark
-      score = depth
-    elsif board.winner == false
-      score = 0
+    if !board.has_winner?
+      return 0
+    elsif board.winner == computer_mark
+      return depth
     else
-      score = - depth
+      return - depth
     end
-    score
   end
 
   def switch_mark(mark)

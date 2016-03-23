@@ -13,21 +13,27 @@ class Board
   end
 
   def available_positions
-    positions = []
-    grid.select { |cell| (0..8).to_a.include? cell}
+    grid.select { |cell| cell != :X && cell != :O}
   end
 
   def game_over?
-    winner || full? ? true : false
+    has_winner? || full?
   end
 
   def winner
     winner = false
     lines.each do |line|
-      winner = :X if all_x(line)
-      winner = :O if all_o(line)
+      return line[0] if all_same_marks?(line)
     end
     winner
+  end
+
+  def has_winner?
+    lines.any?{|line| all_same_marks?(line)}
+  end
+
+  def all_same_marks?(line)
+    line[0] == line[1] && line[1] == line[2]
   end
 
   def empty?
@@ -36,14 +42,6 @@ class Board
 
   def full?
     (grid & (0..8).to_a).empty?
-  end
-
-  def all_x(line)
-    line.all? {|x| x == :X}
-  end
-
-  def all_o(line)
-    line.all? {|o| o == :O}
   end
 
   def lines
