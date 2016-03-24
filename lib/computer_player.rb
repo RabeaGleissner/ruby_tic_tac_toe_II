@@ -9,6 +9,10 @@ class ComputerPlayer
     @computer_mark = computer_mark
   end
 
+  def ready?
+    true
+  end
+
   def make_move(board)
     scored_move = minimax(board.available_positions.length, board,
                           computer_mark, INITIAL_ALPHA_VALUE, INITIAL_BETA_VALUE)

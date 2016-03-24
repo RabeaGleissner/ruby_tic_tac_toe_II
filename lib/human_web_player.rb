@@ -6,13 +6,13 @@ class HumanWebPlayer
   end
 
   def add_move(position)
-    @move = position
+    @move = position.to_i
   end
 
   def make_move(board)
-    move_to_return = @move
+    new_board = board.add_mark(@move, mark)
     @move = nil
-    move_to_return
+    new_board
   end
 
   def ready?

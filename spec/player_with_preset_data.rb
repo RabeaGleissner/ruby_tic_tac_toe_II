@@ -9,4 +9,8 @@ class PlayerWithPresetData
   def make_move(board)
     board.add_mark(moves.shift, mark)
   end
+
+  def ready?
+    true
+  end
 end
