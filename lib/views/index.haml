@@ -2,9 +2,6 @@ Tic Tac Toe
 
 - @game_state_rows.each do |row|
   .row
-    .cell
-      = row[0]
-    .cell
-      = row[1]
-    .cell
-      = row[2]
+    %a.cell{:href => "/move?move=#{row[0]}"}= row[0]
+    %a.cell{:href => "/move?move=#{row[1]}"}= row[1]
+    %a.cell{:href => "/move?move=#{row[2]}"}= row[2]
