@@ -1,12 +1,18 @@
-Tic Tac Toe
+!!!
+%html
+  %head
+    %title Tic Tac Toe
+    %link{:href => url("/styles.css"), :rel => "stylesheet", :type => "text/css"}
 
-- @game_state_rows.each do |row|
-  .row
-    %a.cell{:href => "/move?move=#{row[0]}"}= row[0]
-    %a.cell{:href => "/move?move=#{row[1]}"}= row[1]
-    %a.cell{:href => "/move?move=#{row[2]}"}= row[2]
+  %body
+  %h1 Tic Tac Toe
+  - @game_state_rows.each do |row|
+    .row
+      %a.cell{:href => url("/move?move=#{row[0]}")}= row[0]
+      %a.cell{:href => url("/move?move=#{row[1]}")}= row[1]
+      %a.cell{:href => url("/move?move=#{row[2]}")}= row[2]
 
-- if @winner == false
-  %p Game over! It's a draw!
-- elsif @winner != nil
-  %p Game over! Winner is #{@winner}.
+  - if @winner == false
+    %p Game over! It's a draw!
+  - elsif @winner != nil
+    %p Game over! Winner is #{@winner}.

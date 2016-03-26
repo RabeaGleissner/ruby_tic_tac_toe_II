@@ -25,4 +25,8 @@ class WebController < Sinatra::Base
     session['board'] = session['game'].play(session['players'], current_board)
     redirect '/'
   end
+
+  get '/styles.css' do
+    scss :styles
+  end
 end

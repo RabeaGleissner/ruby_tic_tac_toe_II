@@ -1,2 +1,2 @@
-require_relative 'lib/web_controller'
+require 'web_controller'
 run WebController
