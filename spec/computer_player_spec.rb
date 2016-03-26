@@ -68,4 +68,9 @@ describe ComputerPlayer do
                                            :O,  7, :X]))
     expect(new_board.available_positions).not_to include [4, 2].any?
   end
+
+  it "is always ready to make a move" do
+    player = ComputerPlayer.new(:X)
+    expect(player.ready?).to be true
+  end
 end

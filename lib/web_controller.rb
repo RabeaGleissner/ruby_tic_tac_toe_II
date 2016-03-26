@@ -9,19 +9,17 @@ class WebController < Sinatra::Base
 
   get '/' do
     session['ui'] ||= WebUi.new
-    session['game'] ||= Game.new(session['ui'])
     session['board'] ||= Board.new
     @game_state_rows = session['board'].rows
     haml :index
   end
 
   get '/move' do
-    player1 = HumanWebPlayer.new(:X)
-    player2 = HumanWebPlayer.new(:O)
-    player1.add_move(params[:move])
-    game = session['game']
-    board = session['board']
-    session['board'] = game.play(player1, player2, board)
+    session['game'] ||= Game.new(session['ui'])
+    session['players'] ||= [HumanWebPlayer.new(:X), HumanWebPlayer.new(:O)]
+    session['players'].first.add_move(params[:move])
+    current_board = session['board']
+    session['board'] = session['game'].play(session['players'], current_board)
     redirect '/'
   end
 end

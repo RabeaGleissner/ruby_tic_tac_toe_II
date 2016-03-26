@@ -10,4 +10,9 @@ describe HumanPlayer do
     new_board = player.make_move(Board.new)
     expect(new_board.available_positions).not_to include 3
   end
+
+  it "is always ready to make a move" do
+    player = HumanPlayer.new(:X, FakeUi.new(nil))
+    expect(player.ready?).to be true
+  end
 end
