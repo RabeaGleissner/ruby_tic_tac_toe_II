@@ -13,7 +13,7 @@ class WebController < Sinatra::Base
     session['game'] ||= Game.new(session['ui'])
     session['board'] ||= Board.new
     board = session['board']
-    @game_state_rows = board.rows
+    @board = board
     @winner = ui.winner_to_display if ui.winner_to_display != nil
     haml :index
   end

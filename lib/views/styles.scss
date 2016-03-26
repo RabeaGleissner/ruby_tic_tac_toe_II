@@ -1,3 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: white;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+a {
+  transition: 0.2s;
+}
+
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  color: black;
+  font-size: 18px;
+  margin: 0 0 35px;
+  text-align: center;
+}
+
 h1 {
-  color: red
+  font-size: 3em;
+  margin-bottom: 70px;
+}
+
+.board {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.row {
+  border-bottom: 1px solid black;
+  padding: 20px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  &:last-child {
+    border: none;
+  }
+}
+
+.cell {
+  width: 120px;
+  height: 120px;
+  text-decoration: none;
+  flex-grow: 1;
+  font-size: 5em;
+  border-right: 1px solid black;
+  &:last-child {
+    border: none;
+  }
+}
+
+.empty-cell {
+  margin: 0 auto;
+  background-color: lightgrey;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  transition: .6s;
+}
+
+.empty-cell:hover {
+  background-color: lightpink;
+}
+
+.game-end-message {
+  width: 300px;
+  margin: 0 auto;
+  font-size: 1.2em;
 }

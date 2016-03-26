@@ -15,11 +15,7 @@ describe WebController do
   it "displays an empty board on the root route template" do
     get '/'
     expect(last_response).to be_ok
-    expect(last_response.body).to include('0', '1', '2',
-                                          '3', '4', '5',
-                                          '6', '7', '8')
-    expect(last_response.body).not_to include 'X'
-    expect(last_response.body).not_to include 'O'
+    expect(last_response.body).not_to include 'class="cell, full-cell"'
   end
 
   it "redirects a get request to /move to root" do
