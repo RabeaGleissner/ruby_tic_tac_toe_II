@@ -5,3 +5,8 @@ Tic Tac Toe
     %a.cell{:href => "/move?move=#{row[0]}"}= row[0]
     %a.cell{:href => "/move?move=#{row[1]}"}= row[1]
     %a.cell{:href => "/move?move=#{row[2]}"}= row[2]
+
+- if @winner == false
+  %p Game over! It's a draw!
+- elsif @winner != nil
+  %p Game over! Winner is #{@winner}.

@@ -19,4 +19,10 @@ describe WebUi do
     web_ui.draw_board(new_board)
     expect(web_ui.game_state_rows).to eq([[0, 1, 2], [:X, 4, 5], [6, 7, 8]])
   end
+
+  it "returns the winner to display after it was set" do
+    winning_board = Board.new([:X, :X, :X, 3, 4, 5, 6, 7, 8])
+    web_ui.announce_winner(winning_board)
+    expect(web_ui.winner_to_display).to eq :X
+  end
 end

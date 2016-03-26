@@ -2,6 +2,7 @@ ENV['RACK_ENV'] = 'test'
 require 'spec_helper'
 require 'rack/test'
 require 'web_controller'
+require 'web_ui'
 require 'board'
 
 describe WebController do
@@ -18,6 +19,7 @@ describe WebController do
                                           '3', '4', '5',
                                           '6', '7', '8')
     expect(last_response.body).not_to include 'X'
+    expect(last_response.body).not_to include 'O'
   end
 
   it "redirects a get request to /move to root" do
@@ -31,6 +33,13 @@ describe WebController do
     get '/move?move=2'
     board = last_request.env['rack.session']['board']
     expect(board.rows).to eql([[0, 1, :X], [3, 4, 5], [6, 7, 8]])
+  end
+
+  it "displays the winning mark when a winner is available" do
+    ui = WebUi.new
+    ui.announce_winner(Board.new([:X, :X, :X, 3, 4, 5, 6, 7, 8]))
+    get '/', {}, {'rack.session' => {'ui' => ui}}
+    expect(last_response.body).to include('Game over! Winner is X.')
   end
 
   def set_up_game
