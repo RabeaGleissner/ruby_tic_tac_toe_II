@@ -25,16 +25,19 @@ class ComputerPlayer
 
     board.available_positions.each do |move|
       next_board = board.add_mark(move, current_mark)
-      score = minimax(depth - 1, next_board, switch_mark(current_mark), alpha, beta)
-      if score_favourable_for_computer?(current_mark, score, best_score)
-        best_score = score[0]
+      move_with_score = minimax(depth - 1, next_board, switch_mark(current_mark), alpha, beta)
+
+      if score_favourable_for_computer?(current_mark, move_with_score, best_score)
+        best_score = move_with_score[0]
         best_move = move
       end
+
       if current_mark == computer_mark
         alpha = [alpha, best_score].max
       else
         beta = [beta, best_score].min
       end
+
       break if alpha > beta
     end
     [best_score, best_move]
