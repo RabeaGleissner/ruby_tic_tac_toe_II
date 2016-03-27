@@ -7,7 +7,7 @@ class WebUi
   end
 
   def game_state_rows
-    if @grid != nil
+    if @grid
       @grid
     else
       Board.new.rows

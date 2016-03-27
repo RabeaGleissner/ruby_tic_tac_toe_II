@@ -9,12 +9,10 @@ class WebController < Sinatra::Base
 
   get '/' do
     session['ui'] ||= WebUi.new
-    ui = session['ui']
     session['game'] ||= Game.new(session['ui'])
     session['board'] ||= Board.new
-    board = session['board']
-    @board = board
-    @winner = ui.winner_to_display if ui.winner_to_display != nil
+    @board = session['board']
+    @winner = session['ui'].winner_to_display
     haml :index
   end
 

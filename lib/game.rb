@@ -13,9 +13,7 @@ class Game
       board = current_player.make_move(board)
       current_player = switch(players).first
     end
-    if board.game_over?
-      end_game(board)
-    end
+    end_game(board) if board.game_over?
     board
   end
 

@@ -38,6 +38,11 @@ describe WebController do
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 
+  it "displays the styling when the route /styles.css is requested" do
+    get '/styles.css'
+    expect(last_response.body).to include('box-sizing: border-box;')
+  end
+
   def set_up_game
     get '/'
   end
