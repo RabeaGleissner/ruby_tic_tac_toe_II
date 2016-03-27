@@ -2,7 +2,6 @@
 $LOAD_PATH << File.expand_path("../../lib", __FILE__)
 
 require 'game_runner'
-require 'human_player'
 require 'computer_player'
 require 'ui'
 
