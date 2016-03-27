@@ -9,27 +9,30 @@
   .board
     - @board.rows.each do |row|
       .row
-        - if @board.available_positions.include? row[0]
-          %a.cell{:href => url("/move?move=#{row[0]}")}
-            .empty-cell
-              &nbsp;
-        - else
-          .cell.full-cell
-            = row[0]
-        - if @board.available_positions.include? row[1]
-          %a.cell{:href => url("/move?move=#{row[1]}")}
-            .empty-cell
-              &nbsp;
-        - else
-          .cell.full-cell
-            = row[1]
-        - if @board.available_positions.include? row[2]
-          %a.cell{:href => url("/move?move=#{row[2]}")}
-            .empty-cell
-              &nbsp;
-        - else
-          .cell.full-cell
-            = row[2]
+        .outer-cell
+          - if @board.available_positions.include? row[0]
+            %a.cell{:href => url("/move?move=#{row[0]}")}
+              .empty-cell
+                &nbsp;
+          - else
+            .cell.full-cell
+              = row[0]
+        .outer-cell
+          - if @board.available_positions.include? row[1]
+            %a.cell{:href => url("/move?move=#{row[1]}")}
+              .empty-cell
+                &nbsp;
+          - else
+            .cell.full-cell
+              = row[1]
+        .outer-cell
+          - if @board.available_positions.include? row[2]
+            %a.cell{:href => url("/move?move=#{row[2]}")}
+              .empty-cell
+                &nbsp;
+          - else
+            .cell.full-cell
+              = row[2]
 
   .game-end-message
     - if @winner == false

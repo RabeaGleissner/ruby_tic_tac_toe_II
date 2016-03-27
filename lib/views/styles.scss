@@ -36,7 +36,7 @@ h1 {
 
 .row {
   border-bottom: 1px solid black;
-  padding: 20px 0;
+  /*padding: 20px 0;*/
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -46,29 +46,37 @@ h1 {
   }
 }
 
-.cell {
-  width: 120px;
-  height: 120px;
-  text-decoration: none;
+.outer-cell {
+  height: 140px;
+  width: 140px;
   flex-grow: 1;
-  font-size: 5em;
   border-right: 1px solid black;
   &:last-child {
     border: none;
   }
 }
 
+.cell {
+  text-decoration: none;
+}
+
 .empty-cell {
-  margin: 0 auto;
-  background-color: lightgrey;
-  width: 100px;
-  height: 100px;
+  margin: 10px auto 0;
+  background-color: #e5e0e0;
+  width: 120px;
+  height: 120px;
   cursor: pointer;
   transition: .6s;
 }
 
 .empty-cell:hover {
   background-color: lightpink;
+}
+
+.full-cell {
+  width: 166px;
+  height: 120px;
+  font-size: 5.5em;
 }
 
 .game-end-message {
