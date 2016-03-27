@@ -1,2 +1,4 @@
 coverage
 Gemfile.lock
+.sass-cache
+.css.map
