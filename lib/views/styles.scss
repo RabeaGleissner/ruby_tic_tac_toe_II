@@ -45,7 +45,7 @@ h1 {
   }
 }
 
-.outer-cell {
+.wrapper {
   height: 140px;
   width: 140px;
   flex-grow: 1;
@@ -59,7 +59,7 @@ h1 {
   text-decoration: none;
 }
 
-.empty-cell {
+.empty {
   margin: 10px auto 0;
   background-color: #e5e0e0;
   width: 120px;
@@ -68,11 +68,11 @@ h1 {
   transition: .6s;
 }
 
-.empty-cell:hover {
+.empty:hover {
   background-color: lightpink;
 }
 
-.full-cell {
+.full {
   width: 166px;
   height: 120px;
   font-size: 5.5em;

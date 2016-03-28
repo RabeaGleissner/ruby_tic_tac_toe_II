@@ -9,29 +9,29 @@
   .board
     - @board.rows.each do |row|
       .row
-        .outer-cell
+        .wrapper
           - if @board.available_positions.include? row[0]
             %a.cell{:href => url("/move?move=#{row[0]}")}
-              .empty-cell
+              .empty
                 &nbsp;
           - else
-            .cell.full-cell
+            .cell.full
               = row[0]
-        .outer-cell
+        .wrapper
           - if @board.available_positions.include? row[1]
             %a.cell{:href => url("/move?move=#{row[1]}")}
-              .empty-cell
+              .empty
                 &nbsp;
           - else
-            .cell.full-cell
+            .cell.full
               = row[1]
-        .outer-cell
+        .wrapper
           - if @board.available_positions.include? row[2]
             %a.cell{:href => url("/move?move=#{row[2]}")}
-              .empty-cell
+              .empty
                 &nbsp;
           - else
-            .cell.full-cell
+            .cell.full
               = row[2]
 
   .game-end-message
