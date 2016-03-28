@@ -16,6 +16,6 @@ class HumanWebPlayer
   end
 
   def ready?
-    @move != nil
+    !@move.nil?
   end
 end
