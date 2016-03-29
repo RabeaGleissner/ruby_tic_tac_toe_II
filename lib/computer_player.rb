@@ -40,7 +40,7 @@ class ComputerPlayer < Player
         beta = [beta, best_score].min
       end
 
-      break if alpha > beta
+      break if alpha >= beta
     end
     [best_score, best_move]
   end
@@ -62,8 +62,8 @@ class ComputerPlayer < Player
   private
 
   def score_favourable_for_computer?(current_mark, score, best_score)
-    current_mark == computer_mark && score[0] >= best_score ||
-      current_mark != computer_mark && score[0] <= best_score
+    current_mark == computer_mark && score[0] > best_score ||
+      current_mark != computer_mark && score[0] < best_score
   end
 
   def reset_score(current_mark)
