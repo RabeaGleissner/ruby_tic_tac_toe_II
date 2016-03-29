@@ -47,11 +47,11 @@ class ComputerPlayer < Player
 
   def score_for_move(board, depth)
     if !board.has_winner?
-      return 0
+      0
     elsif board.winner == computer_mark
-      return depth
+      depth
     else
-      return - depth
+      -depth
     end
   end
 
@@ -62,11 +62,18 @@ class ComputerPlayer < Player
   private
 
   def score_favourable_for_computer?(current_mark, score, best_score)
-    current_mark == computer_mark && score[0] > best_score ||
-      current_mark != computer_mark && score[0] < best_score
+    if (computer_mark_is?(current_mark))
+      score[0] > best_score
+    else
+      score[0] < best_score
+    end
+  end
+
+  def computer_mark_is?(current_mark)
+    current_mark == computer_mark
   end
 
   def reset_score(current_mark)
-    current_mark == computer_mark ? - 1000 : 1000
+    current_mark == computer_mark ? -1000 : 1000
   end
 end

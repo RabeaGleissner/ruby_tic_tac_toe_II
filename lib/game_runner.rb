@@ -24,7 +24,7 @@ class GameRunner
         break unless ui.replay?
       end
       ui.say_goodbye
-    rescue Interrupt => e
+    rescue Interrupt
       ui.interruption_message
     end
   end
