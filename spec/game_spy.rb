@@ -3,7 +3,7 @@ class GameSpy
     @play_method_calls_count = 0
   end
 
-  def play(player1, player2)
+  def play(players, board)
     @play_method_calls_count += 1
   end
 

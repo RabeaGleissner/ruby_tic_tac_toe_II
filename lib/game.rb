@@ -6,23 +6,21 @@ class Game
     @ui = ui
   end
 
-  def play(player1, player2)
-    board = Board.new
-    current_player = player1
-
-    until board.game_over?
+  def play(players, board)
+    current_player = players.first
+    until board.game_over? || !current_player.ready?
       ui.draw_board(board)
       board = current_player.make_move(board)
-      current_player = switch(current_player, player1, player2)
+      current_player = switch(players).first
     end
-
-    end_game(board)
+    end_game(board) if board.game_over?
+    board
   end
 
   private
 
-  def switch(current_player, player1, player2)
-    current_player == player1 ? player2 : player1
+  def switch(players)
+    players.reverse!
   end
 
   def end_game(board)

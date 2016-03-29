@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: white;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+a {
+  transition: 0.2s;
+}
+
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  color: black;
+  font-size: 18px;
+  margin: 0 0 35px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 70px;
+}
+
+.board {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.row {
+  border-bottom: 1px solid black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  &:last-child {
+    border: none;
+  }
+}
+
+.wrapper {
+  height: 140px;
+  width: 140px;
+  flex-grow: 1;
+  display: flex;
+  border-right: 1px solid black;
+  &:last-child {
+    border: none;
+  }
+}
+
+.cell {
+  text-decoration: none;
+  flex-grow: 1;
+}
+
+.empty {
+  margin: 10px auto 0;
+  background-color: #e5e0e0;
+  height: 120px;
+  max-width: 120px;
+  cursor: pointer;
+  transition: .6s;
+}
+
+.empty:hover {
+  background-color: lightpink;
+}
+
+.full {
+  font-size: 5.5em;
+}
+
+.game-end-message {
+  width: 300px;
+  margin: 0 auto;
+  font-size: 1.2em;
+}

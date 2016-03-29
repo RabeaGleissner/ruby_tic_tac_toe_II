@@ -1,4 +1,6 @@
-class ComputerPlayer
+require 'player'
+
+class ComputerPlayer < Player
   attr_reader :computer_mark
   BEST_MOVE_PLACEHOLDER = -1
   INITIAL_ALPHA_VALUE = -10000

@@ -10,14 +10,16 @@
 
 `bundle install`
 
+## To play the game in the console use this command:
+
 `bin/run.sh`
 
+## To play the game in the web browser, type this command:
 
+`rackup -I lib`
 
 ## How to run the tests
 
 When you're inside the ruby_tic_tac_toe_II folder, type:
 
 `rspec spec`
-
-

@@ -1,5 +1,7 @@
 require 'ui'
-class HumanPlayer
+require 'player'
+
+class HumanConsolePlayer < Player
   attr_reader :mark, :ui
 
   def initialize(mark, ui)
