@@ -65,14 +65,6 @@ describe Board do
     expect(board.lines).to eq([[:X, :O, 2], [:O, :X, :O], [6, 7, 8], [:X, :O, 6], [:O, :X, 7], [2, :O, 8], [:X, :X, 8], [2, :X, 6]])
   end
 
-  it "knows that all all marks are x in line" do
-    expect(board.all_x([:X, :X, :X])).to be true
-  end
-
-  it "knows that all all marks are o in line" do
-    expect(board.all_o([:O, :O, :O])).to be true
-  end
-
   it "knows that game is over" do
     full_board = Board.new([:X, :O, :X,
                             :O, :X, :O,
@@ -81,10 +73,10 @@ describe Board do
   end
 
   it "knows that game is not over" do
-    full_board = Board.new([:O, :O, :X,
+    board = Board.new([:O, :O, :X,
                             :O, :X, :O,
                             6, 7, 8])
-    expect(full_board.game_over?).to be false
+    expect(board.game_over?).to be false
   end
 
   it "adds adds a mark on a new board" do
@@ -95,5 +87,10 @@ describe Board do
   it "doesn't change the existing board if a move is made" do
     board.add_mark(1, :X)
     expect(board.available_positions.length).to eq (9)
+  end
+
+  it "has a winner" do
+    winning_board = Board.new([:X, :X, :X, :O, :O, 5,6,7,8])
+    expect(winning_board.has_winner?).to eq true
   end
 end
