@@ -21,7 +21,7 @@ class Board
   end
 
   def winner
-    if @winner == nil
+    if @winner.nil?
       winner = false
       lines.each do |line|
         if all_same_marks?(line)
