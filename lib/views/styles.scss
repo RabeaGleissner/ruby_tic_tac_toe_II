@@ -49,6 +49,7 @@ h1 {
   height: 140px;
   width: 140px;
   flex-grow: 1;
+  display: flex;
   border-right: 1px solid black;
   &:last-child {
     border: none;
@@ -57,13 +58,14 @@ h1 {
 
 .cell {
   text-decoration: none;
+  flex-grow: 1;
 }
 
 .empty {
   margin: 10px auto 0;
   background-color: #e5e0e0;
-  width: 120px;
   height: 120px;
+  max-width: 120px;
   cursor: pointer;
   transition: .6s;
 }
@@ -73,8 +75,6 @@ h1 {
 }
 
 .full {
-  width: 166px;
-  height: 120px;
   font-size: 5.5em;
 }
 
