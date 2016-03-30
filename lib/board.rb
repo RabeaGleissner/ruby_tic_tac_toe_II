@@ -1,7 +1,5 @@
 class Board
-  attr_reader :grid, :dimension
-
-  def initialize(marks = (0..8).to_a)
+  def initialize(marks = empty_board)
     @grid = marks
     @dimension = Math.sqrt(@grid.size).to_i
   end
@@ -43,7 +41,7 @@ class Board
   end
 
   def full?
-    (grid & (0..8).to_a).empty?
+    (grid & empty_board).empty?
   end
 
   def lines
@@ -64,4 +62,12 @@ class Board
       [grid[2], grid[4], grid[6]]
     ]
   end
+
+  private
+  attr_reader :grid, :dimension
+
+  def empty_board
+    (0..8).to_a
+  end
+
 end

@@ -18,7 +18,7 @@ class ComputerPlayer < Player
   end
 
   def minimax(depth, board, current_mark, alpha, beta)
-    best_score = reset_score(current_mark)
+    best_score = initialize_best_score(current_mark)
     best_move = BEST_MOVE_PLACEHOLDER
 
     if board.game_over? || depth == 0
@@ -73,7 +73,7 @@ class ComputerPlayer < Player
     current_mark == computer_mark
   end
 
-  def reset_score(current_mark)
+  def initialize_best_score(current_mark)
     current_mark == computer_mark ? -1000 : 1000
   end
 end
