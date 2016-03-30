@@ -24,7 +24,7 @@ describe WebUi do
   it "returns the winner to display after it was set" do
     winning_board = Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8])
     web_ui.announce_winner(winning_board)
-    expect(web_ui.winner_to_announce).to eq Marks::X
+    expect(web_ui.winner_to_announce(winning_board)).to eq Marks::X
   end
 
   it "announces a draw after it was set" do
@@ -32,6 +32,6 @@ describe WebUi do
                              Marks::O, Marks::O, Marks::X,
                              Marks::X, Marks::O, Marks::X])
     web_ui.announce_winner(drawn_board)
-    expect(web_ui.announce_draw?).to be true
+    expect(web_ui.announce_draw?(drawn_board)).to be true
   end
 end

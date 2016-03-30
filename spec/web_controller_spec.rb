@@ -35,8 +35,8 @@ describe WebController do
 
   it "displays the winning mark when a winner is available" do
     ui = WebUi.new
-    ui.announce_winner(Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]))
-    get '/', {}, {'rack.session' => {'ui' => ui}}
+    board = Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8])
+    get '/', {}, {'rack.session' => {'board' => board}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 
