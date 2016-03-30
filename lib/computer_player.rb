@@ -1,6 +1,4 @@
-require 'player'
-
-class ComputerPlayer < Player
+class ComputerPlayer
   attr_reader :computer_mark
   BEST_MOVE_PLACEHOLDER = -1
   INITIAL_ALPHA_VALUE = -10000
@@ -57,6 +55,10 @@ class ComputerPlayer < Player
 
   def switch_mark(mark)
     mark = mark == :X ? :O : :X
+  end
+
+  def ready?
+    true
   end
 
   private

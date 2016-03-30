@@ -1,7 +1,6 @@
 require 'ui'
-require 'player'
 
-class HumanConsolePlayer < Player
+class HumanConsolePlayer
   attr_reader :mark, :ui
 
   def initialize(mark, ui)
@@ -11,5 +10,9 @@ class HumanConsolePlayer < Player
 
   def make_move(board)
     board.add_mark(ui.request_position(board), mark)
+  end
+
+  def ready?
+    true
   end
 end
