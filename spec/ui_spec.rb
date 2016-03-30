@@ -5,7 +5,6 @@ require 'board'
 require 'marks'
 
 describe Ui do
-  include Marks
   let(:input) {StringIO.new}
   let(:output) {StringIO.new}
   let (:ui) {Ui.new(input, output)}
@@ -16,7 +15,7 @@ describe Ui do
                   3 => "Computer vs Human"}
 
   it "draws a board to the console" do
-    board = Board.new([X, 1, X, O, 4, O, O, 7, X])
+    board = Board.new([Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
     ui = Ui.new(StringIO.new, output)
     ui.draw_board(board)
     expect(output.string).to eq("#{CLEAR_SCREEN}\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
@@ -55,7 +54,7 @@ describe Ui do
 
   it "asks user for a position again if first input was invalid" do
     board = Board.new
-    new_board = board.add_mark(1, X)
+    new_board = board.add_mark(1, Marks::X)
     ui = Ui.new(input, output)
     allow(ui.input).to receive(:gets).and_return("2", "3")
     ui.request_position(new_board)
@@ -63,17 +62,17 @@ describe Ui do
   end
 
   it "announces that the winner is X" do
-    x_winner_board = Board.new([X, X, X,
-                                3, 4, O,
-                                O, 7, 8])
+    x_winner_board = Board.new([Marks::X, Marks::X, Marks::X,
+                                3, 4, Marks::O,
+                                Marks::O, 7, 8])
     ui.announce_winner(x_winner_board)
     expect(output.string).to eq("\nGame over! Winner is X.\n")
   end
 
   it "announces a draw" do
-    drawn_board = Board.new([X, O, X,
-                             X, O, O,
-                             O, X, X])
+    drawn_board = Board.new([Marks::X, Marks::O, Marks::X,
+                             Marks::X, Marks::O, Marks::O,
+                             Marks::O, Marks::X, Marks::X])
     ui.announce_winner(drawn_board)
     expect(output.string).to eq("\nGame over! It's a draw.\n")
   end

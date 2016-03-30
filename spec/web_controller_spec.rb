@@ -10,9 +10,6 @@ describe WebController do
   include Marks
   include Rack::Test::Methods
 
-  X = Marks::X
-  O = Marks::O
-
   def app
     WebController.new
   end
@@ -33,12 +30,12 @@ describe WebController do
     set_up_game
     get '/move?move=2'
     board = last_request.env['rack.session']['board']
-    expect(board.rows).to eql([[0, 1, X], [3, 4, 5], [6, 7, 8]])
+    expect(board.rows).to eql([[0, 1, Marks::X], [3, 4, 5], [6, 7, 8]])
   end
 
   it "displays the winning mark when a winner is available" do
     ui = WebUi.new
-    ui.announce_winner(Board.new([X, X, X, 3, 4, 5, 6, 7, 8]))
+    ui.announce_winner(Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]))
     get '/', {}, {'rack.session' => {'ui' => ui}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end
