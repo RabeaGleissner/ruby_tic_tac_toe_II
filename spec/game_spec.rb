@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'player_with_preset_data'
+require 'human_web_player'
 require 'ui'
 require 'fake_ui'
 require 'game.rb'
@@ -17,10 +18,21 @@ describe Game do
     expect(fake_ui.announce_winner_called).to eq 1
   end
 
-  it "calculates the players turn" do
+  it "knows that it's player O's turn" do
     board = Board.new([Marks::X, Marks::O, Marks::X, 3, 4, 5, 6, 7, 8])
     ui = Ui.new(nil, nil)
     game = Game.new(ui)
-    expect(game.player_mark(board)).to eq Marks::O
+    players = {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
+    current_player = game.current_player(players, board)
+    expect(current_player.mark).to eq Marks::O
+  end
+
+  it "knows that it's player X's turn" do
+    board = Board.new([Marks::X, Marks::O, Marks::X, Marks::O, 4, 5, 6, 7, 8])
+    ui = Ui.new(nil, nil)
+    game = Game.new(ui)
+    players = {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
+    current_player = game.current_player(players, board)
+    expect(current_player.mark).to eq Marks::X
   end
 end
