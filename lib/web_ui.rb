@@ -15,7 +15,7 @@ class WebUi
   end
 
   def announce_winner(board)
-    @winner = board.winner
+    @winner = board.winner_mark
   end
 
   def winner_to_display

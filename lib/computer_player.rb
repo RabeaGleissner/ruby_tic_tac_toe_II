@@ -46,9 +46,9 @@ class ComputerPlayer < Player
   end
 
   def score_for_move(board, depth)
-    if !board.has_winner?
+    if !board.winner?
       0
-    elsif board.winner == computer_mark
+    elsif board.winner_mark == computer_mark
       depth
     else
       -depth

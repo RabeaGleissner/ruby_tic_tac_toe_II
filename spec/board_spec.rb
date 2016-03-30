@@ -19,21 +19,21 @@ describe Board do
     winning_board = Board.new([:X, :X, :X,
                                :O, :O, 5,
                                6, 7, 8])
-    expect(winning_board.winner).to eq(:X)
+    expect(winning_board.winner_mark).to eq(:X)
   end
 
   it "has a winner :O" do
     winning_board = Board.new([0, :X, :X,
                                :O, :O, :O,
                                6, 7, 8])
-    expect(winning_board.winner).to eq(:O)
+    expect(winning_board.winner_mark).to eq(:O)
   end
 
   it "has no winner" do
     winning_board = Board.new([0, :X, :X,
                                :O, :X, :O,
                                6, 7, 8])
-    expect(winning_board.winner).to eq(false)
+    expect(winning_board.winner_mark).to eq(nil)
   end
 
   it "lists all rows" do
@@ -46,10 +46,9 @@ describe Board do
   it "lists all columns" do
     board = Board.new([:X, :O, 2,
                        :O, :X, :O,
-                       6, 7, 8])
+                        6,  7, 8])
     expect(board.columns).to eq([[:X, :O, 6], [:O, :X, 7], [2, :O, 8]])
   end
-
 
   it "lists all diagonals" do
     board = Board.new([:X, :O, 2,
@@ -74,8 +73,8 @@ describe Board do
 
   it "knows that game is not over" do
     board = Board.new([:O, :O, :X,
-                            :O, :X, :O,
-                            6, 7, 8])
+                       :O, :X, :O,
+                       6, 7, 8])
     expect(board.game_over?).to be false
   end
 
@@ -91,6 +90,6 @@ describe Board do
 
   it "has a winner" do
     winning_board = Board.new([:X, :X, :X, :O, :O, 5,6,7,8])
-    expect(winning_board.has_winner?).to eq true
+    expect(winning_board.winner?).to eq true
   end
 end

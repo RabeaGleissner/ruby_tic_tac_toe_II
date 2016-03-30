@@ -45,10 +45,10 @@ class Ui
   end
 
   def announce_winner(board)
-    if board.winner == false
-      output.puts "\nGame over! It's a draw."
+    if board.winner?
+      output.puts "\nGame over! Winner is #{board.winner_mark}."
     else
-      output.puts "\nGame over! Winner is #{board.winner}."
+      output.puts "\nGame over! It's a draw."
     end
   end
 

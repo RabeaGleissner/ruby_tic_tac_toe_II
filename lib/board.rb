@@ -17,25 +17,21 @@ class Board
   end
 
   def game_over?
-    has_winner? || full?
+    winner? || full?
   end
 
-  def winner
-    if @winner.nil?
-      winner = false
-      lines.each do |line|
-        if all_same_marks?(line)
-          winner = line[0]
-          break
-        end
+  def winner_mark
+    winner = nil
+    lines.each do |line|
+      if all_same_marks?(line)
+        winner = line[0]
       end
-      @winner = winner
     end
-    @winner
+    winner
   end
 
-  def has_winner?
-    winner != false
+  def winner?
+    winner_mark != nil
   end
 
   def all_same_marks?(line)

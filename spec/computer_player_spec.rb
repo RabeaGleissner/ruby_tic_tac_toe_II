@@ -38,21 +38,21 @@ describe ComputerPlayer do
     new_board = player.make_move(Board.new([:O, :X, 2,
                                             :X, :O, 5,
                                              6, :X, 8]))
-    expect(new_board.winner).to eq(:O)
+    expect(new_board.winner_mark).to eq(:O)
   end
 
   it "makes a winning move for a horizontal win" do
     new_board = player.make_move(Board.new([:X, 1,  2,
                                              3, :O, :O,
                                             :X,  7, :X]))
-    expect(new_board.winner).to eq(:O)
+    expect(new_board.winner_mark).to eq(:O)
   end
 
   it "makes a winning move for a vertical win" do
     new_board = player.make_move(Board.new([:O, :X,  2,
                                             3, :O, :O,
                                            :X, :O, :X]))
-    expect(new_board.winner).to eq(:O)
+    expect(new_board.winner_mark).to eq(:O)
   end
 
   it "blocks an opponents winning move" do
