@@ -1,4 +1,7 @@
+require 'marks'
+
 class Board
+  include Marks
   def initialize(marks = empty_board)
     @grid = marks
     @dimension = Math.sqrt(@grid.size).to_i
@@ -11,7 +14,7 @@ class Board
   end
 
   def available_positions
-    grid.select { |cell| cell != :X && cell != :O}
+    grid.select { |cell| cell != X && cell != O}
   end
 
   def game_over?

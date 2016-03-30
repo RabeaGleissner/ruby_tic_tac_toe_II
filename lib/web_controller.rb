@@ -3,8 +3,10 @@ require 'haml'
 require 'web_ui'
 require 'game'
 require 'human_web_player.rb'
+require 'marks'
 
 class WebController < Sinatra::Base
+  include Marks
   use Rack::Session::Pool
 
   get '/' do
@@ -17,7 +19,7 @@ class WebController < Sinatra::Base
   end
 
   get '/move' do
-    session['players'] ||= [HumanWebPlayer.new(:X), HumanWebPlayer.new(:O)]
+    session['players'] ||= [HumanWebPlayer.new(X), HumanWebPlayer.new(O)]
     session['players'].first.add_move(params[:move])
     current_board = session['board']
     session['board'] = session['game'].play(session['players'], current_board)

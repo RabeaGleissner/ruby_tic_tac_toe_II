@@ -1,4 +1,7 @@
+require 'marks'
+
 class Ui
+  include Marks
   attr_reader :input, :output
 
   CLEAR_SCREEN = "\e[H\e[2J"
@@ -106,7 +109,7 @@ class Ui
   end
 
   def draw_one_cell(cell)
-    cell += 1 unless cell == :X || cell == :O
+    cell += 1 unless cell == X || cell == O
     " " + (cell).to_s
   end
 

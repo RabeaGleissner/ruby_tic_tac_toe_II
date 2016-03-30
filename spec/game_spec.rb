@@ -2,11 +2,13 @@ require 'spec_helper'
 require 'player_with_preset_data'
 require 'fake_ui'
 require 'game.rb'
+require 'marks'
 
 describe Game do
+  include Marks
   it "plays game once" do
-    player1 = PlayerWithPresetData.new(:X, [0,1,2])
-    player2 = PlayerWithPresetData.new(:O, [3,4])
+    player1 = PlayerWithPresetData.new(X, [0,1,2])
+    player2 = PlayerWithPresetData.new(O, [3,4])
     replay = [false]
     fake_ui = FakeUi.new(replay)
     game = Game.new(fake_ui)
