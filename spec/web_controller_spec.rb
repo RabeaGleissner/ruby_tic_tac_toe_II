@@ -29,14 +29,14 @@ describe WebController do
   it "updates board with move from params" do
     set_up_game
     get '/move?move=2'
-    board = last_request.env['rack.session']['board']
-    expect(board.rows).to eql([[0, 1, Marks::X], [3, 4, 5], [6, 7, 8]])
+    rows = last_request.env['rack.session']['board_rows']
+    expect(rows).to eql([[0, 1, Marks::X], [3, 4, 5], [6, 7, 8]])
   end
 
   it "displays the winning mark when a winner is available" do
     ui = WebUi.new
-    board = Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8])
-    get '/', {}, {'rack.session' => {'board' => board}}
+    rows = Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]).rows
+    get '/', {}, {'rack.session' => {'board_rows' => rows}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 

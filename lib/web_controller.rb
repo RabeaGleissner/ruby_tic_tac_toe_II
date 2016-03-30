@@ -10,18 +10,19 @@ class WebController < Sinatra::Base
   use Rack::Session::Pool
 
   get '/' do
-    session['board'] ||= Board.new
-    @board = session['board']
-    @winner_mark = WebUi.new.winner_to_announce(@board)
-    @draw = WebUi.new.announce_draw?(@board)
+    ui = WebUi.new
+    session['board_rows'] ||= Board.new.rows
+    @board = Board.new(session['board_rows'].flatten(1))
+    @winner_mark = ui.winner_to_announce(@board)
+    @draw = ui.announce_draw?(@board)
     erb :index
   end
 
   get '/move' do
     session['players'] ||= [HumanWebPlayer.new(X), HumanWebPlayer.new(O)]
     session['players'].first.add_move(params[:move])
-    current_board = session['board']
-    session['board'] = Game.new(WebUi.new).play(session['players'], current_board)
+    current_board = Board.new(session['board_rows'].flatten(1))
+    session['board_rows'] = Game.new(WebUi.new).play(session['players'], current_board)
     redirect '/'
   end
 

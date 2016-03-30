@@ -15,12 +15,6 @@ class WebUi
   end
 
   def announce_winner(board)
-    @draw = false
-    if board.winner_mark.nil?
-      @draw = true
-    else
-      @winner = board.winner_mark
-    end
   end
 
   def winner_to_announce(board)
