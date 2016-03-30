@@ -101,4 +101,18 @@ describe Board do
                              X, O, X])
     expect(drawn_board.draw?).to be true
   end
+
+  it "has three X marks" do
+    board = Board.new([X, X, O,
+                       O, O, X,
+                       6, O, 8])
+    expect(board.count_for(X)).to eq 3
+  end
+
+  it "has four O marks" do
+    board = Board.new([X, X, O,
+                       O, O, X,
+                       6, O, 8])
+    expect(board.count_for(O)).to eq 4
+  end
 end

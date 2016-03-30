@@ -70,11 +70,14 @@ class Board
     ]
   end
 
+  def count_for(mark)
+    count = grid.select {|cell| cell == mark}.size
+  end
+
   private
   attr_reader :grid, :dimension
 
   def empty_board
     (0..8).to_a
   end
-
 end
