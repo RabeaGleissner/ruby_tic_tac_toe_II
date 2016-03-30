@@ -35,6 +35,10 @@ class Board
     winner_mark != nil
   end
 
+  def draw?
+    full? && !winner?
+  end
+
   def all_same_marks?(line)
     line[0] == line[1] && line[1] == line[2]
   end

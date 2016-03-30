@@ -92,6 +92,13 @@ describe Board do
 
   it "has a winner" do
     winning_board = Board.new([X, X, X, O, O, 5,6,7,8])
-    expect(winning_board.winner?).to eq true
+    expect(winning_board.winner?).to be true
+  end
+
+  it "is a draw" do
+    drawn_board = Board.new([X, X, O,
+                             O, O, X,
+                             X, O, X])
+    expect(drawn_board.draw?).to be true
   end
 end

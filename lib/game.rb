@@ -14,7 +14,7 @@ class Game
       current_player = switch(players).first
     end
     end_game(board) if board.game_over?
-    board.rows
+    board
   end
 
   private
