@@ -13,9 +13,11 @@ class WebController < Sinatra::Base
     session['ui'] ||= WebUi.new
     session['game'] ||= Game.new(session['ui'])
     session['board'] ||= Board.new
+    puts @winner_mark
     @board = session['board']
-    @winner = session['ui'].winner_to_display
-    haml :index
+    @winner_mark = session['ui'].winner_to_announce
+    @draw = session['ui'].announce_draw?
+    erb :index
   end
 
   get '/move' do

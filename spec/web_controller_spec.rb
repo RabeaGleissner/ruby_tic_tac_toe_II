@@ -10,6 +10,9 @@ describe WebController do
   include Marks
   include Rack::Test::Methods
 
+  X = Marks::X
+  O = Marks::O
+
   def app
     WebController.new
   end

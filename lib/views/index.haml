@@ -35,7 +35,7 @@
               = row[2]
 
   .game-end-message
-    - if @winner == false
+    - if @draw == true
       %p Game over! It's a draw.
-    - elsif @winner != nil
-      %p Game over! Winner is #{@winner}.
+    - elsif @winner_mark != nil
+      %p Game over! Winner is #{@winner_mark}.

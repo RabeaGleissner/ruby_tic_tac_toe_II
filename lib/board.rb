@@ -48,7 +48,7 @@ class Board
   end
 
   def lines
-    @lines ||= [rows, columns, diagonals].flatten(1)
+    lines ||= [rows, columns, diagonals].flatten(1)
   end
 
   def rows
