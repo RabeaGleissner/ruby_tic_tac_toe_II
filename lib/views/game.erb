@@ -32,4 +32,7 @@
   <% elsif @winner_mark == :X || @winner_mark == :O %>
     <p>Game over! Winner is <%= @winner_mark %>.</p>
   <% end %>
+  <% if @board.game_over? %>
+    <a href="/">Play again!</a>
+  <% end %>
 </div>

@@ -13,6 +13,7 @@ class WebController < Sinatra::Base
   end
 
   post '/menu' do
+    session['board_rows'] = nil
     session['game_option'] = params[:option]
     session['first_move'] = true
     redirect '/game'

@@ -20,6 +20,11 @@ describe WebController do
     expect(last_response.body).to include 'form method="post"', 'game option'
   end
 
+  it "clears board on post request to /menu" do
+    post '/menu', {}, {'rack.session' => {'board_rows' => ["grid"]}}
+    expect(last_request.env['rack.session']['board_rows']).to eql(nil)
+  end
+
   it "redirects to game route after a post request to /menu" do
     post '/menu'
     expect(last_response).to be_redirect
