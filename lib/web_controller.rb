@@ -20,16 +20,20 @@ class WebController < Sinatra::Base
   end
 
   get '/game' do
-    session['board_rows'] ||= Board.new.rows
-    if first_computer_move
-      players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
-      session['board_rows'] = Game.new(WebUi.new).play(players, Board.new).rows
-      session['first_move'] = false
+    if no_game_option_chosen
+      erb :error
+    else
+      session['board_rows'] ||= Board.new.rows
+      if first_computer_move
+        players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
+        session['board_rows'] = Game.new(WebUi.new).play(players, Board.new).rows
+        session['first_move'] = false
+      end
+      @board = Board.new(session['board_rows'].flatten)
+      @winner_mark = @board.winner_mark
+      @draw = @board.draw?
+      erb :game
     end
-    @board = Board.new(session['board_rows'].flatten)
-    @winner_mark = @board.winner_mark
-    @draw = @board.draw?
-    erb :game
   end
 
   get '/move' do
@@ -44,6 +48,10 @@ class WebController < Sinatra::Base
 
   get '/styles.css' do
     scss :styles
+  end
+
+  def no_game_option_chosen
+    session['game_option'] == nil
   end
 
   def first_computer_move

@@ -65,8 +65,13 @@ describe WebController do
   it "displays game over message with winning mark when winner is available" do
     ui = WebUi.new
     rows = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-    get '/game', {}, {'rack.session' => {'board_rows' => rows}}
+    get '/game', {}, {'rack.session' => {'board_rows' => rows, 'game_option' => '2'}}
     expect(last_response.body).to include('Game over! Winner is X.')
+  end
+
+  it "displays error when trying to acces game page without a game option" do
+    get '/game'
+    expect(last_response.body).to include('Something went wrong')
   end
 
   it "displays styling when the route /styles.css is requested" do
