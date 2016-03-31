@@ -12,6 +12,7 @@ describe PlayerFactory do
   HUMAN_VS_HUMAN = "1"
   HUMAN_VS_COMPUTER = "2"
   COMPUTER_VS_HUMAN = "3"
+  COMPUTER_VS_COMPUTER = "4"
 
   it "creates a computer player and a human console player" do
     factory = PlayerFactory.new(ui)
@@ -47,5 +48,11 @@ describe PlayerFactory do
     factory = PlayerFactory.new(ui)
     expect(factory.create_web_players(COMPUTER_VS_HUMAN)[Marks::X]).to be_a ComputerPlayer
     expect(factory.create_web_players(COMPUTER_VS_HUMAN)[Marks::O]).to be_a HumanWebPlayer
+  end
+
+  it "creates two computer players for the web game" do
+    factory = PlayerFactory.new(ui)
+    expect(factory.create_web_players(COMPUTER_VS_COMPUTER)[Marks::X]).to be_a ComputerPlayer
+    expect(factory.create_web_players(COMPUTER_VS_COMPUTER)[Marks::O]).to be_a ComputerPlayer
   end
 end

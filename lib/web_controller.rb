@@ -55,6 +55,6 @@ class WebController < Sinatra::Base
   end
 
   def first_computer_move
-    session['game_option'] == "3" && session['first_move'] == true
+    (session['game_option'] == "3" || session['game_option'] == "4") && session['first_move'] == true
   end
 end

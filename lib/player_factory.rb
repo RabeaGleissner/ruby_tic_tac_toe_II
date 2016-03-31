@@ -28,6 +28,8 @@ class PlayerFactory
       {X => HumanWebPlayer.new(X), O => ComputerPlayer.new(O)}
     elsif game_mode == "3"
       {X => ComputerPlayer.new(X), O => HumanWebPlayer.new(O)}
+    elsif game_mode == "4"
+      {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
     end
   end
 end
