@@ -17,7 +17,7 @@ describe WebController do
   it "displays menu options on the root route template" do
     get '/'
     expect(last_response).to be_ok
-    expect(last_response.body).to include 'form method="post"', 'game option'
+    expect(last_response.body).to include 'form class="game-options-form" method="post"', 'game option'
   end
 
   it "clears board on post request to /menu" do
