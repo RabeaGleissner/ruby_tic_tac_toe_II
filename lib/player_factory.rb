@@ -22,13 +22,13 @@ class PlayerFactory
   end
 
   def create_web_players(game_mode)
-    if game_mode == "1"
+    if game_mode == :HumanVsHuman
       {X => HumanWebPlayer.new(X), O => HumanWebPlayer.new(O)}
-    elsif game_mode == "2"
+    elsif game_mode == :HumanVsComputer
       {X => HumanWebPlayer.new(X), O => ComputerPlayer.new(O)}
-    elsif game_mode == "3"
+    elsif game_mode == :ComputerVsHuman
       {X => ComputerPlayer.new(X), O => HumanWebPlayer.new(O)}
-    elsif game_mode == "4"
+    elsif game_mode == :ComputerVsComputer
       {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
     end
   end

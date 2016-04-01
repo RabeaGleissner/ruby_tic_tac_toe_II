@@ -32,17 +32,17 @@ describe WebController do
 
   it "adds game options choice from params into session" do
     post '/menu', 'option' => '1'
-    expect(last_request.env['rack.session']['game_option']).to eql('1')
+    expect(last_request.env['rack.session']['game_option']).to eql(:HumanVsHuman)
   end
 
   it "displays empty board on game route template for a Human vs Human game" do
-    get '/game', {}, {'rack.session' => {'game_option' => '1'}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsHuman}}
     expect(last_response).to be_ok
     expect(last_response.body).not_to include "class='cell full'"
   end
 
   it "gets and displays computer's first move for Computer vs Human game" do
-    get '/game', {}, {'rack.session' => {'game_option' => '3', 'first_move' => true}}
+    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsHuman, 'first_move' => true}}
     rows = last_request.env['rack.session']['board_rows']
     expect(rows.flatten).to include :X
     expect(Board.new(rows.flatten).available_positions.length).to be 8
@@ -50,14 +50,14 @@ describe WebController do
 
   it "redirects a get request to /move to game" do
     rows = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-    get '/move', {}, {'rack.session' => {'game_option' => '1', 'board_rows' => rows}}
+    get '/move', {}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => rows}}
     expect(last_response).to be_redirect
     expect(last_response.location).to include '/game'
   end
 
   it "updates board with move from params" do
     board_rows = [0, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-    get '/move?move=8', {}, {'rack.session' => {'game_option' => '1', 'board_rows' => board_rows}}
+    get '/move?move=8', {}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => board_rows}}
     board_rows = last_request.env['rack.session']['board_rows']
     expect(board_rows).to eql([[0, Marks::X, Marks::X], [3, 4, 5], [6, 7, Marks::O]])
   end
@@ -75,7 +75,7 @@ describe WebController do
   end
 
   it "resets the game option when the root route is requested" do
-    get '/game', {}, {'rack.session' => {'game_option' => '2'}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer}}
     get '/'
     expect(last_request.env['rack.session']['game_option']).to eql(nil)
   end
