@@ -9,8 +9,6 @@ class GameOptionsMapper
       :ComputerVsHuman
     when 4
       :ComputerVsComputer
-    else
-      puts "invalid user choice"
     end
   end
 end

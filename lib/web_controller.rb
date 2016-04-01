@@ -37,7 +37,7 @@ class WebController < Sinatra::Base
 
   def set_template_variables
     @game_option = session["game_option"]
-    @board = Board.new(session['board_rows'].flatten)
+    @board = current_board
     @winner_mark = @board.winner_mark
     @draw = @board.draw?
   end
@@ -45,7 +45,6 @@ class WebController < Sinatra::Base
   get '/move' do
     players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
     game = Game.new(WebUi.new)
-    current_board = Board.new(session['board_rows'].flatten)
     player = game.current_player(players, current_board)
     player.add_move(params[:move])
     session['board_rows'] = game.play(players, current_board).rows
@@ -65,10 +64,9 @@ class WebController < Sinatra::Base
   end
 
   def play_computer_vs_computer_game
-    unless Board.new(session['board_rows'].flatten).game_over?
+    unless current_board.game_over?
       game = Game.new(WebUi.new)
       players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
-      current_board = Board.new(session['board_rows'].flatten)
       session['board_rows'] = game.current_player(players, current_board).make_move(current_board).rows
       sleep 1
     end
@@ -77,8 +75,12 @@ class WebController < Sinatra::Base
   def play_first_computer_move
     if first_computer_move
       players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
-      session['board_rows'] = Game.new(WebUi.new).play(players, Board.new).rows
+      session['board_rows'] = Game.new(WebUi.new).play(players, current_board).rows
       session['first_move'] = false
     end
+  end
+
+  def current_board
+    Board.new(session['board_rows'].flatten)
   end
 end

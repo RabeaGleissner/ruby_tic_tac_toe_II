@@ -21,12 +21,12 @@ describe WebController do
   end
 
   it "clears board on post request to /menu" do
-    post '/menu', {}, {'rack.session' => {'board_rows' => ["grid"]}}
+    post '/menu', {'option' => '1'}, {'rack.session' => {'board_rows' => ['grid']}}
     expect(last_request.env['rack.session']['board_rows']).to eql(nil)
   end
 
   it "redirects to game route after a post request to /menu" do
-    post '/menu'
+    post '/menu', 'option' => '1'
     expect(last_response).to be_redirect
   end
 
@@ -43,6 +43,13 @@ describe WebController do
 
   it "gets and displays computer's first move for Computer vs Human game" do
     get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsHuman, 'first_move' => true}}
+    rows = last_request.env['rack.session']['board_rows']
+    expect(rows.flatten).to include :X
+    expect(Board.new(rows.flatten).available_positions.length).to be 8
+  end
+
+  it "plays first move of Computer vs Computer game" do
+    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer}}
     rows = last_request.env['rack.session']['board_rows']
     expect(rows.flatten).to include :X
     expect(Board.new(rows.flatten).available_positions.length).to be 8
