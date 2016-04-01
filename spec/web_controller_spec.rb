@@ -74,6 +74,12 @@ describe WebController do
     expect(last_response.body).to include('Something went wrong')
   end
 
+  it "resets the game option when the root route is requested" do
+    get '/game', {}, {'rack.session' => {'game_option' => '2'}}
+    get '/'
+    expect(last_request.env['rack.session']['game_option']).to eql(nil)
+  end
+
   it "displays styling when the route /styles.css is requested" do
     get '/styles.css'
     expect(last_response.body).to include('box-sizing: border-box;')

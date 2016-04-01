@@ -9,6 +9,7 @@ class WebController < Sinatra::Base
   use Rack::Session::Pool
 
   get '/' do
+    session['game_option'] = nil
     erb :menu
   end
 
@@ -20,19 +21,22 @@ class WebController < Sinatra::Base
   end
 
   get '/game' do
+    session['board_rows'] ||= Board.new.rows
     if no_game_option_chosen
       erb :error
     else
-      session['board_rows'] ||= Board.new.rows
-      if first_computer_move
-        players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
-        session['board_rows'] = Game.new(WebUi.new).play(players, Board.new).rows
-        session['first_move'] = false
+    if session['game_option'] == "4"
+      unless Board.new(session['board_rows'].flatten).game_over?
+        play_computer_vs_computer_game
       end
-      @board = Board.new(session['board_rows'].flatten)
-      @winner_mark = @board.winner_mark
-      @draw = @board.draw?
-      erb :game
+    elsif session['game_option'] == '3'
+      play_first_computer_move
+    end
+    @game_option = session["game_option"]
+    @board = Board.new(session['board_rows'].flatten)
+    @winner_mark = @board.winner_mark
+    @draw = @board.draw?
+    erb :game
     end
   end
 
@@ -55,6 +59,22 @@ class WebController < Sinatra::Base
   end
 
   def first_computer_move
-    (session['game_option'] == "3" || session['game_option'] == "4") && session['first_move'] == true
+    (session['game_option'] == "3") && session['first_move'] == true
+  end
+
+  def play_computer_vs_computer_game
+    game = Game.new(WebUi.new)
+    players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
+    current_board = Board.new(session['board_rows'].flatten)
+    session['board_rows'] = game.current_player(players, current_board).make_move(current_board).rows
+    sleep 1
+  end
+
+  def play_first_computer_move
+    if first_computer_move
+      players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
+      session['board_rows'] = Game.new(WebUi.new).play(players, Board.new).rows
+      session['first_move'] = false
+    end
   end
 end
