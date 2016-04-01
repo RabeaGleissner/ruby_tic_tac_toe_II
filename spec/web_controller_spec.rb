@@ -41,14 +41,14 @@ describe WebController do
     expect(last_response.body).not_to include "class='cell full'"
   end
 
-  it "gets and displays computer's first move for Computer vs Human game" do
+  it "gets and displays computer's first move for Computer vs Human game", slow: true do
     get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsHuman, 'first_move' => true}}
     rows = last_request.env['rack.session']['board_rows']
     expect(rows.flatten).to include :X
     expect(Board.new(rows.flatten).available_positions.length).to be 8
   end
 
-  it "plays first move of Computer vs Computer game" do
+  it "plays first move of Computer vs Computer game", slow: true do
     get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer}}
     rows = last_request.env['rack.session']['board_rows']
     expect(rows.flatten).to include :X

@@ -76,7 +76,7 @@ describe ComputerPlayer do
     expect(player.ready?).to be true
   end
 
-  it "makes the first move in under 2 second" do
+  it "makes the first move in under 2 seconds", slow: true do
     start_time = Time.now
     player.make_move(Board.new)
     end_time = Time.now
