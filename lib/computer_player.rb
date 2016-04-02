@@ -56,10 +56,6 @@ class ComputerPlayer
     end
   end
 
-  def switch_mark(mark)
-    mark = mark == X ? O : X
-  end
-
   def ready?
     true
   end
@@ -67,14 +63,14 @@ class ComputerPlayer
   private
 
   def score_favourable_for_computer?(current_mark, score, best_score)
-    if (computer_mark_is?(current_mark))
+    if (computer?(current_mark))
       score[0] > best_score
     else
       score[0] < best_score
     end
   end
 
-  def computer_mark_is?(current_mark)
+  def computer?(current_mark)
     current_mark == computer_mark
   end
 
