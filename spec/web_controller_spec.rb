@@ -14,38 +14,68 @@ describe WebController do
     WebController.new
   end
 
-  it "displays an empty board on the root route template" do
+  it "displays menu options on the root route template" do
     get '/'
     expect(last_response).to be_ok
-    expect(last_response.body).not_to include 'class="cell, full-cell"'
+    expect(last_response.body).to include 'form class="game-options-form" method="post"', 'game option'
   end
 
-  it "redirects a get request to /move to root" do
-    set_up_game
-    get '/move'
+  it "clears board on post request to /menu" do
+    post '/menu', {}, {'rack.session' => {'board_rows' => ["grid"]}}
+    expect(last_request.env['rack.session']['board_rows']).to eql(nil)
+  end
+
+  it "redirects to game route after a post request to /menu" do
+    post '/menu'
     expect(last_response).to be_redirect
   end
 
-  it "updates board with move from params" do
-    set_up_game
-    get '/move?move=2'
-    rows = last_request.env['rack.session']['board_rows']
-    expect(rows).to eql([[0, 1, Marks::X], [3, 4, 5], [6, 7, 8]])
+  it "adds game options choice from params into session" do
+    post '/menu', 'option' => '1'
+    expect(last_request.env['rack.session']['game_option']).to eql('1')
   end
 
-  it "displays the winning mark when a winner is available" do
+  it "displays empty board on game route template for a Human vs Human game" do
+    get '/game', {}, {'rack.session' => {'game_option' => '1'}}
+    expect(last_response).to be_ok
+    expect(last_response.body).not_to include "class='cell full'"
+  end
+
+  it "gets and displays computer's first move for Computer vs Human game" do
+    get '/game', {}, {'rack.session' => {'game_option' => '3', 'first_move' => true}}
+    rows = last_request.env['rack.session']['board_rows']
+    expect(rows.flatten).to include :X
+    expect(Board.new(rows.flatten).available_positions.length).to be 8
+  end
+
+  it "redirects a get request to /move to game" do
+    rows = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
+    get '/move', {}, {'rack.session' => {'game_option' => '1', 'board_rows' => rows}}
+    expect(last_response).to be_redirect
+    expect(last_response.location).to include '/game'
+  end
+
+  it "updates board with move from params" do
+    board_rows = [0, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
+    get '/move?move=8', {}, {'rack.session' => {'game_option' => '1', 'board_rows' => board_rows}}
+    board_rows = last_request.env['rack.session']['board_rows']
+    expect(board_rows).to eql([[0, Marks::X, Marks::X], [3, 4, 5], [6, 7, Marks::O]])
+  end
+
+  it "displays game over message with winning mark when winner is available" do
     ui = WebUi.new
-    rows = Board.new([Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]).rows
-    get '/', {}, {'rack.session' => {'board_rows' => rows}}
+    rows = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
+    get '/game', {}, {'rack.session' => {'board_rows' => rows, 'game_option' => '2'}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 
-  it "displays the styling when the route /styles.css is requested" do
-    get '/styles.css'
-    expect(last_response.body).to include('box-sizing: border-box;')
+  it "displays error when trying to acces game page without a game option" do
+    get '/game'
+    expect(last_response.body).to include('Something went wrong')
   end
 
-  def set_up_game
-    get '/'
+  it "displays styling when the route /styles.css is requested" do
+    get '/styles.css'
+    expect(last_response.body).to include('box-sizing: border-box;')
   end
 end

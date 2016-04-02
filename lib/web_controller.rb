@@ -1,8 +1,7 @@
 require 'sinatra'
-require 'haml'
 require 'web_ui'
 require 'game'
-require 'human_web_player.rb'
+require 'player_factory'
 require 'marks'
 
 class WebController < Sinatra::Base
@@ -10,24 +9,52 @@ class WebController < Sinatra::Base
   use Rack::Session::Pool
 
   get '/' do
-    session['board_rows'] ||= Board.new.rows
-    @board = Board.new(session['board_rows'].flatten)
-    @winner_mark = @board.winner_mark
-    @draw = @board.draw?
-    erb :index
+    erb :menu
+  end
+
+  post '/menu' do
+    session['board_rows'] = nil
+    session['game_option'] = params[:option]
+    session['first_move'] = true
+    redirect '/game'
+  end
+
+  get '/game' do
+    if no_game_option_chosen
+      erb :error
+    else
+      session['board_rows'] ||= Board.new.rows
+      if first_computer_move
+        players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
+        session['board_rows'] = Game.new(WebUi.new).play(players, Board.new).rows
+        session['first_move'] = false
+      end
+      @board = Board.new(session['board_rows'].flatten)
+      @winner_mark = @board.winner_mark
+      @draw = @board.draw?
+      erb :game
+    end
   end
 
   get '/move' do
-    players = {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
+    players = PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
     game = Game.new(WebUi.new)
     current_board = Board.new(session['board_rows'].flatten)
     player = game.current_player(players, current_board)
     player.add_move(params[:move])
-    session['board_rows'] = Game.new(WebUi.new).play(players,current_board).rows
-    redirect '/'
+    session['board_rows'] = game.play(players,current_board).rows
+    redirect '/game'
   end
 
   get '/styles.css' do
     scss :styles
+  end
+
+  def no_game_option_chosen
+    session['game_option'] == nil
+  end
+
+  def first_computer_move
+    session['game_option'] == "3" && session['first_move'] == true
   end
 end
