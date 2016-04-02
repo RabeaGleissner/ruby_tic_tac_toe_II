@@ -1,5 +1,8 @@
 require 'board'
+require 'marks'
+
 class Game
+  include Marks
   attr_reader :ui
 
   def initialize(ui)
@@ -7,20 +10,28 @@ class Game
   end
 
   def play(players, board)
-    current_player = players.first
-    until board.game_over? || !current_player.ready?
+    current_player = players[Marks::X]
+    until board.game_over? || !current_player(players, board).ready?
       ui.draw_board(board)
-      board = current_player.make_move(board)
-      current_player = switch(players).first
+      board = current_player(players, board).make_move(board)
     end
     end_game(board) if board.game_over?
     board
   end
 
+  def current_player(players, board)
+    players[current_player_mark(board)]
+  end
+
   private
 
-  def switch(players)
-    players.reverse!
+  def current_player_mark(board)
+    if board.count_for(Marks::X) >
+      board.count_for(Marks::O)
+      Marks::O
+    else
+      Marks::X
+    end
   end
 
   def end_game(board)

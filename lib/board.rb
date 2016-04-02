@@ -35,6 +35,10 @@ class Board
     winner_mark != nil
   end
 
+  def draw?
+    full? && !winner?
+  end
+
   def all_same_marks?(line)
     line[0] == line[1] && line[1] == line[2]
   end
@@ -66,11 +70,14 @@ class Board
     ]
   end
 
+  def count_for(mark)
+    count = grid.select {|cell| cell == mark}.size
+  end
+
   private
   attr_reader :grid, :dimension
 
   def empty_board
     (0..8).to_a
   end
-
 end

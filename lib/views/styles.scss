@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-html, body {
-  background-color: white;
-}
-
 html {
   position: relative;
   min-height: 100%;
@@ -48,7 +44,13 @@ h1 {
 .wrapper {
   height: 140px;
   width: 140px;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   border-right: 1px solid black;
   &:last-child {
@@ -58,6 +60,9 @@ h1 {
 
 .cell {
   text-decoration: none;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
@@ -83,3 +88,64 @@ h1 {
   margin: 0 auto;
   font-size: 1.2em;
 }
+
+input {
+  overflow: visible;
+}
+
+h2.menu {
+  margin-bottom: 20px;
+}
+
+.game-options-form {
+  p {
+    width: 260px;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #e5e0e0;
+    padding: 16px 10px;
+    &:hover {
+      background-color: lightpink;
+      cursor: pointer;
+    }
+    label {
+      padding: 10px 26px;
+    }
+    input:hover, label:hover {
+      cursor: pointer;
+    }
+    input[type=radio] {
+      display: none;
+      &:checked + label {
+        font-weight: bold;
+        padding: 0;
+      }
+      &:checked + label:after {
+        content: " \2714";
+      }
+    }
+  }
+}
+
+button, .play-again, .choose-game-option {
+  font: inherit;
+  overflow: visible;
+  margin: 0;
+  cursor: pointer;
+  -webkit-appearance: button;
+  border: 1px solid grey;
+  background: #fff;
+  padding: 8px 16px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #000000;
+  font-size: 1em;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.play-again {
+  font-size: .8em;
+}
+

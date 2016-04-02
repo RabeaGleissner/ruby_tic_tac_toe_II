@@ -1,0 +1,38 @@
+<div class='board'>
+  <% @board.rows.each do |row| %>
+    <div class='row'>
+      <div class='wrapper'>
+        <% if @board.available_positions.include? row[0] %>
+          <a class='cell' href="/move?move=<%= row[0] %>"><div class='empty'>&nbsp;</div></a>
+        <% else %>
+          <div class='cell full'><%= row[0] %></div>
+        <% end %>
+      </div>
+      <div class='wrapper'>
+        <% if @board.available_positions.include? row[1] %>
+          <a class='cell' href="/move?move=<%= row[1] %>"><div class='empty'>&nbsp;</div></a>
+        <% else %>
+          <div class='cell full'><%= row[1] %></div>
+        <% end %>
+      </div>
+      <div class='wrapper'>
+        <% if @board.available_positions.include? row[2] %>
+          <a class='cell' href="/move?move=<%= row[2] %>"><div class='empty'>&nbsp;</div></a>
+        <% else %>
+          <div class='cell full'><%= row[2] %></div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class='game-end-message'>
+  <% if @draw == true %>
+    <p>Game over! It's a draw.</p>
+  <% elsif @winner_mark == :X || @winner_mark == :O %>
+    <p>Game over! Winner is <%= @winner_mark %>.</p>
+  <% end %>
+  <% if @board.game_over? %>
+    <a class="play-again" href="/">Play again</a>
+  <% end %>
+</div>
