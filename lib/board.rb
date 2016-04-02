@@ -1,7 +1,8 @@
-class Board
-  attr_reader :grid, :dimension
+require 'marks'
 
-  def initialize(marks = (0..8).to_a)
+class Board
+  include Marks
+  def initialize(marks = empty_board)
     @grid = marks
     @dimension = Math.sqrt(@grid.size).to_i
   end
@@ -13,29 +14,25 @@ class Board
   end
 
   def available_positions
-    grid.select { |cell| cell != :X && cell != :O}
+    grid.select { |cell| cell != X && cell != O}
   end
 
   def game_over?
-    has_winner? || full?
+    winner? || full?
   end
 
-  def winner
-    if @winner.nil?
-      winner = false
-      lines.each do |line|
-        if all_same_marks?(line)
-          winner = line[0]
-          break
-        end
+  def winner_mark
+    winner = nil
+    lines.each do |line|
+      if all_same_marks?(line)
+        winner = line[0]
       end
-      @winner = winner
     end
-    @winner
+    winner
   end
 
-  def has_winner?
-    winner != false
+  def winner?
+    winner_mark != nil
   end
 
   def all_same_marks?(line)
@@ -47,11 +44,11 @@ class Board
   end
 
   def full?
-    (grid & (0..8).to_a).empty?
+    (grid & empty_board).empty?
   end
 
   def lines
-    @lines ||= [rows, columns, diagonals].flatten(1)
+    lines ||= [rows, columns, diagonals].flatten(1)
   end
 
   def rows
@@ -68,4 +65,12 @@ class Board
       [grid[2], grid[4], grid[6]]
     ]
   end
+
+  private
+  attr_reader :grid, :dimension
+
+  def empty_board
+    (0..8).to_a
+  end
+
 end

@@ -1,6 +1,7 @@
-require 'player'
+require 'marks'
 
-class ComputerPlayer < Player
+class ComputerPlayer
+  include Marks
   attr_reader :computer_mark
   BEST_MOVE_PLACEHOLDER = -1
   INITIAL_ALPHA_VALUE = -10000
@@ -18,7 +19,7 @@ class ComputerPlayer < Player
   end
 
   def minimax(depth, board, current_mark, alpha, beta)
-    best_score = reset_score(current_mark)
+    best_score = initialize_best_score(current_mark)
     best_move = BEST_MOVE_PLACEHOLDER
 
     if board.game_over? || depth == 0
@@ -46,27 +47,38 @@ class ComputerPlayer < Player
   end
 
   def score_for_move(board, depth)
-    if !board.has_winner?
-      return 0
-    elsif board.winner == computer_mark
-      return depth
+    if !board.winner?
+      0
+    elsif board.winner_mark == computer_mark
+      depth
     else
-      return - depth
+      -depth
     end
   end
 
   def switch_mark(mark)
-    mark = mark == :X ? :O : :X
+    mark = mark == X ? O : X
+  end
+
+  def ready?
+    true
   end
 
   private
 
   def score_favourable_for_computer?(current_mark, score, best_score)
-    current_mark == computer_mark && score[0] > best_score ||
-      current_mark != computer_mark && score[0] < best_score
+    if (computer_mark_is?(current_mark))
+      score[0] > best_score
+    else
+      score[0] < best_score
+    end
   end
 
-  def reset_score(current_mark)
-    current_mark == computer_mark ? - 1000 : 1000
+  def computer_mark_is?(current_mark)
+    current_mark == computer_mark
+  end
+
+  def initialize_best_score(current_mark)
+    current_mark == computer_mark ? -1000 : 1000
   end
 end
