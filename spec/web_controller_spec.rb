@@ -91,4 +91,16 @@ describe WebController do
     get '/styles.css'
     expect(last_response.body).to include('box-sizing: border-box;')
   end
+
+  it "disables board when game is over" do
+    board_rows = [Marks::X, Marks::X, Marks::X, Marks::O, Marks::O, 5, 6, 7, 8]
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => board_rows}}
+    expect(last_response.body).to include("class='board disabled'")
+  end
+
+  it "disables board during computer vs computer game", slow: true do
+    board_rows = [Marks::X, 1, Marks::X, Marks::O, Marks::O, Marks::X, Marks::O, 7, 8]
+    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer, 'board_rows' => board_rows}}
+    expect(last_response.body).to include("class='board disabled'")
+  end
 end
