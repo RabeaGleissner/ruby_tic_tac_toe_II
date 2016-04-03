@@ -9,6 +9,7 @@ require 'marks'
 describe WebController do
   include Marks
   include Rack::Test::Methods
+  HUMAN_VS_HUMAN = '1'
 
   def app
     WebController.new
@@ -21,17 +22,17 @@ describe WebController do
   end
 
   it "clears board on post request to /menu" do
-    post '/menu', {'option' => '1'}, {'rack.session' => {'board_rows' => ['grid']}}
+    post '/menu', {'option' => HUMAN_VS_HUMAN}, {'rack.session' => {'board_rows' => ['grid']}}
     expect(last_request.env['rack.session']['board_rows']).to eql(nil)
   end
 
   it "redirects to game route after a post request to /menu" do
-    post '/menu', 'option' => '1'
+    post '/menu', 'option' => HUMAN_VS_HUMAN
     expect(last_response).to be_redirect
   end
 
   it "adds game options choice from params into session" do
-    post '/menu', 'option' => '1'
+    post '/menu', 'option' => HUMAN_VS_HUMAN
     expect(last_request.env['rack.session']['game_option']).to eql(:HumanVsHuman)
   end
 
@@ -72,7 +73,7 @@ describe WebController do
   it "displays game over message with winning mark when winner is available" do
     ui = WebUi.new
     rows = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-    get '/game', {}, {'rack.session' => {'board_rows' => rows, 'game_option' => '2'}}
+    get '/game', {}, {'rack.session' => {'board_rows' => rows, 'game_option' => :HumanVsComputer}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 
