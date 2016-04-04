@@ -29,16 +29,16 @@ describe Ui do
 
   it "gets the game mode" do
     ui = Ui.new(StringIO.new("2"), output)
-    expect(ui.menu(GAME_OPTIONS)).to eq("2")
+    expect(ui.menu(GAME_OPTIONS)).to eq(:HumanVsComputer)
   end
 
   it "displays error message and menu options on bad user input" do
     ERROR_MESSAGE = "Please select a valid game mode!"
-    allow(ui.input).to receive(:gets).and_return("bad", "3")
+    VALID_OPTION = "3"
+    allow(ui.input).to receive(:gets).and_return("bad", VALID_OPTION)
     ui.get_game_mode(GAME_OPTIONS)
     expect(output.string).to include(ERROR_MESSAGE)
   end
-
 
   it "asks user for position" do
     output = StringIO.new

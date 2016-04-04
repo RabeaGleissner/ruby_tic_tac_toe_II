@@ -12,22 +12,26 @@ class PlayerFactory
   end
 
   def create_console_players(game_mode)
-    if game_mode == "1"
+    case game_mode
+    when :HumanVsHuman
       {X => HumanConsolePlayer.new(X, ui), O => HumanConsolePlayer.new(O, ui)}
-    elsif game_mode == "2"
+    when :HumanVsComputer
       {X => HumanConsolePlayer.new(X, ui), O => ComputerPlayer.new(O)}
-    elsif game_mode == "3"
+    when :ComputerVsHuman
       {X => ComputerPlayer.new(X), O => HumanConsolePlayer.new(O, ui)}
     end
   end
 
   def create_web_players(game_mode)
-    if game_mode == "1"
+    case game_mode
+    when :HumanVsHuman
       {X => HumanWebPlayer.new(X), O => HumanWebPlayer.new(O)}
-    elsif game_mode == "2"
+    when :HumanVsComputer
       {X => HumanWebPlayer.new(X), O => ComputerPlayer.new(O)}
-    elsif game_mode == "3"
+    when :ComputerVsHuman
       {X => ComputerPlayer.new(X), O => HumanWebPlayer.new(O)}
+    when :ComputerVsComputer
+      {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
     end
   end
 end

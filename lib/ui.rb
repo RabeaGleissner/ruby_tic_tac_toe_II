@@ -1,4 +1,5 @@
 require 'marks'
+require 'game_options_mapper'
 
 class Ui
   include Marks
@@ -23,8 +24,9 @@ class Ui
 
   def get_game_mode(game_options)
     mode = input.gets.chomp
-    if (1..game_options.length).include? mode.to_i || mode == "q"
-      mode
+    mapper = GameOptionsMapper.new
+    if (mapper.game_options.key?(mode.to_i))
+      mapper.map(mode)
     else
       game_mode_selection_error
       menu(game_options)

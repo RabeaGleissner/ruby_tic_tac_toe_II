@@ -31,6 +31,15 @@ class Board
     winner
   end
 
+  def next_player_mark
+    if count_for(Marks::X) >
+      count_for(Marks::O)
+      Marks::O
+    else
+      Marks::X
+    end
+  end
+
   def winner?
     winner_mark != nil
   end

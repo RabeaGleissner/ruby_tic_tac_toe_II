@@ -1,13 +1,10 @@
 require 'game'
 require 'player_factory'
 require 'ui'
+require 'game_options_mapper'
 
 class GameRunner
   attr_reader :ui, :game, :player_factory
-
-  GAME_OPTIONS = {1 => "Human vs Human",
-                  2 => "Human vs Computer",
-                  3 => "Computer vs Human"}
 
   def initialize(ui, game, player_factory)
     @ui = ui
@@ -18,7 +15,7 @@ class GameRunner
   def start
     begin
       loop do
-        game_option = ui.menu(GAME_OPTIONS)
+        game_option = ui.menu(GameOptionsMapper.new.game_options)
         players = player_factory.create_console_players(game_option)
         game.play(players, Board.new)
         break unless ui.replay?

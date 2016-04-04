@@ -1,4 +1,7 @@
-<div class='board'>
+<% if @game_option == :ComputerVsComputer && !@board.game_over? %>
+  <meta http-equiv="refresh" content="1">
+<% end %>
+<div class='board <% if @game_option == :ComputerVsComputer || @board.game_over?%>disabled<% end %>'>
   <% @board.rows.each do |row| %>
     <div class='row'>
       <div class='wrapper'>
