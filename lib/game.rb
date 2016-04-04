@@ -24,19 +24,10 @@ class Game
   end
 
   def current_player(players, board)
-    players[current_player_mark(board)]
+    players[board.next_player_mark]
   end
 
   private
-
-  def current_player_mark(board)
-    if board.count_for(Marks::X) >
-      board.count_for(Marks::O)
-      Marks::O
-    else
-      Marks::X
-    end
-  end
 
   def end_game(board)
     ui.draw_board(board)
