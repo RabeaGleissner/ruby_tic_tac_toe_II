@@ -3,7 +3,7 @@ module Marks
   O = :O
 
   def switch_mark(mark)
-    mark = mark == X ? O : X
+    mark == X ? O : X
   end
 
 end

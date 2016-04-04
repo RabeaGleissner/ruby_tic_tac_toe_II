@@ -9,11 +9,6 @@ describe PlayerFactory do
   include Marks
   let (:ui) {Ui.new(nil, nil)}
 
-  HUMAN_VS_HUMAN = "1"
-  HUMAN_VS_COMPUTER = "2"
-  COMPUTER_VS_HUMAN = "3"
-  COMPUTER_VS_COMPUTER = "4"
-
   it "creates a computer player and a human console player" do
     factory = PlayerFactory.new(ui)
     expect(factory.create_console_players(:ComputerVsHuman)[Marks::X]).to be_a ComputerPlayer
