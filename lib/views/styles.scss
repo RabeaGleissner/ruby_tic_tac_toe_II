@@ -17,11 +17,16 @@ body {
   font-size: 18px;
   margin: 0 0 35px;
   text-align: center;
+  padding: 10px;
 }
 
 h1 {
   font-size: 3em;
   margin-bottom: 70px;
+}
+
+h2 {
+  font-size: 1.5em;
 }
 
 .board {
@@ -31,7 +36,7 @@ h1 {
 }
 
 .board.disabled {
-  a {
+  button {
     pointer-events: none;
     cursor: default;
   }
@@ -67,17 +72,14 @@ h1 {
 
 .cell {
   text-decoration: none;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+  border: none;
 }
 
 .empty {
-  margin: 10px auto 0;
+  margin: 2px auto 0;
   background-color: #e5e0e0;
   height: 120px;
-  max-width: 120px;
+  width: 120px;
   cursor: pointer;
   transition: .6s;
 }
@@ -88,6 +90,11 @@ h1 {
 
 .full {
   font-size: 5.5em;
+  margin: 0 auto;
+}
+
+.cell-form {
+  margin: 0 auto;
 }
 
 .game-end-message {
@@ -150,9 +157,37 @@ button, .play-again, .choose-game-option {
   font-size: 1em;
   text-decoration: none;
   vertical-align: middle;
+  &:focus {
+    outline:0;
+  }
 }
 
 .play-again {
   font-size: .8em;
 }
 
+@media only screen and (max-width:520px) {
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .empty {
+    height: 90px;
+    width: 90px;
+    margin: 0;
+  }
+
+  .wrapper {
+    height: 120px;
+    width: 120px;
+  }
+
+  .cell {
+    width: 90px;
+    padding: 15px 0px;
+  }
+
+  .full {
+    margin: -15px auto;
+  }
+}

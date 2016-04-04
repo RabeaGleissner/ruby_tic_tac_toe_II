@@ -6,21 +6,30 @@
     <div class='row'>
       <div class='wrapper'>
         <% if @board.available_positions.include? row[0] %>
-          <a class='cell' href="/move?move=<%= row[0] %>"><div class='empty'>&nbsp;</div></a>
+          <form class="cell-form" method="post" action="/move">
+            <input class="hidden" type="hidden" name="position" value=<%= row[0].to_s %>>
+            <button class='cell' type="submit"><div class='empty'>&nbsp;</div></button>
+          </form>
         <% else %>
           <div class='cell full'><%= row[0] %></div>
         <% end %>
       </div>
       <div class='wrapper'>
         <% if @board.available_positions.include? row[1] %>
-          <a class='cell' href="/move?move=<%= row[1] %>"><div class='empty'>&nbsp;</div></a>
+          <form class="cell-form" method="post" action="/move">
+            <input class="hidden" type="hidden" name="position" value=<%= row[1].to_s %>>
+            <button class='cell' type="submit"><div class='empty'>&nbsp;</div></button>
+          </form>
         <% else %>
           <div class='cell full'><%= row[1] %></div>
         <% end %>
       </div>
       <div class='wrapper'>
         <% if @board.available_positions.include? row[2] %>
-          <a class='cell' href="/move?move=<%= row[2] %>"><div class='empty'>&nbsp;</div></a>
+          <form class="cell-form" method ="post" action="/move">
+            <input class="hidden" type="hidden" name="position" value=<%= row[2].to_s %>>
+            <button class='cell' type="submit"><div class='empty'>&nbsp;</div></button>
+          </form>
         <% else %>
           <div class='cell full'><%= row[2] %></div>
         <% end %>

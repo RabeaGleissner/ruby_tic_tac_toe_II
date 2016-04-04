@@ -42,9 +42,9 @@ class WebController < Sinatra::Base
     @draw = @board.draw?
   end
 
-  get '/move' do
+  post '/move' do
     players = current_game_players
-    game.current_player(players, current_board).add_move(params[:move])
+    game.current_player(players, current_board).add_move(params[:position])
     session['board_rows'] = game.play(players, current_board).rows
     redirect '/game'
   end

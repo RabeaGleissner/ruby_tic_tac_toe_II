@@ -56,16 +56,16 @@ describe WebController do
     expect(Board.new(rows.flatten).available_positions.length).to be 8
   end
 
-  it "redirects a get request to /move to game" do
+  it "redirects a post request to /move to game" do
     rows = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-    get '/move', {}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => rows}}
+    post '/move', {'position' => '1'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => rows}}
     expect(last_response).to be_redirect
     expect(last_response.location).to include '/game'
   end
 
   it "updates board with move from params" do
     board_rows = [0, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-    get '/move?move=8', {}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => board_rows}}
+    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => board_rows}}
     board_rows = last_request.env['rack.session']['board_rows']
     expect(board_rows).to eql([[0, Marks::X, Marks::X], [3, 4, 5], [6, 7, Marks::O]])
   end
