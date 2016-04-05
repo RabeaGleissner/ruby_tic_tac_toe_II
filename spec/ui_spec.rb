@@ -40,7 +40,7 @@ describe Ui do
     expect(output.string).to include(ERROR_MESSAGE)
   end
 
-  it "asks user for position" do
+  it "asks user for a position" do
     output = StringIO.new
     ui = Ui.new(StringIO.new("2"), output)
     ui.request_position(Board.new)

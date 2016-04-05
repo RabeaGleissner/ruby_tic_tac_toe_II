@@ -38,28 +38,7 @@ describe Board do
     expect(winning_board.winner_mark).to eq(nil)
   end
 
-  it "lists all rows" do
-    full_board = Board.new([X, O, X,
-                            O, X, O,
-                            X, O, X])
-    expect(full_board.rows).to eq([[X, O, X], [O, X, O], [X, O, X]])
-  end
-
-  it "lists all columns" do
-    board = Board.new([X, O, 2,
-                       O, X, O,
-                        6,  7, 8])
-    expect(board.columns).to eq([[X, O, 6], [O, X, 7], [2, O, 8]])
-  end
-
-  it "lists all diagonals" do
-    board = Board.new([X, O, 2,
-                       O, X, O,
-                       6, 7, 8])
-    expect(board.diagonals).to eq([[X, X, 8], [2, X, 6]])
-  end
-
-  it "lists all lines of the current game state" do
+  it "lists all rows, columns and diagonals of the current game state" do
     board = Board.new([X, O, 2,
                        O, X, O,
                        6, 7, 8])

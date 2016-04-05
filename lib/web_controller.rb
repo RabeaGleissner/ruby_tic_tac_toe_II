@@ -2,10 +2,8 @@ require 'sinatra'
 require 'web_ui'
 require 'game'
 require 'player_factory'
-require 'marks'
 
 class WebController < Sinatra::Base
-  include Marks
   use Rack::Session::Pool
 
   get '/' do
@@ -25,21 +23,14 @@ class WebController < Sinatra::Base
     if no_game_option_chosen
       erb :error
     else
-      if session['game_option'] == :ComputerVsComputer
+      if computer_vs_computer_option
         play_computer_vs_computer_game
-      elsif session['game_option'] == :ComputerVsHuman
+      elsif computer_vs_human_option
         play_first_computer_move
       end
     set_template_variables
     erb :game
     end
-  end
-
-  def set_template_variables
-    @game_option = session["game_option"]
-    @board = current_board
-    @winner_mark = @board.winner_mark
-    @draw = @board.draw?
   end
 
   post '/move' do
@@ -51,6 +42,15 @@ class WebController < Sinatra::Base
 
   get '/styles.css' do
     scss :styles
+  end
+
+  private
+
+  def set_template_variables
+    @game_option = session["game_option"]
+    @board = current_board
+    @winner_mark = @board.winner_mark
+    @draw = @board.draw?
   end
 
   def no_game_option_chosen
@@ -87,5 +87,13 @@ class WebController < Sinatra::Base
 
   def game
     Game.new(WebUi.new)
+  end
+
+  def computer_vs_human_option
+    session['game_option'] == :ComputerVsHuman
+  end
+
+  def computer_vs_computer_option
+    session['game_option'] == :ComputerVsComputer
   end
 end

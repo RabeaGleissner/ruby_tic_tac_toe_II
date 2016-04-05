@@ -4,7 +4,6 @@ require 'board'
 require 'marks'
 
 describe HumanWebPlayer do
-
   it "is ready when it has a move" do
     player = HumanWebPlayer.new(Marks::X)
     player.add_move(1)

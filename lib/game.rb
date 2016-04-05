@@ -12,15 +12,11 @@ class Game
   def play(players, board)
     current_player = players[Marks::X]
     until board.game_over? || !current_player(players, board).ready?
-      board = play_one_round(board, players)
+      ui.draw_board(board)
+      board = current_player(players, board).make_move(board)
     end
     end_game(board) if board.game_over?
     board
-  end
-
-  def play_one_round(board, players)
-      ui.draw_board(board)
-      current_player(players, board).make_move(board)
   end
 
   def current_player(players, board)

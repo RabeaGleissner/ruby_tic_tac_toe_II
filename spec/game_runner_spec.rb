@@ -10,8 +10,7 @@ describe GameRunner do
   it "starts application and plays game twice if user wants to replay" do
     replay_choices = [true, false]
     fake_ui = FakeUi.new(replay_choices)
-    player_factory = PlayerFactory.new(fake_ui)
-    game_runner = GameRunner.new(fake_ui, game_spy, player_factory)
+    game_runner = GameRunner.new(fake_ui, game_spy, PlayerFactory.new(fake_ui))
 
     game_runner.start
 
@@ -19,11 +18,12 @@ describe GameRunner do
   end
 
   it "catches exception if a user interrupts with ctrl + c" do
-    disruptive_ui = InterruptingUi.new
-    player_factory = PlayerFactory.new(disruptive_ui)
-    game_runner = GameRunner.new(disruptive_ui, game_spy, player_factory)
+    interrupting_ui = InterruptingUi.new
+    game_runner = GameRunner.new(interrupting_ui, game_spy, PlayerFactory.new(interrupting_ui))
+
     game_runner.start
-    expect(disruptive_ui.displayed_interruption_message?).to be true
+
+    expect(interrupting_ui.displayed_interruption_message?).to be true
   end
 
   class InterruptingUi

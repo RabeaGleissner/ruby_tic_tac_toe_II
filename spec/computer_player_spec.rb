@@ -7,33 +7,25 @@ describe ComputerPlayer do
   include Marks
   let(:player) {ComputerPlayer.new(Marks::O)}
 
-  it "assigns a positive score if computer player wins" do
+  it "assigns positive score if computer player wins" do
     board = Board.new([Marks::O, Marks::O, Marks::O,
                        3, 4, 5,
                        6, Marks::X, Marks::X])
     expect(player.score_for_move(board, 2)).to eq 2
   end
 
-  it "assigns a positive score if game is drawn" do
+  it "assigns positive score if game is drawn" do
     board = Board.new([Marks::O, Marks::O, Marks::X,
                        Marks::X, Marks::X, Marks::O,
                        Marks::O, Marks::X, Marks::X])
     expect(player.score_for_move(board, 0)).to eq 0
   end
 
-  it "assigns a negatie score if opponent wins" do
+  it "assigns negative score if opponent wins" do
     board = Board.new([Marks::O, Marks::O, 2,
                        3, 4, 5,
                        Marks::X, Marks::X, Marks::X])
     expect(player.score_for_move(board, 4)).to eq -4
-  end
-
-  it "switches the mark to Marks::O" do
-    expect(player.switch_mark(Marks::X)).to eq Marks::O
-  end
-
-  it "switches the mark to Marks::X" do
-    expect(player.switch_mark(Marks::O)).to eq Marks::X
   end
 
   it "makes a winning move for a diagonal win" do
