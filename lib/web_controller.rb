@@ -36,7 +36,7 @@ class WebController < Sinatra::Base
   post '/move' do
     players = current_game_players
     game.current_player(players, current_board).add_move(params[:position])
-    session['board_rows'] = game.play(players, current_board).rows
+    session['board_rows'] = game.play_one_round(players, current_board).rows
     redirect '/game'
   end
 
@@ -72,7 +72,7 @@ class WebController < Sinatra::Base
   def play_first_computer_move
     if first_computer_move
       current_game_players
-      session['board_rows'] = game.play(current_game_players, current_board).rows
+      session['board_rows'] = game.play_one_round(current_game_players, current_board).rows
       session['first_move'] = false
     end
   end
