@@ -10,7 +10,7 @@ describe WebController do
   include Rack::Test::Methods
   HUMAN_VS_HUMAN = '1'
   X_WINNING_ROWS = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
-  GAME_IN_PROGRESS_ROWS = [0, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
+  GAME_IN_PROGRESS_ROWS = [0, Marks::X, Marks::O, 3, 4, 5, 6, 7, 8]
 
   def app
     WebController.new
@@ -66,7 +66,7 @@ describe WebController do
   it "updates board with move from params" do
     post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
     board_rows = last_request.env['rack.session']['board_rows']
-    expect(board_rows).to eql([[0, Marks::X, Marks::X], [3, 4, 5], [6, 7, Marks::O]])
+    expect(board_rows).to eql([[0, Marks::X, Marks::O], [3, 4, 5], [6, 7, Marks::X]])
   end
 
   it "displays game over message with winning mark when winner is available" do
@@ -98,5 +98,12 @@ describe WebController do
   it "disables board during computer vs computer game", slow: true do
     get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
     expect(last_response.body).to include("class='board disabled'")
+  end
+
+  it "plays move for computer after human move for Human vs Computer game" do
+    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer}}
+    board_rows = last_request.env['rack.session']['board_rows'].flatten
+    expect(Board.new(board_rows).available_positions.length).to eq 5
   end
 end
