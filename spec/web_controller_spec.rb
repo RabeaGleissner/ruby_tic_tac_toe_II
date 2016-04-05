@@ -2,7 +2,6 @@ ENV['RACK_ENV'] = 'test'
 require 'spec_helper'
 require 'rack/test'
 require 'web_controller'
-require 'web_ui'
 require 'board'
 require 'marks'
 
@@ -71,7 +70,6 @@ describe WebController do
   end
 
   it "displays game over message with winning mark when winner is available" do
-    ui = WebUi.new
     get '/game', {}, {'rack.session' => {'board_rows' => X_WINNING_ROWS, 'game_option' => :HumanVsComputer}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end

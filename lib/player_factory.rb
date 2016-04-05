@@ -5,13 +5,8 @@ require 'marks'
 
 class PlayerFactory
   include Marks
-  attr_reader :ui
 
-  def initialize(ui)
-    @ui = ui
-  end
-
-  def create_console_players(game_mode)
+  def create_console_players(game_mode, ui)
     case game_mode
     when :HumanVsHuman
       {X => HumanConsolePlayer.new(X, ui), O => HumanConsolePlayer.new(O, ui)}

@@ -77,7 +77,7 @@ class WebController < Sinatra::Base
   end
 
   def current_game_players
-      PlayerFactory.new(WebUi.new).create_web_players(session['game_option'])
+      PlayerFactory.new.create_web_players(session['game_option'])
   end
 
   def current_board
