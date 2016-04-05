@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'web_ui'
 require 'game'
 require 'player_factory'
 
@@ -86,7 +85,7 @@ class WebController < Sinatra::Base
   end
 
   def game
-    Game.new(WebUi.new)
+    Game.new
   end
 
   def computer_vs_human_option
