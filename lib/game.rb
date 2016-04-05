@@ -9,7 +9,7 @@ class Game
     @ui = ui
   end
 
-  def play(players, board)
+  def play(players, board, ui)
     current_player = players[Marks::X]
     until board.game_over? || !current_player(players, board).ready?
       board = play_one_round(players, board)

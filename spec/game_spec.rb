@@ -14,7 +14,7 @@ describe Game do
     replay = [false]
     fake_ui = FakeUi.new(replay)
     game = Game.new(fake_ui)
-    game.play({Marks::X => player1, Marks::O => player2}, Board.new)
+    game.play({Marks::X => player1, Marks::O => player2}, Board.new, fake_ui)
     expect(fake_ui.announce_winner_called).to eq 1
   end
 
