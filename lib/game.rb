@@ -5,6 +5,7 @@ class Game
   include Marks
 
   def play(players, board, ui)
+    ui.draw_board(board)
     current_player = players[Marks::X]
     until board.game_over? || !current_player(players, board).ready?
       board = play_one_round(players, board)

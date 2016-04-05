@@ -7,6 +7,6 @@ require 'ui'
 
 ui = Ui.new($stdin, $stdout)
 player_factory = PlayerFactory.new
-game = Game.new(ui)
+game = Game.new
 game_runner = GameRunner.new(ui, game, player_factory)
 game_runner.start

@@ -23,7 +23,7 @@ class WebController < Sinatra::Base
     if no_game_option_chosen
       erb :error
     else
-      play_games_with_computer
+      play_game_with_computer
       set_template_variables
       erb :game
     end
@@ -46,7 +46,7 @@ class WebController < Sinatra::Base
     session['game_option'] == nil
   end
 
-  def play_games_with_computer
+  def play_game_with_computer
     if human_vs_computer_option
       human_vs_computer_game
     elsif computer_vs_human_option
