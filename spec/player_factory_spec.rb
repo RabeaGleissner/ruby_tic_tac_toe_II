@@ -27,6 +27,12 @@ describe PlayerFactory do
     expect(factory.create_console_players(:HumanVsHuman, ui)[Marks::O]).to be_a HumanConsolePlayer
    end
 
+  it "creates two computer players for the web game" do
+    factory = PlayerFactory.new
+    expect(factory.create_console_players(:ComputerVsComputer, ui)[Marks::X]).to be_a ComputerPlayer
+    expect(factory.create_console_players(:ComputerVsComputer, ui)[Marks::O]).to be_a ComputerPlayer
+  end
+
   it "creates two human web players" do
     factory = PlayerFactory.new
     expect(factory.create_web_players(:HumanVsHuman)[Marks::X]).to be_a HumanWebPlayer
