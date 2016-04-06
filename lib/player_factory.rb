@@ -14,6 +14,8 @@ class PlayerFactory
       {X => HumanConsolePlayer.new(X, ui), O => ComputerPlayer.new(O)}
     when :ComputerVsHuman
       {X => ComputerPlayer.new(X), O => HumanConsolePlayer.new(O, ui)}
+    when :ComputerVsComputer
+      {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
     end
   end
 

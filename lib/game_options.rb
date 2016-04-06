@@ -2,7 +2,8 @@ class GameOptions
   GAME_OPTIONS = {
     1 => "Human vs Human",
     2 => "Human vs Computer",
-    3 => "Computer vs Human"
+    3 => "Computer vs Human",
+    4 => "Computer vs Computer"
   }
 
   def map(user_input)
