@@ -1,7 +1,7 @@
 require 'game'
 require 'player_factory'
 require 'ui'
-require 'game_options_mapper'
+require 'game_options'
 
 class GameRunner
   attr_reader :ui, :game, :player_factory
@@ -15,7 +15,7 @@ class GameRunner
   def start
     begin
       loop do
-        game_option = ui.menu(GameOptionsMapper::GAME_OPTIONS)
+        game_option = ui.menu(GameOptions::GAME_OPTIONS)
         game.play(player_factory.create_console_players(game_option, ui), Board.new, ui)
         break unless ui.replay?
       end

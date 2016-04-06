@@ -2,6 +2,7 @@ require 'sinatra'
 require 'game'
 require 'player_factory'
 require 'marks'
+require 'game_options'
 
 class WebController < Sinatra::Base
   use Rack::Session::Pool
@@ -14,7 +15,7 @@ class WebController < Sinatra::Base
 
   post '/menu' do
     session['board_rows'] = nil
-    session['game_option'] = GameOptionsMapper.new.map(params[:option])
+    session['game_option'] = GameOptions.new.map(params[:option])
     redirect '/game'
   end
 
