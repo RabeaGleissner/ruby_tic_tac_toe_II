@@ -1,6 +1,7 @@
 require 'human_console_player'
 require 'computer_player'
 require 'human_web_player'
+require 'random_player'
 require 'marks'
 
 class PlayerFactory
@@ -16,6 +17,8 @@ class PlayerFactory
       {X => ComputerPlayer.new(X), O => HumanConsolePlayer.new(O, ui)}
     when :ComputerVsComputer
       {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
+    when :HumanVsRandom
+      {X => HumanConsolePlayer.new(X, ui), O => RandomPlayer.new(O)}
     end
   end
 
