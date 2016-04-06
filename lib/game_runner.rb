@@ -15,7 +15,7 @@ class GameRunner
   def start
     begin
       loop do
-        game_option = ui.menu(GameOptionsMapper.new.game_options)
+        game_option = ui.menu(GameOptionsMapper::GAME_OPTIONS)
         game.play(player_factory.create_console_players(game_option, ui), Board.new, ui)
         break unless ui.replay?
       end
