@@ -107,7 +107,7 @@ class WebController < Sinatra::Base
   end
 
   def current_game_players
-    PlayerFactory.new.create_web_players(session['game_option'])
+    PlayerFactory.new.create_players(session['game_option'], :web)
   end
 
   def current_board
