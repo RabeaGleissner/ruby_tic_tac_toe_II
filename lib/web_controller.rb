@@ -49,12 +49,16 @@ class WebController < Sinatra::Base
 
   def play_game_with_computer
     if human_vs_computer_option
-      human_vs_computer_game
+      human_vs_machine_game
     elsif computer_vs_human_option
       computer_vs_human_game
     elsif computer_vs_computer_option
       computer_vs_computer_game
     end
+  end
+
+  def human_vs_random_option
+    session['game_option'] == :HumanVsRandom
   end
 
   def computer_vs_human_option
@@ -69,9 +73,11 @@ class WebController < Sinatra::Base
     session['game_option'] == :HumanVsComputer
   end
 
-  def human_vs_computer_game
-    if current_board.next_player_mark == Marks::O
-      make_move
+  def human_vs_machine_game
+    unless current_board.game_over?
+      if current_board.next_player_mark == Marks::O
+        make_move
+      end
     end
   end
 

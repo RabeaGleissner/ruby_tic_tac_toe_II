@@ -19,4 +19,8 @@ describe GameOptions do
   it "maps option 4 to Computer vs Computer" do
     expect(game_options.map("4")).to eq :ComputerVsComputer
   end
+
+  it "maps option 5 to Human vs Random Player" do
+    expect(game_options.map("5")).to eq :HumanVsRandom
+  end
 end

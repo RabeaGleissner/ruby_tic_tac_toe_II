@@ -27,6 +27,12 @@ describe PlayerFactory do
     expect(factory.create_console_players(:HumanVsHuman, ui)[Marks::O]).to be_a HumanConsolePlayer
    end
 
+  it "creates a human console player and a random player" do
+    factory = PlayerFactory.new
+    expect(factory.create_console_players(:HumanVsRandom, ui)[Marks::X]).to be_a HumanConsolePlayer
+    expect(factory.create_console_players(:HumanVsRandom, ui)[Marks::O]).to be_a RandomPlayer
+  end
+
   it "creates two computer players for the web game" do
     factory = PlayerFactory.new
     expect(factory.create_console_players(:ComputerVsComputer, ui)[Marks::X]).to be_a ComputerPlayer
@@ -45,7 +51,7 @@ describe PlayerFactory do
     expect(factory.create_web_players(:HumanVsComputer)[Marks::O]).to be_a ComputerPlayer
   end
 
-  it "creates a human web player and a computer player" do
+  it "creates a computer player and a human web player" do
     factory = PlayerFactory.new
     expect(factory.create_web_players(:ComputerVsHuman)[Marks::X]).to be_a ComputerPlayer
     expect(factory.create_web_players(:ComputerVsHuman)[Marks::O]).to be_a HumanWebPlayer
@@ -55,5 +61,11 @@ describe PlayerFactory do
     factory = PlayerFactory.new
     expect(factory.create_web_players(:ComputerVsComputer)[Marks::X]).to be_a ComputerPlayer
     expect(factory.create_web_players(:ComputerVsComputer)[Marks::O]).to be_a ComputerPlayer
+  end
+
+  xit "creates a human web player and a random player" do
+    factory = PlayerFactory.new
+    expect(factory.create_web_players(:HumanVsRandom)[Marks::X]).to be_a HumanWebPlayer
+    expect(factory.create_web_players(:HumanVsRandom)[Marks::O]).to be_a RandomPlayer
   end
 end
