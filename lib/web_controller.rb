@@ -3,13 +3,16 @@ require 'game'
 require 'player_factory'
 require 'marks'
 require 'game_options'
+require 'views/view_helper'
 
 class WebController < Sinatra::Base
   use Rack::Session::Pool
   include Marks
+  include ViewHelper
 
   get '/' do
     session['game_option'] = nil
+    @game_options = GameOptions::GAME_OPTIONS
     erb :menu
   end
 

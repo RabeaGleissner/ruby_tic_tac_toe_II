@@ -10,5 +10,4 @@ describe ViewHelperWrapper do
     view_helper = ViewHelperWrapper.new
     expect(view_helper.convert_to_kebab_case("Human vs Human")).to eq "human-vs-human"
   end
-
 end
