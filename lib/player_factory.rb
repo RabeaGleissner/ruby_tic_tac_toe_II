@@ -7,33 +7,53 @@ require 'marks'
 class PlayerFactory
   include Marks
 
-  def create_players(game_mode, app_version)
+  def create_players(game_mode, app_type)
     if game_mode == :HumanVsHuman
-      if app_version == :console
-        {X => HumanConsolePlayer.new(X), O => HumanConsolePlayer.new(O)}
-      else
-        {X => HumanWebPlayer.new(X), O => HumanWebPlayer.new(O)}
-      end
+      create_human_vs_human_players(app_type)
     elsif game_mode == :HumanVsComputer
-      if app_version == :console
-        {X => HumanConsolePlayer.new(X), O => ComputerPlayer.new(O)}
-      else
-        {X => HumanWebPlayer.new(X), O => ComputerPlayer.new(O)}
-      end
+      create_human_vs_computer_players(app_type)
     elsif game_mode == :ComputerVsHuman
-      if app_version == :console
-        {X => ComputerPlayer.new(X), O => HumanConsolePlayer.new(O)}
-      else
-        {X => ComputerPlayer.new(X), O => HumanWebPlayer.new(O)}
-      end
+      create_computer_vs_human_players(app_type)
     elsif game_mode == :ComputerVsComputer
-      {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
+      create_computer_vs_computer_players(app_type)
     elsif game_mode == :HumanVsRandom
-      if app_version == :console
-        {X => HumanConsolePlayer.new(X), O => RandomPlayer.new(O)}
-      else
-        {X => ComputerPlayer.new(X), O => ComputerPlayer.new(O)}
-      end
+      create_human_vs_random_players(app_type)
+    end
+  end
+
+  def create_human_vs_human_players(app_type)
+    if app_type == :console
+      {Marks::X => HumanConsolePlayer.new(Marks::X), Marks::O => HumanConsolePlayer.new(Marks::O)}
+    elsif app_type == :web
+      {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
+    end
+  end
+
+  def create_human_vs_computer_players(app_type)
+    if app_type == :console
+      {Marks::X => HumanConsolePlayer.new(Marks::X), Marks::O => ComputerPlayer.new(Marks::O)}
+    elsif app_type == :web
+      {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => ComputerPlayer.new(Marks::O)}
+    end
+  end
+
+  def create_computer_vs_human_players(app_type)
+    if app_type == :console
+      {Marks::X => ComputerPlayer.new(Marks::X), Marks::O => HumanConsolePlayer.new(Marks::O)}
+    elsif app_type == :web
+      {Marks::X => ComputerPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
+    end
+  end
+
+  def create_computer_vs_computer_players(app_type)
+    {Marks::X => ComputerPlayer.new(Marks::X), Marks::O => ComputerPlayer.new(Marks::O)}
+  end
+
+  def create_human_vs_random_players(app_type)
+    if app_type == :console
+      {Marks::X => HumanConsolePlayer.new(Marks::X), Marks::O => RandomPlayer.new(Marks::O)}
+    elsif app_type == :web
+      {Marks::X => ComputerPlayer.new(Marks::X), Marks::O => ComputerPlayer.new(Marks::O)}
     end
   end
 end
