@@ -53,7 +53,7 @@ class PlayerFactory
     if app_type == :console
       {Marks::X => HumanConsolePlayer.new(Marks::X), Marks::O => RandomPlayer.new(Marks::O)}
     elsif app_type == :web
-      {Marks::X => ComputerPlayer.new(Marks::X), Marks::O => ComputerPlayer.new(Marks::O)}
+      {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => RandomPlayer.new(Marks::O)}
     end
   end
 end
