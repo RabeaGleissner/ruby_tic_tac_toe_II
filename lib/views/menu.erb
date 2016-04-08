@@ -3,9 +3,8 @@
   <% @game_options.each do |number, text| %>
     <p>
     <input id=<%= convert_to_kebab_case(text)%> class="option-choice" type="radio" name="option" value=<%= number %>>
-      <label for=<%= convert_to_kebab_case(text)%>><%= text %></label>
+    <label for=<%= convert_to_kebab_case(text)%>><%= text %></label>
     </p>
-    <h2></h2>
   <% end %>
   <button type="submit">Start game</button>
 </form>
