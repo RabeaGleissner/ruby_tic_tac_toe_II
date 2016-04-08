@@ -3,7 +3,7 @@ require 'ui'
 class HumanConsolePlayer
   attr_reader :mark, :ui
 
-  def initialize(mark, ui)
+  def initialize(mark, ui = Ui.new($stdin, $stdout))
     @mark = mark
     @ui = ui
   end

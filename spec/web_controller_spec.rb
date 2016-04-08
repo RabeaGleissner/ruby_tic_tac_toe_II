@@ -106,4 +106,11 @@ describe WebController do
     board_rows = last_request.env['rack.session']['board_rows'].flatten
     expect(Board.new(board_rows).available_positions.length).to eq 5
   end
+
+  it "plays move for random player after human move for Human vs Random game" do
+    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsRandom, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsRandom}}
+    board_rows = last_request.env['rack.session']['board_rows'].flatten
+    expect(Board.new(board_rows).available_positions.length).to eq 5
+  end
 end

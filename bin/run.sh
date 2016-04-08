@@ -6,7 +6,7 @@ require 'computer_player'
 require 'ui'
 
 ui = Ui.new($stdin, $stdout)
-player_factory = PlayerFactory.new
+player_factory = PlayerFactory.new(:console)
 game = Game.new
 game_runner = GameRunner.new(ui, game, player_factory)
 game_runner.start

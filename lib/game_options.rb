@@ -3,7 +3,8 @@ class GameOptions
     1 => "Human vs Human",
     2 => "Human vs Computer",
     3 => "Computer vs Human",
-    4 => "Computer vs Computer"
+    4 => "Computer vs Computer",
+    5 => "Human vs Random Player"
   }
 
   def map(user_input)
@@ -16,6 +17,9 @@ class GameOptions
       :ComputerVsHuman
     when 4
       :ComputerVsComputer
+    when 5
+      :HumanVsRandom
     end
   end
+
 end
