@@ -16,7 +16,7 @@ class GameRunner
     begin
       loop do
         game_option = ui.menu(GameOptions::GAME_OPTIONS)
-        game.play(player_factory.create_players(game_option, :console), Board.new, ui)
+        game.play(player_factory.create_players(game_option), Board.new, ui)
         break unless ui.replay?
       end
       ui.say_goodbye

@@ -21,4 +21,5 @@ class GameOptions
       :HumanVsRandom
     end
   end
+
 end

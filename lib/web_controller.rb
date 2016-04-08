@@ -58,10 +58,6 @@ class WebController < Sinatra::Base
     end
   end
 
-  def make_move
-    game.current_player(current_game_players, current_board).make_move(current_board).rows
-  end
-
   def player_ready
     game.current_player(current_game_players, current_board).ready?
   end
@@ -82,11 +78,11 @@ class WebController < Sinatra::Base
   end
 
   def make_move
-    session['board_rows'] = game.play_one_round(current_game_players, current_board).rows
+    game.play_one_round(current_game_players, current_board).rows
   end
 
   def current_game_players
-    PlayerFactory.new.create_players(session['game_option'], :web)
+    PlayerFactory.new(:web).create_players(session['game_option'])
   end
 
   def current_board
