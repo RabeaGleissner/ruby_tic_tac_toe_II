@@ -16,7 +16,7 @@ class Game
   end
 
   def play_one_round(players, board)
-      current_player(players, board).make_move(board)
+    current_player(players, board).make_move(board)
   end
 
   def current_player(players, board)
