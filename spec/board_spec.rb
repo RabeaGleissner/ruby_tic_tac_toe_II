@@ -45,11 +45,35 @@ describe Board do
     expect(board.lines).to eq([[X, O, 2], [O, X, O], [6, 7, 8], [X, O, 6], [O, X, 7], [2, O, 8], [X, X, 8], [2, X, 6]])
   end
 
-  it "knows that game is over" do
-    full_board = Board.new(3, [X, O, X,
-                            O, X, O,
-                            X, O, X])
-    expect(full_board.game_over?).to be true
+  it "knows that game is over on a 3x3 board" do
+    winning_board = Board.new(3, [X, O, X,
+                               O, X, O,
+                               X, O, X])
+    expect(winning_board.game_over?).to be true
+  end
+
+  it "knows that game is over on a 4x4 board" do
+    winning_board = Board.new(4, [X, O, X, O,
+                               O, X, O, X,
+                               X, O, X, O,
+                               O, X, O, X])
+    expect(winning_board.game_over?).to be true
+  end
+
+  it "finds the diagonals on a 4x4 board" do
+    winning_board = Board.new(4, [X, O, X, O,
+                                  O, X, O, X,
+                                  X, O, X, O,
+                                  O, X, O, X])
+    expect(winning_board.diagonals).to eq [[X, X, X, X], [O, O, O, O]]
+  end
+
+  it "knows that a line has all the same marks on a 4x4 board" do
+    expect(board.all_x?([X, X, X, X])).to be true
+  end
+
+  it "knows that a line does not have all the same marks on a 4x4 board" do
+    expect(board.all_same_marks?([X, X, X, O])).to be false
   end
 
   it "knows that game is not over" do
