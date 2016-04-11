@@ -1,7 +1,5 @@
 Feature: Three by three board
-  In order to make sure that the three by three board is implemented,
-  As a player,
-  I want to play the game on this board size.
+  A player can play the game on a three by three board.
 
 Scenario: First player wins
     Given an empty three by three board
