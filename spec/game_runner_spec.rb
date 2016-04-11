@@ -3,6 +3,7 @@ require 'game_runner.rb'
 require 'player_factory'
 require 'fake_ui'
 require 'game_spy'
+require 'board_factory'
 
 describe GameRunner do
   let (:game_spy) {GameSpy.new}
@@ -10,7 +11,7 @@ describe GameRunner do
   it "starts application and plays game twice if user wants to replay" do
     replay_choices = [true, false]
     fake_ui = FakeUi.new(replay_choices)
-    game_runner = GameRunner.new(fake_ui, game_spy, PlayerFactory.new(:console))
+    game_runner = GameRunner.new(fake_ui, game_spy, PlayerFactory.new(:console), BoardFactory.new)
 
     game_runner.start
 
@@ -19,7 +20,7 @@ describe GameRunner do
 
   it "catches exception if a user interrupts with ctrl + c" do
     interrupting_ui = InterruptingUi.new
-    game_runner = GameRunner.new(interrupting_ui, game_spy, PlayerFactory.new(:console))
+    game_runner = GameRunner.new(interrupting_ui, game_spy, PlayerFactory.new(:console), BoardFactory.new)
 
     game_runner.start
 
