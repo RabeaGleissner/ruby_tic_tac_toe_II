@@ -15,7 +15,7 @@ describe Ui do
                   3 => "Computer vs Human"}
 
   it "draws a board to the console" do
-    board = Board.new([Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
+    board = Board.new(3, [Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
     ui = Ui.new(StringIO.new, output)
     ui.draw_board(board)
     expect(output.string).to eq("#{CLEAR_SCREEN}\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
@@ -62,7 +62,7 @@ describe Ui do
   end
 
   it "announces that the winner is X" do
-    x_winner_board = Board.new([Marks::X, Marks::X, Marks::X,
+    x_winner_board = Board.new(3, [Marks::X, Marks::X, Marks::X,
                                 3, 4, Marks::O,
                                 Marks::O, 7, 8])
     ui.announce_winner(x_winner_board)
@@ -70,7 +70,7 @@ describe Ui do
   end
 
   it "announces a draw" do
-    drawn_board = Board.new([Marks::X, Marks::O, Marks::X,
+    drawn_board = Board.new(3, [Marks::X, Marks::O, Marks::X,
                              Marks::X, Marks::O, Marks::O,
                              Marks::O, Marks::X, Marks::X])
     ui.announce_winner(drawn_board)

@@ -86,7 +86,7 @@ class WebController < Sinatra::Base
   end
 
   def current_board
-    Board.new(session['board_rows'].flatten)
+    Board.new(3, session['board_rows'].flatten)
   end
 
   def game

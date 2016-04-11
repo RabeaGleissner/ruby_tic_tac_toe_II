@@ -47,14 +47,14 @@ describe WebController do
     get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsHuman, 'first_move' => true}}
     rows = last_request.env['rack.session']['board_rows'].flatten
     expect(rows).to include :X
-    expect(Board.new(rows).available_positions.length).to be 8
+    expect(Board.new(3, rows).available_positions.length).to be 8
   end
 
   it "plays first move of Computer vs Computer game", slow: true do
     get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer}}
     rows = last_request.env['rack.session']['board_rows'].flatten
     expect(rows).to include :X
-    expect(Board.new(rows).available_positions.length).to be 8
+    expect(Board.new(3, rows).available_positions.length).to be 8
   end
 
   it "redirects a post request to /move to game" do
@@ -104,13 +104,13 @@ describe WebController do
     post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
     get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer}}
     board_rows = last_request.env['rack.session']['board_rows'].flatten
-    expect(Board.new(board_rows).available_positions.length).to eq 5
+    expect(Board.new(3, board_rows).available_positions.length).to eq 5
   end
 
   it "plays move for random player after human move for Human vs Random game" do
     post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsRandom, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
     get '/game', {}, {'rack.session' => {'game_option' => :HumanVsRandom}}
     board_rows = last_request.env['rack.session']['board_rows'].flatten
-    expect(Board.new(board_rows).available_positions.length).to eq 5
+    expect(Board.new(3, board_rows).available_positions.length).to eq 5
   end
 end

@@ -1,16 +1,17 @@
 require 'marks'
 
 class Board
+  attr_reader :grid, :dimension
   include Marks
-  def initialize(marks = empty_board)
+  def initialize(dimension = 3, marks = empty_board)
+    @dimension = dimension
     @grid = marks
-    @dimension = Math.sqrt(@grid.size).to_i
   end
 
   def add_mark(position, mark)
     new_grid = grid.clone
     new_grid[position] = mark
-    Board.new(new_grid)
+    Board.new(dimension, new_grid)
   end
 
   def available_positions
@@ -84,7 +85,6 @@ class Board
   end
 
   private
-  attr_reader :grid, :dimension
 
   def empty_board
     (0..8).to_a

@@ -19,14 +19,14 @@ describe Game do
   end
 
   it "knows that it's player O's turn" do
-    board = Board.new([Marks::X, Marks::O, Marks::X, 3, 4, 5, 6, 7, 8])
+    board = Board.new(3, [Marks::X, Marks::O, Marks::X, 3, 4, 5, 6, 7, 8])
     game = Game.new
     players = {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
     expect(game.current_player(players, board).mark).to eq Marks::O
   end
 
   it "knows that it's player X's turn" do
-    board = Board.new([Marks::X, Marks::O, Marks::X, Marks::O, 4, 5, 6, 7, 8])
+    board = Board.new(3, [Marks::X, Marks::O, Marks::X, Marks::O, 4, 5, 6, 7, 8])
     game = Game.new
     players = {Marks::X => HumanWebPlayer.new(Marks::X), Marks::O => HumanWebPlayer.new(Marks::O)}
     expect(game.current_player(players, board).mark).to eq Marks::X
