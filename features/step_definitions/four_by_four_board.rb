@@ -6,10 +6,11 @@ require_relative '../../spec/fake_ui'
 
 Given(/^an empty four by four board$/) do
   @board = Board.new(4)
+  @player1 = PlayerWithPresetData.new(Marks::X)
+  @player2 = PlayerWithPresetData.new(Marks::O)
 end
 
 When(/^the first player chooses the first position in the first row$/) do
-  @player1 = PlayerWithPresetData.new(Marks::X)
   @player1.add_move(0)
 end
 
@@ -46,12 +47,10 @@ When(/^the first player chooses the last position in the last row$/) do
 end
 
 When(/^the second player chooses the second position in the first row$/) do
-  @player2 = PlayerWithPresetData.new(Marks::O)
   @player2.add_move(1)
 end
 
 When(/^the second player chooses the last position in the first row$/) do
-  @player2 = PlayerWithPresetData.new(Marks::O)
   @player2.add_move(3)
 end
 
@@ -84,14 +83,12 @@ When(/^the second player chooses the last position in the last row$/) do
 end
 
 Then(/^the game is a draw\.$/) do
-  pending
   replay_option = false
   new_board = Game.new.play({Marks::X => @player1, Marks::O => @player2}, @board, FakeUi.new(replay_option))
   expect(new_board.draw?).to be true
 end
 
 Then(/^the second player wins\.$/) do
-  pending
   replay_option = false
   new_board = Game.new.play({Marks::X => @player1, Marks::O => @player2}, @board, FakeUi.new(replay_option))
   expect(new_board.winner_mark).to eq Marks::O
