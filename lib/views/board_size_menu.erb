@@ -1,10 +1,10 @@
-<h2 class="menu">Please choose a game option:</h2>
-<form class="options-form" method="post" action="/menu">
-  <% @game_options.each do |number, text| %>
+<h2 class="menu">Please choose a board size:</h2>
+<form class="options-form" method="post" action="/board-size">
+  <% @board_size_options.each do |number, text| %>
     <p>
     <input id=<%= convert_to_kebab_case(text)%> class="option-choice" type="radio" name="option" value=<%= number %>>
     <label for=<%= convert_to_kebab_case(text)%>><%= text %></label>
     </p>
   <% end %>
-  <button type="submit">Start game</button>
+  <button type="submit">Next</button>
 </form>

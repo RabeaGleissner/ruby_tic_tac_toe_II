@@ -34,6 +34,18 @@
           <div class='cell full'><%= row[2] %></div>
         <% end %>
       </div>
+      <% if @board.dimension == 4 %>
+      <div class='wrapper'>
+        <% if @board.available_positions.include? row[2] %>
+          <form class="cell-form" method ="post" action="/move">
+            <input class="hidden" type="hidden" name="position" value=<%= row[2].to_s %>>
+            <button class='cell' type="submit"><div class='empty'>&nbsp;</div></button>
+          </form>
+        <% else %>
+          <div class='cell full'><%= row[2] %></div>
+        <% end %>
+      </div>
+      <% end %>
     </div>
   <% end %>
 </div>

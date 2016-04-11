@@ -19,7 +19,7 @@ describe WebController do
   it "displays menu options on the root route template" do
     get '/'
     expect(last_response).to be_ok
-    expect(last_response.body).to include 'form class="game-options-form" method="post"', 'game option'
+    expect(last_response.body).to include 'form class="options-form" method="post"', 'game option'
   end
 
   it "clears board on post request to /menu" do
@@ -38,49 +38,49 @@ describe WebController do
   end
 
   it "displays empty board on game route template for a Human vs Human game" do
-    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsHuman}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_size' => 3}}
     expect(last_response).to be_ok
     expect(last_response.body).not_to include "class='cell full'"
   end
 
   it "gets and displays computer's first move for Computer vs Human game", slow: true do
-    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsHuman, 'first_move' => true}}
+    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsHuman, 'board_size' => 3, 'first_move' => true}}
     rows = last_request.env['rack.session']['board_rows'].flatten
     expect(rows).to include :X
     expect(Board.new(3, rows).available_positions.length).to be 8
   end
 
   it "plays first move of Computer vs Computer game", slow: true do
-    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer}}
+    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer, 'board_size' => 3}}
     rows = last_request.env['rack.session']['board_rows'].flatten
     expect(rows).to include :X
     expect(Board.new(3, rows).available_positions.length).to be 8
   end
 
   it "redirects a post request to /move to game" do
-    post '/move', {'position' => '1'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    post '/move', {'position' => '1'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => GAME_IN_PROGRESS_ROWS, 'board_size' => 3}}
     expect(last_response).to be_redirect
     expect(last_response.location).to include '/game'
   end
 
   it "updates board with move from params" do
-    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsHuman, 'board_rows' => GAME_IN_PROGRESS_ROWS, 'board_size' => 3}}
     board_rows = last_request.env['rack.session']['board_rows']
     expect(board_rows).to eql([[0, Marks::X, Marks::O], [3, 4, 5], [6, 7, Marks::X]])
   end
 
   it "displays game over message with winning mark when winner is available" do
-    get '/game', {}, {'rack.session' => {'board_rows' => X_WINNING_ROWS, 'game_option' => :HumanVsComputer}}
+    get '/game', {}, {'rack.session' => {'board_rows' => X_WINNING_ROWS, 'game_option' => :HumanVsComputer, 'board_size' => 3}}
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 
-  it "displays error when trying to acces game page without a game option" do
-    get '/game'
+  it "displays error when trying to access game page without a game option" do
+    get '/game', {}, {'rack.session' => {'board_size' => 3}}
     expect(last_response.body).to include('Something went wrong')
   end
 
   it "resets the game option when the root route is requested" do
-    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_size' => 3}}
     get '/'
     expect(last_request.env['rack.session']['game_option']).to eql(nil)
   end
@@ -91,24 +91,24 @@ describe WebController do
   end
 
   it "disables board when game is over" do
-    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => X_WINNING_ROWS}}
+    get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => X_WINNING_ROWS, 'board_size' => 3}}
     expect(last_response.body).to include("class='board disabled'")
   end
 
   it "disables board during computer vs computer game", slow: true do
-    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    get '/game', {}, {'rack.session' => {'game_option' => :ComputerVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS, 'board_size' => 3}}
     expect(last_response.body).to include("class='board disabled'")
   end
 
   it "plays move for computer after human move for Human vs Computer game" do
-    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsComputer, 'board_rows' => GAME_IN_PROGRESS_ROWS, 'board_size' => 3}}
     get '/game', {}, {'rack.session' => {'game_option' => :HumanVsComputer}}
     board_rows = last_request.env['rack.session']['board_rows'].flatten
     expect(Board.new(3, board_rows).available_positions.length).to eq 5
   end
 
   it "plays move for random player after human move for Human vs Random game" do
-    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsRandom, 'board_rows' => GAME_IN_PROGRESS_ROWS}}
+    post '/move', {'position' => '8'}, {'rack.session' => {'game_option' => :HumanVsRandom, 'board_rows' => GAME_IN_PROGRESS_ROWS, 'board_size' => 3}}
     get '/game', {}, {'rack.session' => {'game_option' => :HumanVsRandom}}
     board_rows = last_request.env['rack.session']['board_rows'].flatten
     expect(Board.new(3, board_rows).available_positions.length).to eq 5

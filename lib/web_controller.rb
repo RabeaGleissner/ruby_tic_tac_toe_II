@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'game'
 require 'player_factory'
+require 'board_factory'
 require 'marks'
 require 'game_options'
 require 'views/view_helper'
@@ -19,11 +20,21 @@ class WebController < Sinatra::Base
   post '/menu' do
     session['board_rows'] = nil
     session['game_option'] = GameOptions.new.map(params[:option])
+    redirect '/board-size'
+  end
+
+  get '/board-size' do
+    @board_size_options = BoardFactory::BOARD_SIZES
+    erb :board_size_menu
+  end
+
+  post '/board-size' do
+    session['board_size'] = BoardFactory.new.map(params[:option])
     redirect '/game'
   end
 
   get '/game' do
-    session['board_rows'] ||= Board.new.rows
+    session['board_rows'] ||= Board.new(session['board_size']).rows
     if no_game_option_chosen
       erb :error
     else
@@ -86,7 +97,7 @@ class WebController < Sinatra::Base
   end
 
   def current_board
-    Board.new(3, session['board_rows'].flatten)
+    Board.new(session['board_size'], session['board_rows'].flatten)
   end
 
   def game
