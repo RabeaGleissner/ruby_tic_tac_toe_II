@@ -13,7 +13,7 @@ class ComputerPlayer
   end
 
   def make_move(board)
-    scored_move = minimax(board.available_positions.length, board,
+    scored_move = minimax(9, board,
                           computer_mark, INITIAL_ALPHA_VALUE, INITIAL_BETA_VALUE)
     board.add_mark(scored_move[1], computer_mark)
   end

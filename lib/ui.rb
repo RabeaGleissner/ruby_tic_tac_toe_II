@@ -22,14 +22,34 @@ class Ui
     get_game_mode(game_options)
   end
 
-  def get_game_mode(game_options)
+  def get_game_mode(options)
     mode = input.gets.chomp
-    mapper = GameOptions.new
+    game_options = GameOptions.new
     if (GameOptions::GAME_OPTIONS.key?(mode.to_i))
-      mapper.map(mode)
+      game_options.map(mode)
     else
       game_mode_selection_error
-      menu(game_options)
+      menu(options)
+    end
+  end
+
+  def board_size_menu(board_size_options)
+    output.puts "Please choose a board size:\n\n"
+    board_size_options.each do |number, option|
+      output.puts "#{number} - #{option}"
+    end
+    output.puts "--> "
+    get_board_size(board_size_options)
+  end
+
+  def get_board_size(board_size_options)
+    size = input.gets.chomp.to_i
+    board_factory = BoardFactory.new
+    if (BoardFactory::BOARD_SIZES.key?(size))
+      board_factory.map(size)
+    else
+      board_size_selection_error
+      board_size_menu(board_size_options)
     end
   end
 
@@ -93,6 +113,10 @@ class Ui
 
   def game_mode_selection_error
     output.puts "Please select a valid game mode!"
+  end
+
+  def board_size_selection_error
+    output.puts "Please select a valid board size!"
   end
 
   def create_board_image(board)

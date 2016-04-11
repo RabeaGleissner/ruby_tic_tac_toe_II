@@ -6,6 +6,10 @@ class FakeUi
     @announce_winner_called = 0
   end
 
+  def board_size_menu(options)
+    3
+  end
+
   def announce_winner(board)
     @announce_winner_called += 1
   end

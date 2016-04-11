@@ -3,6 +3,7 @@ require 'marks'
 class Board
   attr_reader :dimension, :grid
   include Marks
+
   def initialize(dimension = 3, marks = empty_board(dimension))
     @dimension = dimension
     @grid = marks

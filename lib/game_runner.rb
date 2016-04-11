@@ -1,11 +1,11 @@
 require 'game'
 require 'player_factory'
+require 'board_factory'
 require 'ui'
 require 'game_options'
-require 'board_factory'
 
 class GameRunner
-  attr_reader :ui, :game, :player_factory
+  attr_reader :ui, :game, :player_factory, :board_factory
 
   def initialize(ui, game, player_factory, board_factory)
     @ui = ui
