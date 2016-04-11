@@ -31,6 +31,8 @@ When(/^the first player chooses the top right position$/) do
 end
 
 Then(/^the first player wins\.$/) do
-  new_board = Game.new.play({Marks::X => @player1, Marks::O => @player2}, @board, FakeUi.new(false))
+  pending
+  replay_option = false
+  new_board = Game.new.play({Marks::X => @player1, Marks::O => @player2}, @board, FakeUi.new(replay_option))
   expect(new_board.winner_mark).to eq Marks::X
 end

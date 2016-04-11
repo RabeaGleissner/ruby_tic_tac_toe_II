@@ -29,15 +29,15 @@ Scenario: Game ends with a draw
     When the first player chooses the first position in the first row
     And the second player chooses the second position in the first row
     And the first player chooses the third position in the first row
-    And the second player chooses the fourth position in the first row
+    And the second player chooses the last position in the first row
     And the first player chooses the first position in the second row
     And the second player chooses the second position in the second row
     And the first player chooses the third position in the second row
-    And the second player chooses the fourth position in the second row
+    And the second player chooses the last position in the second row
     And the first player chooses the first position in the third row
     And the second player chooses the second position in the third row
     And the first player chooses the third position in the third row
-    And the second player chooses the fourth position in the third row
+    And the second player chooses the last position in the third row
     And the first player chooses the second position in the last row
     And the second player chooses the first position in the last row
     And the first player chooses the last position in the last row
