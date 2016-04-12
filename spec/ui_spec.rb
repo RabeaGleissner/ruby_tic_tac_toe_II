@@ -14,7 +14,7 @@ describe Ui do
 
   CLEAR_SCREEN = "\e[H\e[2J"
 
-  it "draws a 3x3 board to the console" do
+  it "draws a board to the console" do
     board = Board.new(3, [Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
     ui = Ui.new(StringIO.new, output)
     ui.draw_board(board)
