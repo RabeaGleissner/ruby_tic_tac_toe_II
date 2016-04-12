@@ -4,11 +4,6 @@ require 'marks'
 require_relative '../../spec/player_with_preset_data'
 require_relative '../../spec/fake_ui'
 
-Given(/^an empty four by four board$/) do
-  @board = Board.new(4)
-  @player1 = PlayerWithPresetData.new(Marks::X)
-  @player2 = PlayerWithPresetData.new(Marks::O)
-end
 
 When(/^the first player chooses the first position in the first row$/) do
   @player1.add_move(0)

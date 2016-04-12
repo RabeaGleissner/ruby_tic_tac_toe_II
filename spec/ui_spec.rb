@@ -4,6 +4,7 @@ require 'ui'
 require 'game_options'
 require 'board'
 require 'board_factory'
+require 'board_size'
 require 'marks'
 
 describe Ui do
@@ -22,8 +23,8 @@ describe Ui do
 
   it "shows the board size options menu" do
     ui = Ui.new(StringIO.new("1"), output)
-    ui.board_size_menu(BoardFactory::BOARD_SIZES)
-    expect(output.string).to eq("Please choose a board size:\n\n1 - 3x3\n2 - 4x4\n--> \n")
+    ui.board_size_menu(BoardSize.new)
+    expect(output.string).to eq("Please choose a board size:\n\n1 - 3x3 board\n2 - 4x4 board\n--> \n")
   end
 
   it "shows the game options menu" do
@@ -39,14 +40,14 @@ describe Ui do
 
   it "gets the board size from the user" do
     ui = Ui.new(StringIO.new("2"), output)
-    expect(ui.board_size_menu(BoardFactory::BOARD_SIZES)).to eq 4
+    expect(ui.board_size_menu(BoardSize.new)).to eq 4
   end
 
   it "displays error message and board size options on bad user input for board size" do
     BOARD_SIZE_ERROR = "Please select a valid board size!"
     VALID_OPTION = "1"
     allow(ui.input).to receive(:gets).and_return("bad", VALID_OPTION)
-    ui.board_size_menu(BoardFactory::BOARD_SIZES)
+    ui.board_size_menu(BoardSize.new)
     expect(output.string).to include(BOARD_SIZE_ERROR)
   end
 

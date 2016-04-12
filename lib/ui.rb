@@ -1,5 +1,7 @@
 require 'marks'
 require 'game_options'
+require 'board_size'
+require 'board_factory'
 
 class Ui
   include Marks
@@ -32,23 +34,23 @@ class Ui
     end
   end
 
-  def board_size_menu(board_size_options)
+  def board_size_menu(board_size)
     output.puts "Please choose a board size:\n\n"
-    board_size_options.each do |number, option|
-      output.puts "#{number} - #{option}"
+    BoardSize::SIZES.each do |number, option|
+      output.puts "#{number} - #{board_size.display(option)}"
     end
     output.puts "--> "
-    get_board_size(board_size_options)
+    get_board_size(board_size)
   end
 
-  def get_board_size(board_size_options)
+  def get_board_size(board_size)
     size = input.gets.chomp.to_i
     board_factory = BoardFactory.new
-    if (BoardFactory::BOARD_SIZES.key?(size))
-      board_factory.map(size)
+    if (BoardSize::SIZES.key?(size))
+      board_size.map(size)
     else
       board_size_selection_error
-      board_size_menu(board_size_options)
+      board_size_menu(board_size)
     end
   end
 

@@ -13,6 +13,11 @@ describe ViewHelperWrapper do
 
    it "formats a Ruby symbol for front end display" do
     view_helper = ViewHelperWrapper.new
-    expect(view_helper.format(:HumanVsHuman)).to eq "Human vs Human"
+    expect(view_helper.format_game_options(:HumanVsHuman)).to eq "Human vs Human"
+   end
+
+   it "formats the board size for front end display" do
+    view_helper = ViewHelperWrapper.new
+    expect(view_helper.format_board_size(3)).to eq "3x3 board"
    end
 end

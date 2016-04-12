@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'game'
 require 'players/player_factory'
-require 'board_factory'
+require 'board_size'
 require 'marks'
 require 'game_options'
 require 'views/view_helper'
@@ -24,12 +24,12 @@ class WebController < Sinatra::Base
   end
 
   get '/board-size' do
-    @board_size_options = BoardFactory::BOARD_SIZES
+    @board_size_options = BoardSize::SIZES
     erb :board_size_menu
   end
 
   post '/board-size' do
-    session['board_size'] = BoardFactory.new.map(params[:option])
+    session['board_size'] = BoardSize.new.map(params[:option])
     redirect '/game'
   end
 

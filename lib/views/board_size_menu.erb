@@ -1,9 +1,9 @@
 <h2 class="menu">Please choose a board size:</h2>
 <form class="options-form" method="post" action="/board-size">
-  <% @board_size_options.each do |number, text| %>
+  <% @board_size_options.each do |number, size| %>
     <p>
-    <input id=<%= convert_to_kebab_case(text)%> class="option-choice" type="radio" name="option" value=<%= number %>>
-    <label for=<%= convert_to_kebab_case(text)%>><%= text %></label>
+    <input id=<%= convert_to_kebab_case(format_board_size(size))%> class="option-choice" type="radio" name="option" value=<%= number %>>
+    <label for=<%= convert_to_kebab_case(format_board_size(size))%>><%= format_board_size(size) %></label>
     </p>
   <% end %>
   <button type="submit">Next</button>
