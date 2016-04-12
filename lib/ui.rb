@@ -120,7 +120,8 @@ class Ui
   end
 
   def create_board_image(board)
-    line = "\n-----------\n"
+    dashes = "-----" * board.dimension
+    line = "\n#{dashes}\n"
     pipe = " |"
     board_image = line
     rows = board.rows.flatten
@@ -135,12 +136,16 @@ class Ui
   end
 
   def draw_one_cell(cell)
-    cell += 1 unless cell == X || cell == O
-    " " + (cell).to_s
+    if cell == X || cell == O
+      "  #{cell}"
+    else
+      cell += 1
+      " #{sprintf("%2d", cell)}"
+    end
   end
 
   def last_cell_in_row?(index, board)
     board_size = board.rows.first.length
-    index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1
+    index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1 || index == (board_size * 4) - 1
   end
 end

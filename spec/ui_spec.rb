@@ -13,11 +13,11 @@ describe Ui do
 
   CLEAR_SCREEN = "\e[H\e[2J"
 
-  it "draws a board to the console" do
+  it "draws a 3x3 board to the console" do
     board = Board.new(3, [Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
     ui = Ui.new(StringIO.new, output)
     ui.draw_board(board)
-    expect(output.string).to eq("#{CLEAR_SCREEN}\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
+    expect(output.string).to eq("#{CLEAR_SCREEN}\n---------------\n  X |  2 |  X\n---------------\n  O |  5 |  O\n---------------\n  O |  8 |  X\n---------------\n")
   end
 
   it "shows the board size options menu" do
