@@ -1,5 +1,5 @@
 require 'game'
-require 'player_factory'
+require 'players/player_factory'
 require 'board_factory'
 require 'ui'
 require 'game_options'

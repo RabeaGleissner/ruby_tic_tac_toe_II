@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'game_runner.rb'
-require 'player_factory'
+require 'players/player_factory'
 require 'fake_ui'
 require 'game_spy'
 require 'board_factory'

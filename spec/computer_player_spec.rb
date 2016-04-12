@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'computer_player'
+require 'players/computer_player'
 require 'board'
 require 'marks'
 

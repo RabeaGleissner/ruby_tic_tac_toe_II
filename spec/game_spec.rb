@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'player_with_preset_data'
-require 'human_web_player'
+require 'players/human_web_player'
 require 'ui'
 require 'fake_ui'
 require 'game.rb'

@@ -1,7 +1,7 @@
-require 'human_console_player'
-require 'computer_player'
-require 'human_web_player'
-require 'random_player'
+require 'players/human_console_player'
+require 'players/computer_player'
+require 'players/human_web_player'
+require 'players/random_player'
 require 'marks'
 
 class PlayerFactory

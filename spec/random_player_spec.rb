@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'random_player'
+require 'players/random_player'
 require 'board'
 
 describe RandomPlayer do
