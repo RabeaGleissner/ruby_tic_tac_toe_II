@@ -9,6 +9,7 @@ describe WebController do
   include Marks
   include Rack::Test::Methods
   HUMAN_VS_HUMAN = '1'
+  THREE_BY_THREE = '1'
   X_WINNING_ROWS = [Marks::X, Marks::X, Marks::X, 3, 4, 5, 6, 7, 8]
   GAME_IN_PROGRESS_ROWS = [0, Marks::X, Marks::O, 3, 4, 5, 6, 7, 8]
 
@@ -22,14 +23,27 @@ describe WebController do
     expect(last_response.body).to include 'form class="options-form" method="post"', 'game option'
   end
 
+  it "displays board size options on the board-size route template" do
+    get '/board-size'
+    expect(last_response).to be_ok
+    expect(last_response.body).to include 'form class="options-form" method="post" action="/board-size"'
+  end
+
   it "clears board on post request to /menu" do
     post '/menu', {'option' => HUMAN_VS_HUMAN}, {'rack.session' => {'board_rows' => 'some value'}}
     expect(last_request.env['rack.session']['board_rows']).to eql(nil)
   end
 
-  it "redirects to game route after a post request to /menu" do
+  it "redirects to board-size route after a post request to /menu" do
     post '/menu', 'option' => HUMAN_VS_HUMAN
     expect(last_response).to be_redirect
+    expect(last_response.location).to include 'board-size'
+  end
+
+  it "redirects to game route after a post request to /board-size" do
+    post '/board-size', 'option' => THREE_BY_THREE
+    expect(last_response).to be_redirect
+    expect(last_response.location).to include 'game'
   end
 
   it "adds game options choice from params into session" do
