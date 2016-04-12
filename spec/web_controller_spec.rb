@@ -74,9 +74,9 @@ describe WebController do
     expect(last_response.body).to include('Game over! Winner is X.')
   end
 
-  it "displays error when trying to access game page without a game option" do
-    get '/game', {}, {'rack.session' => {'board_size' => 3}}
-    expect(last_response.body).to include('Something went wrong')
+  it "redirects to home when trying to access game page without a game option or board size" do
+    get '/game', {}, {}
+    expect(last_response).to be_redirect
   end
 
   it "resets the game option when the root route is requested" do

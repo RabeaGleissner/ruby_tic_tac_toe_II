@@ -34,10 +34,10 @@ class WebController < Sinatra::Base
   end
 
   get '/game' do
-    session['board_rows'] ||= Board.new(session['board_size']).rows
-    if no_game_option_chosen
-      erb :error
+    if no_game_option_chosen || no_board_size_chosen
+      redirect '/'
     else
+      session['board_rows'] ||= Board.new(session['board_size']).rows
       current_player_move
       set_template_variables
       erb :game
@@ -59,6 +59,10 @@ class WebController < Sinatra::Base
 
   def no_game_option_chosen
     session['game_option'] == nil
+  end
+
+  def no_board_size_chosen
+    session['board_size'] == nil
   end
 
   def current_player_move
