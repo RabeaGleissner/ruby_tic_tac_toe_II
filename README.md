@@ -16,6 +16,7 @@
 `bin/run.sh`
 
 
+
 ## To play the game in the web browser, type this command:
 
 `rackup -I lib`
@@ -25,5 +26,8 @@
 
 When you're inside the ruby_tic_tac_toe_II folder, type:
 
-`rspec spec`
+`rspec spec` (to run the unit tests)
+
+`cucumber` (to run the acceptance tests)
+
 

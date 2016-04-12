@@ -1,9 +1,9 @@
 <h2 class="menu">Please choose a game option:</h2>
-<form class="game-options-form" method="post" action="/menu">
-  <% @game_options.each do |number, text| %>
+<form class="options-form" method="post" action="/menu">
+  <% @game_options.each do |number, symbol| %>
     <p>
-    <input id=<%= convert_to_kebab_case(text)%> class="option-choice" type="radio" name="option" value=<%= number %>>
-    <label for=<%= convert_to_kebab_case(text)%>><%= text %></label>
+    <input id=<%= convert_to_kebab_case(format_game_options(symbol))%> class="option-choice" type="radio" name="option" value=<%= number %>>
+    <label for=<%= convert_to_kebab_case(format_game_options(symbol))%>><%= format_game_options(symbol) %></label>
     </p>
   <% end %>
   <button type="submit">Start game</button>

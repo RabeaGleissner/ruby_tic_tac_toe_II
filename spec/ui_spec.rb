@@ -1,7 +1,10 @@
 require 'spec_helper'
 require 'stringio'
 require 'ui'
+require 'game_options'
 require 'board'
+require 'board_factory'
+require 'board_size'
 require 'marks'
 
 describe Ui do
@@ -10,34 +13,50 @@ describe Ui do
   let (:ui) {Ui.new(input, output)}
 
   CLEAR_SCREEN = "\e[H\e[2J"
-  GAME_OPTIONS = {1 => "Human vs Human",
-                  2 => "Human vs Computer",
-                  3 => "Computer vs Human"}
 
-  it "draws a board to the console" do
-    board = Board.new([Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
+  it "draws a 3x3 board to the console" do
+    board = Board.new(3, [Marks::X, 1, Marks::X, Marks::O, 4, Marks::O, Marks::O, 7, Marks::X])
     ui = Ui.new(StringIO.new, output)
     ui.draw_board(board)
-    expect(output.string).to eq("#{CLEAR_SCREEN}\n-----------\n X | 2 | X\n-----------\n O | 5 | O\n-----------\n O | 8 | X\n-----------\n")
+    expect(output.string).to eq("#{CLEAR_SCREEN}\n---------------\n  X |  2 |  X\n---------------\n  O |  5 |  O\n---------------\n  O |  8 |  X\n---------------\n")
   end
 
-  it "shows the menu" do
+  it "shows the board size options menu" do
     ui = Ui.new(StringIO.new("1"), output)
-    ui.menu(GAME_OPTIONS)
-    expect(output.string).to eq("#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n--> \n")
+    ui.board_size_menu(BoardSize.new)
+    expect(output.string).to eq("Please choose a board size:\n\n1 - 3x3 board\n2 - 4x4 board\n--> \n")
+  end
+
+  it "shows the game options menu" do
+    ui = Ui.new(StringIO.new("1"), output)
+    ui.menu(GameOptions.new)
+    expect(output.string).to eq("#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer\n5 - Human vs Random\n--> \n")
   end
 
   it "gets the game mode" do
     ui = Ui.new(StringIO.new("2"), output)
-    expect(ui.menu(GAME_OPTIONS)).to eq(:HumanVsComputer)
+    expect(ui.menu(GameOptions.new)).to eq(:HumanVsComputer)
   end
 
-  it "displays error message and menu options on bad user input" do
-    ERROR_MESSAGE = "Please select a valid game mode!"
-    VALID_OPTION = "3"
+  it "gets the board size from the user" do
+    ui = Ui.new(StringIO.new("2"), output)
+    expect(ui.board_size_menu(BoardSize.new)).to eq 4
+  end
+
+  it "displays error message and board size options on bad user input for board size" do
+    BOARD_SIZE_ERROR = "Please select a valid board size!"
+    VALID_OPTION = "1"
     allow(ui.input).to receive(:gets).and_return("bad", VALID_OPTION)
-    ui.get_game_mode(GAME_OPTIONS)
-    expect(output.string).to include(ERROR_MESSAGE)
+    ui.board_size_menu(BoardSize.new)
+    expect(output.string).to include(BOARD_SIZE_ERROR)
+  end
+
+  it "displays error message and menu options on bad user input for game options" do
+    GAME_OPTIONS_ERROR = "Please select a valid game mode!"
+    VALID_GAME_OPTION = "3"
+    allow(ui.input).to receive(:gets).and_return("bad", VALID_GAME_OPTION)
+    ui.get_game_mode(GameOptions.new)
+    expect(output.string).to include(GAME_OPTIONS_ERROR)
   end
 
   it "asks user for a position" do
@@ -62,7 +81,7 @@ describe Ui do
   end
 
   it "announces that the winner is X" do
-    x_winner_board = Board.new([Marks::X, Marks::X, Marks::X,
+    x_winner_board = Board.new(3, [Marks::X, Marks::X, Marks::X,
                                 3, 4, Marks::O,
                                 Marks::O, 7, 8])
     ui.announce_winner(x_winner_board)
@@ -70,9 +89,9 @@ describe Ui do
   end
 
   it "announces a draw" do
-    drawn_board = Board.new([Marks::X, Marks::O, Marks::X,
-                             Marks::X, Marks::O, Marks::O,
-                             Marks::O, Marks::X, Marks::X])
+    drawn_board = Board.new(3, [Marks::X, Marks::O, Marks::X,
+                                Marks::X, Marks::O, Marks::O,
+                                Marks::O, Marks::X, Marks::X])
     ui.announce_winner(drawn_board)
     expect(output.string).to eq("\nGame over! It's a draw.\n")
   end

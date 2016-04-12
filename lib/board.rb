@@ -1,16 +1,18 @@
 require 'marks'
 
 class Board
+  attr_reader :dimension, :grid
   include Marks
-  def initialize(marks = empty_board)
+
+  def initialize(dimension = 3, marks = empty_board(dimension))
+    @dimension = dimension
     @grid = marks
-    @dimension = Math.sqrt(@grid.size).to_i
   end
 
   def add_mark(position, mark)
     new_grid = grid.clone
     new_grid[position] = mark
-    Board.new(new_grid)
+    Board.new(dimension, new_grid)
   end
 
   def available_positions
@@ -49,7 +51,23 @@ class Board
   end
 
   def all_same_marks?(line)
-    line[0] == line[1] && line[1] == line[2]
+    all_x?(line) || all_o?(line)
+  end
+
+  def all_x?(line)
+    all_same = true
+    line.each do |cell|
+      all_same = all_same && (cell == Marks::X)
+    end
+    all_same
+  end
+
+  def all_o?(line)
+    all_same = true
+    line.each do |cell|
+      all_same = all_same && (cell == Marks::O)
+    end
+    all_same
   end
 
   def empty?
@@ -57,7 +75,7 @@ class Board
   end
 
   def full?
-    (grid & empty_board).empty?
+    (grid & empty_board(dimension)).empty?
   end
 
   def lines
@@ -73,10 +91,16 @@ class Board
   end
 
   def diagonals
-    [
-      [grid[0], grid[4], grid[8]],
-      [grid[2], grid[4], grid[6]]
-    ]
+    first, second = [], []
+    (0...dimension).each do |i|
+      first[i] = grid[(dimension * i) + i]
+    end
+    offset = dimension - 1
+    (0...dimension).each do |i|
+      second[i] = grid[offset]
+      offset += dimension - 1
+    end
+    [first, second]
   end
 
   def count_for(mark)
@@ -84,9 +108,9 @@ class Board
   end
 
   private
-  attr_reader :grid, :dimension
 
-  def empty_board
-    (0..8).to_a
+  def empty_board(dimension)
+    size = dimension ** 2
+    (0...size).to_a
   end
 end

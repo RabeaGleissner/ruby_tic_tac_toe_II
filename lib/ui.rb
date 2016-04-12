@@ -1,5 +1,7 @@
 require 'marks'
 require 'game_options'
+require 'board_size'
+require 'board_factory'
 
 class Ui
   include Marks
@@ -15,21 +17,40 @@ class Ui
   def menu(game_options)
     output.puts "#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\n"
     output.puts "Please indicate your desired game mode:\n\n"
-    game_options.each do |number, option|
-      output.puts "#{number} - #{option}"
+    GameOptions::GAME_OPTIONS.each do |number, option|
+      output.puts "#{number} - #{game_options.format_for_display(option)}"
     end
     output.puts "--> "
     get_game_mode(game_options)
   end
 
-  def get_game_mode(game_options)
+  def get_game_mode(options)
     mode = input.gets.chomp
-    mapper = GameOptions.new
     if (GameOptions::GAME_OPTIONS.key?(mode.to_i))
-      mapper.map(mode)
+      options.map(mode)
     else
       game_mode_selection_error
-      menu(game_options)
+      menu(options)
+    end
+  end
+
+  def board_size_menu(board_size)
+    output.puts "Please choose a board size:\n\n"
+    BoardSize::SIZES.each do |number, option|
+      output.puts "#{number} - #{board_size.display(option)}"
+    end
+    output.puts "--> "
+    get_board_size(board_size)
+  end
+
+  def get_board_size(board_size)
+    size = input.gets.chomp.to_i
+    board_factory = BoardFactory.new
+    if (BoardSize::SIZES.key?(size))
+      board_size.map(size)
+    else
+      board_size_selection_error
+      board_size_menu(board_size)
     end
   end
 
@@ -95,8 +116,13 @@ class Ui
     output.puts "Please select a valid game mode!"
   end
 
+  def board_size_selection_error
+    output.puts "Please select a valid board size!"
+  end
+
   def create_board_image(board)
-    line = "\n-----------\n"
+    dashes = "-----" * board.dimension
+    line = "\n#{dashes}\n"
     pipe = " |"
     board_image = line
     rows = board.rows.flatten
@@ -111,12 +137,16 @@ class Ui
   end
 
   def draw_one_cell(cell)
-    cell += 1 unless cell == X || cell == O
-    " " + (cell).to_s
+    if cell == X || cell == O
+      "  #{cell}"
+    else
+      cell += 1
+      " #{sprintf("%2d", cell)}"
+    end
   end
 
   def last_cell_in_row?(index, board)
     board_size = board.rows.first.length
-    index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1
+    index == board_size - 1 || index == (board_size * 2) - 1 || index == (board_size * 3) - 1 || index == (board_size * 4) - 1
   end
 end

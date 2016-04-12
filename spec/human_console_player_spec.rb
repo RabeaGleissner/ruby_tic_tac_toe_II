@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'human_console_player'
+require 'players/human_console_player'
 require 'fake_ui'
 require 'board'
 require 'marks'

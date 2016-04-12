@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'player_factory'
-require 'computer_player'
+require 'players/player_factory'
+require 'players/computer_player'
 require 'marks'
-require 'human_console_player'
+require 'players/human_console_player'
 require 'ui'
 
 describe PlayerFactory do
