@@ -15,8 +15,8 @@ class Ui
   def menu(game_options)
     output.puts "#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\n"
     output.puts "Please indicate your desired game mode:\n\n"
-    game_options.each do |number, option|
-      output.puts "#{number} - #{option}"
+    GameOptions::GAME_OPTIONS.each do |number, option|
+      output.puts "#{number} - #{game_options.format_for_display(option)}"
     end
     output.puts "--> "
     get_game_mode(game_options)
@@ -24,9 +24,8 @@ class Ui
 
   def get_game_mode(options)
     mode = input.gets.chomp
-    game_options = GameOptions.new
     if (GameOptions::GAME_OPTIONS.key?(mode.to_i))
-      game_options.map(mode)
+      options.map(mode)
     else
       game_mode_selection_error
       menu(options)

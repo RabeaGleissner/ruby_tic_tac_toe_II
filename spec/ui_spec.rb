@@ -28,13 +28,13 @@ describe Ui do
 
   it "shows the game options menu" do
     ui = Ui.new(StringIO.new("1"), output)
-    ui.menu(GameOptions::GAME_OPTIONS)
-    expect(output.string).to eq("#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer\n5 - Human vs Random Player\n--> \n")
+    ui.menu(GameOptions.new)
+    expect(output.string).to eq("#{CLEAR_SCREEN}::: WELCOME TO TIC TAC TOE :::\n\nPlease indicate your desired game mode:\n\n1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer\n5 - Human vs Random\n--> \n")
   end
 
   it "gets the game mode" do
     ui = Ui.new(StringIO.new("2"), output)
-    expect(ui.menu(GameOptions::GAME_OPTIONS)).to eq(:HumanVsComputer)
+    expect(ui.menu(GameOptions.new)).to eq(:HumanVsComputer)
   end
 
   it "gets the board size from the user" do
@@ -54,7 +54,7 @@ describe Ui do
     GAME_OPTIONS_ERROR = "Please select a valid game mode!"
     VALID_GAME_OPTION = "3"
     allow(ui.input).to receive(:gets).and_return("bad", VALID_GAME_OPTION)
-    ui.get_game_mode(GameOptions::GAME_OPTIONS)
+    ui.get_game_mode(GameOptions.new)
     expect(output.string).to include(GAME_OPTIONS_ERROR)
   end
 

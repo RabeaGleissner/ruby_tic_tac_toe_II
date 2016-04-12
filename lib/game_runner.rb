@@ -17,7 +17,7 @@ class GameRunner
   def start
     begin
       loop do
-        game_option = ui.menu(GameOptions::GAME_OPTIONS)
+        game_option = ui.menu(GameOptions.new)
         board_size = ui.board_size_menu(BoardFactory::BOARD_SIZES)
         game.play(player_factory.create_players(game_option), board_factory.create_board(board_size), ui)
         break unless ui.replay?
