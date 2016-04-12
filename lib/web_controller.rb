@@ -82,7 +82,7 @@ class WebController < Sinatra::Base
   end
 
   def set_template_variables
-    @game_option = session["game_option"]
+    @game_option = session['game_option']
     @board = current_board
     @winner_mark = @board.winner_mark
     @draw = @board.draw?
