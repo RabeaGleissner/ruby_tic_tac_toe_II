@@ -23,4 +23,8 @@ describe GameOptions do
   it "maps option 5 to Human vs Random Player" do
     expect(game_options.map("5")).to eq :HumanVsRandom
   end
+
+  it "formats a symbol so that it can be used in the display" do
+    expect(game_options.format_for_display(:HumanVsRandom)).to eq "Human vs Random"
+  end
 end
